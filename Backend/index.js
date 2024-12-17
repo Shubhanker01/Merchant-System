@@ -9,7 +9,7 @@ app.get('/', function (req, res) {
 })
 
 app.get('/api/user', function (req, res) {
-    res.send({ name: "shubhanker", rollNo: 1909 })
+    res.json({ name: "shubhanker", rollNo: 1909 })
 })
 
 app.listen(port, () => {

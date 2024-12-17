@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+
 
 function Home() {
-  useEffect(() => {
-    axios.get('/user').then((response) => {
-      console.log(response.data)
-    }).catch((err) => {
-      console.log(err)
-    })
-  }, [])
+  // useEffect(() => {
+  //   axios.get('/api/user').then((response) => {
+  //     console.log(response.data)
+  //   }).catch((err) => {
+  //     console.log(err)
+  //   })
+  // }, [])
   return (
     <div>
       <div className='bg-gray-800 grid grid-cols-2'>
