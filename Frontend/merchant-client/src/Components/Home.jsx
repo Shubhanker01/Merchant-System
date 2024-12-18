@@ -3,13 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 function Home() {
-  // useEffect(() => {
-  //   axios.get('/api/user').then((response) => {
-  //     console.log(response.data)
-  //   }).catch((err) => {
-  //     console.log(err)
-  //   })
-  // }, [])
+  
   return (
     <div>
       <div className='bg-gray-800 grid grid-cols-2'>
