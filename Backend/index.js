@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = 8000
 const cors = require('cors')
+const connectToMongo = require('./db/connectToDb')
 
 app.use(cors())
 app.get('/', function (req, res) {
@@ -15,3 +16,5 @@ app.get('/api/user', function (req, res) {
 app.listen(port, () => {
     console.log("Example app listening on port ", port)
 })
+
+connectToMongo()
