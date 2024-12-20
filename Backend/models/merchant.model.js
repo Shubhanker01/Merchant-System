@@ -14,7 +14,12 @@ const merchantSchema = new mongoose.Schema({
         type:String,
         required:true,
         min:[8,"Your password should contain minimum of length 8"]
+    },
+    isVerified:{
+        type:Boolean,
+        default:false
     }
 })
 
-export const Merchant = mongoose.model("merchant", merchantSchema)
+const Merchant = mongoose.model("merchant", merchantSchema)
+module.exports = {Merchant}

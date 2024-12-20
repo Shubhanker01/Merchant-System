@@ -5,13 +5,12 @@ const cors = require('cors')
 const connectToMongo = require('./db/connectToDb')
 
 app.use(cors())
+app.use(express.json())
 app.get('/', function (req, res) {
     res.send("Hello world")
 })
 
-app.get('/api/user', function (req, res) {
-    res.json({ name: "shubhanker", rollNo: 1909 })
-})
+app.use('/api/merchant', require('./routes/merchant registration/merchantRegistration'))
 
 app.listen(port, () => {
     console.log("Example app listening on port ", port)
