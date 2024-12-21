@@ -4,7 +4,7 @@ const router = express.Router()
 const { Merchant } = require('../../models/merchant.model')
 const sendEmail = require('../../utils/sendEmail')
 
-router.post('/registration', async (req, res) => {
+router.post('/registration', async (req, res, next) => {
     try {
         await Merchant.create({
             name: req.body.name,
@@ -13,8 +13,11 @@ router.post('/registration', async (req, res) => {
             isVerified: false,
         })
         let response = await sendEmail(req.body.email)
-        console.log(response)
-        res.json({ message: "Merchant registered successfully" })
+        if (response) {
+            res.status(200).send("Email sent successfully")
+        }
+        next()
+
     } catch (error) {
         console.log(error.message)
         if (error.code === 11000) {

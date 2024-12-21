@@ -6,6 +6,7 @@ const connectToMongo = require('./db/connectToDb')
 
 app.use(cors())
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 app.get('/', function (req, res) {
     res.send("Hello world")
 })
