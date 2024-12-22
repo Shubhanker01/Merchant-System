@@ -9,7 +9,6 @@ router.post('/registration', async (req, res) => {
         await Merchant.create({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
             isVerified: false,
         })
         let response = await sendEmail(req.body.email)
@@ -31,11 +30,28 @@ router.post('/registration', async (req, res) => {
     }
 })
 
-router.post('/verify', async (req, res)=> {
-    // let numberofAttemps = 0
+router.post('/verify', async (req, res) => {
+
     try {
         // verify
-        
+        let enteredPassword = req.body.password
+        let email = req.body.email
+        if (enteredPassword !== "") {
+            let user = await TempPassword.findOne({ email: email })
+            if (user) {
+                if (user.expiresAt.getTime() > new Date().getTime()) {
+                    if (user.password === enteredPassword) {
+                        res.send("Email verified successfully")
+                    }
+                    else {
+                        res.send("Incorrect password")
+                    }
+                }
+                else {
+                    res.send("Password expired")
+                }
+            }
+        }
     }
     catch (error) {
         console.log(error.message)

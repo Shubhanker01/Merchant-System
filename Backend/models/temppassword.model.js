@@ -7,7 +7,7 @@ const TempPasswordSchema = new Schema({
         required: true
     },
     email: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Merchant'
     },
     createdAt: {
@@ -21,4 +21,4 @@ const TempPasswordSchema = new Schema({
 })
 
 const TempPassword = mongoose.model('temppassword', TempPasswordSchema)
-module.exports = TempPassword
+module.exports = { TempPassword }
