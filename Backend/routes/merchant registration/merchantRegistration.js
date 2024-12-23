@@ -4,6 +4,7 @@ const router = express.Router()
 const { Merchant } = require('../../models/merchant.model')
 const sendEmail = require('../../utils/sendEmail')
 const { TempPassword } = require('../../models/temppassword.model')
+const { limiter } = require('../../utils/rateLimiter')
 
 router.post('/registration', async (req, res) => {
     try {
@@ -31,7 +32,7 @@ router.post('/registration', async (req, res) => {
     }
 })
 
-router.post('/verify', async (req, res) => {
+router.post('/verify', limiter, async (req, res) => {
     try {
         // verify
         let enteredPassword = req.body.password
@@ -50,7 +51,9 @@ router.post('/verify', async (req, res) => {
                 res.status(401).send("Incorrect password")
             }
             else if (user.expiresAt.getTime() < new Date().getTime()) {
-                res.status(401).send("Password expired")
+                await TempPassword.deleteOne({ email: email })
+                await Merchant.deleteOne({ email: email })
+                res.status(401).send("Password expired , go back to registration page")
             }
             else {
                 await Merchant.findOneAndUpdate({ email: email }, { isVerified: true })
@@ -59,6 +62,14 @@ router.post('/verify', async (req, res) => {
         }
     }
     catch (error) {
+        console.log(error.message)
+    }
+})
+
+router.post('/setpassword', async (req, res) => {
+    try {
+        
+    } catch (error) {
         console.log(error.message)
     }
 })
