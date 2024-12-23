@@ -4,6 +4,7 @@ const router = express.Router()
 const { Merchant } = require('../../models/merchant.model')
 const sendEmail = require('../../utils/sendEmail')
 const { TempPassword } = require('../../models/temppassword.model')
+
 router.post('/registration', async (req, res) => {
     try {
         await Merchant.create({
@@ -31,25 +32,29 @@ router.post('/registration', async (req, res) => {
 })
 
 router.post('/verify', async (req, res) => {
-
     try {
         // verify
         let enteredPassword = req.body.password
         let email = req.body.email
-        if (enteredPassword !== "") {
+
+        // check if password is empty
+        if (enteredPassword === "" || email === "") {
+            res.status(400).send("Password cannot be empty or email cannot be empty")
+        }
+        else {
             let user = await TempPassword.findOne({ email: email })
-            if (user) {
-                if (user.expiresAt.getTime() > new Date().getTime()) {
-                    if (user.password === enteredPassword) {
-                        res.send("Email verified successfully")
-                    }
-                    else {
-                        res.send("Incorrect password")
-                    }
-                }
-                else {
-                    res.send("Password expired")
-                }
+            if (!user) {
+                res.status(404).send("Email not found")
+            }
+            else if (user.password !== enteredPassword) {
+                res.status(401).send("Incorrect password")
+            }
+            else if (user.expiresAt.getTime() < new Date().getTime()) {
+                res.status(401).send("Password expired")
+            }
+            else {
+                await Merchant.findOneAndUpdate({ email: email }, { isVerified: true })
+                res.status(200).send("Email verified successfully")
             }
         }
     }
