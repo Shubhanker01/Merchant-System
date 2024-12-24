@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-
+const bcrypt = require('bcrypt')
 const { Merchant } = require('../../models/merchant.model')
 const sendEmail = require('../../utils/sendEmail')
 const { TempPassword } = require('../../models/temppassword.model')
@@ -68,7 +68,11 @@ router.post('/verify', limiter, async (req, res) => {
 
 router.post('/setpassword', async (req, res) => {
     try {
-        
+        let password = req.body.password
+        let email = req.body.email
+        let hashedPassword = await bcrypt.hash(password, 10)
+        await Merchant.findOneAndUpdate({ email: email }, { password: hashedPassword })
+        res.status(200).send("Password set successfully")
     } catch (error) {
         console.log(error.message)
     }
