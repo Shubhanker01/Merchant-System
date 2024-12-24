@@ -5,6 +5,7 @@ const { Merchant } = require('../../models/merchant.model')
 const sendEmail = require('../../utils/sendEmail')
 const { TempPassword } = require('../../models/temppassword.model')
 const { limiter } = require('../../utils/rateLimiter')
+const { generateToken } = require('../../utils/generateToken')
 
 router.post('/registration', async (req, res) => {
     try {
@@ -56,8 +57,11 @@ router.post('/verify', limiter, async (req, res) => {
                 res.status(401).send("Password expired , go back to registration page")
             }
             else {
+                await TempPassword.deleteOne({ email: email })
                 await Merchant.findOneAndUpdate({ email: email }, { isVerified: true })
+                let token = generateToken(email)
                 res.status(200).send("Email verified successfully")
+                    .cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' })
             }
         }
     }
