@@ -74,12 +74,17 @@ router.post('/verify', limiter, async (req, res) => {
 
 router.post('/setpassword', authenticateToken, async (req, res) => {
     try {
-        // let password = req.body.password
-        // // let email = req.body.email
-        // let hashedPassword = await bcrypt.hash(password, 10)
-        // await Merchant.findOneAndUpdate({ email: req.body.email }, { password: hashedPassword })
-        // res.status(200).send("Password set successfully")
-        res.send("Authenticated")
+        let email = req.user.email
+        let password = req.body.password
+        let hashedPassword = await bcrypt.hash(password, 10)
+        if(!password){
+            res.status(400).send("Password cannot be empty")
+        }
+        else{
+            await Merchant.findOneAndUpdate({ email: email }, { password: hashedPassword })
+            res.send("Password set successfully")
+        }
+        
     } catch (error) {
         console.log(error.message)
     }

@@ -5,12 +5,12 @@ function authenticateToken(req, res, next) {
     try {
         const authHeader = req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
-        if (token == null) console.log("Token is null")
+        if (token == null) throw new Error("Token is null")
 
         jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-            if (err) console.log(err.message)
+            if (err) res.status(403).send("Invalid token")
             else {
-                console.log(user)
+                req.user = user
             }
 
         })
