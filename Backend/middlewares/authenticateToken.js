@@ -8,7 +8,7 @@ function authenticateToken(req, res, next) {
         if (token == null) throw new Error("Token is null")
 
         jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-            if (err) res.status(403).send("Invalid token")
+            if (err) throw new Error("Token is invalid")
             else {
                 req.user = user
             }

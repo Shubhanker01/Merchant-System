@@ -62,8 +62,8 @@ router.post('/verify', limiter, async (req, res) => {
                 await Merchant.findOneAndUpdate({ email: email }, { isVerified: true })
                 let token = generateToken(email)
                 console.log(token)
-                res.status(200).send("Email verified successfully")
-                    .cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' })
+                res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' })
+                .send("User verified successfully")
             }
         }
     }
@@ -75,18 +75,21 @@ router.post('/verify', limiter, async (req, res) => {
 router.post('/setpassword', authenticateToken, async (req, res) => {
     try {
         let email = req.user.email
+        if (email == undefined) {
+            return res.status(400).send("Something went wrong")
+        }
         let password = req.body.password
         let hashedPassword = await bcrypt.hash(password, 10)
-        if(!password){
-            res.status(400).send("Password cannot be empty")
+        if (!password) {
+            return res.status(400).send("Password cannot be empty")
         }
-        else{
+        else {
             await Merchant.findOneAndUpdate({ email: email }, { password: hashedPassword })
-            res.send("Password set successfully")
+            return res.send("Password set successfully")
         }
-        
+
     } catch (error) {
-        console.log(error.message)
+        res.status(500).send(error.message)
     }
 })
 
