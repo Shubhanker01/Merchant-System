@@ -1,15 +1,18 @@
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 function authenticateToken(req, res, next) {
     try {
         const authHeader = req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
-        if (token == null) return res.sendStatus(401)
+        if (token == null) console.log("Token is null")
 
         jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
-            if (err) return res.sendStatus(403)
+            if (err) console.log(err.message)
+            else {
+                console.log(user)
+            }
 
-            req.body.email = user.email
         })
         next()
     } catch (error) {
@@ -17,4 +20,4 @@ function authenticateToken(req, res, next) {
     }
 }
 
-module.exports = authenticateToken
+module.exports = { authenticateToken }

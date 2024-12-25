@@ -6,7 +6,7 @@ const sendEmail = require('../../utils/sendEmail')
 const { TempPassword } = require('../../models/temppassword.model')
 const { limiter } = require('../../utils/rateLimiter')
 const { generateToken } = require('../../utils/generateToken')
-// const { authenticateToken } = require('../../middlewares/authenticateToken')
+const { authenticateToken } = require('../../middlewares/authenticateToken')
 
 router.post('/registration', async (req, res) => {
     try {
@@ -72,13 +72,14 @@ router.post('/verify', limiter, async (req, res) => {
     }
 })
 
-router.post('/setpassword', async (req, res) => {
+router.post('/setpassword', authenticateToken, async (req, res) => {
     try {
-        let password = req.body.password
-        // let email = req.body.email
-        let hashedPassword = await bcrypt.hash(password, 10)
-        await Merchant.findOneAndUpdate({ email: req.body.email }, { password: hashedPassword })
-        res.status(200).send("Password set successfully")
+        // let password = req.body.password
+        // // let email = req.body.email
+        // let hashedPassword = await bcrypt.hash(password, 10)
+        // await Merchant.findOneAndUpdate({ email: req.body.email }, { password: hashedPassword })
+        // res.status(200).send("Password set successfully")
+        res.send("Authenticated")
     } catch (error) {
         console.log(error.message)
     }
