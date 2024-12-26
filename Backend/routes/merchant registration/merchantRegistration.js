@@ -62,7 +62,7 @@ router.post('/verify', limiter, async (req, res) => {
                 await Merchant.findOneAndUpdate({ email: email }, { isVerified: true })
                 let token = generateToken(email)
                 console.log(token)
-                res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', domain:'http://localhost:8000' })
+                res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' })
                 .send("User verified successfully")
             }
         }

@@ -10,11 +10,12 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 app.get('/', function (req, res) {
-    res.send("Hello world")
+    res.send("<h1>Hello world</h1>")
 })
 
 app.use('/api/merchant', require('./routes/merchant registration/merchantRegistration'))
-app.use('/api/merchant', require('./routes/merchant login/merchantLogin'))
+app.use('/api/merchants', require('./routes/merchant login/merchantLogin'))
+app.use('/api/merchant/password', require('./routes/merchant password/passwordReset'))
 
 app.listen(port, () => {
     console.log("Example app listening on port ", port)
