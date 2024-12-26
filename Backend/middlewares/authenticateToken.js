@@ -6,7 +6,6 @@ function authenticateToken(req, res, next) {
     try {
         const authHeader = req.headers['authorization']
         const token = authHeader && authHeader.split(' ')[1]
-        console.log(token)
         if (token == null) throw new apiError(400,'Token is Null')
 
         jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {

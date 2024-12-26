@@ -8,7 +8,7 @@ router.post('/reset', authenticateToken, async (req, res) => {
     try {
         let email = req.user.email
         let password = req.body.password
-        let hashedPassword = bcrypt.hash(password, 10)
+        let hashedPassword = await bcrypt.hash(password, 10)
         await Merchant.findOneAndUpdate({ email: email }, { password: hashedPassword })
         res.status(200).send("Password successfully reset")
     } catch (error) {

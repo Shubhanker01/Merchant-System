@@ -22,7 +22,7 @@ router.post('/login', limiter, async (req, res) => {
                 return res.status(401).send("Incorrect Password")
             }
             else {
-                let token = generateToken(user.email)
+                let token = generateToken(req.body.email)
                 return res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', }).send("Successfully logged in")
             }
 
