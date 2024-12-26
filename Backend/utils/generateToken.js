@@ -7,4 +7,4 @@ const generateToken = (email) => {
 
 
 
-module.exports = {generateToken}
+module.exports = { generateToken }

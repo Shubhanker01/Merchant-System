@@ -3,8 +3,9 @@ const router = express.Router()
 const { Merchant } = require('../../models/merchant.model')
 const bcrypt = require('bcrypt')
 const { generateToken } = require('../../utils/generateToken')
+const { limiter } = require('../../utils/rateLimiter')
 
-router.post('/login', async (req, res) => {
+router.post('/login', limiter, async (req, res) => {
     try {
         let email = req.body.email
         let password = req.body.password
@@ -20,8 +21,11 @@ router.post('/login', async (req, res) => {
             if (!compare) {
                 return res.status(401).send("Incorrect Password")
             }
-            let token = generateToken(user.email)
-            return res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', }).send("Successfully logged in")
+            else {
+                let token = generateToken(user.email)
+                return res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', }).send("Successfully logged in")
+            }
+
         }
     } catch (error) {
         console.log(error.message)
