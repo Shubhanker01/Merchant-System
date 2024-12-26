@@ -14,6 +14,7 @@ app.get('/', function (req, res) {
 })
 
 app.use('/api/merchant', require('./routes/merchant registration/merchantRegistration'))
+app.use('/api/merchant', require('./routes/merchant login/merchantLogin'))
 
 app.listen(port, () => {
     console.log("Example app listening on port ", port)
