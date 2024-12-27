@@ -5,6 +5,7 @@ const { TempPassword } = require('../../models/temppassword.model')
 const sendEmail = require('../../utils/sendEmail')
 const { generateToken } = require('../../utils/generateToken')
 const { authenticateToken } = require('../../middlewares/authenticateToken')
+const bcrypt = require('bcrypt')
 
 router.post('/forgotpassword/verify', async (req, res) => {
     try {
@@ -37,7 +38,8 @@ router.post('/forgotpassword/reset', authenticateToken, async (req, res) => {
         if (!user) return res.status(400).send('User not found')
         if (user.password !== emailToken) return res.status(400).send('Invalid token')
         if (user.expiresAt.getTime() < new Date().getTime()) return res.status(400).send('Your token has expired')
-        await Merchant.findOneAndUpdate({ email: email }, { password: newPassword })
+        let hashedPassword = await bcrypt.hash(newPassword, 10)    
+        await Merchant.findOneAndUpdate({ email: email }, { password: hashedPassword })
         await TempPassword.deleteOne({ email: email })
         return res.status(200).send('Password successfully reset')
     } catch (error) {
