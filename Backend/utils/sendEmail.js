@@ -6,20 +6,20 @@ const transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
     secure: false,
-    service:'gmail',
+    service: 'gmail',
     auth: {
         user: process.env.EMAIL,
         pass: process.env.PASSWORD
     }
 })
 
-const sendEmail = async (recepient) => {
+const sendEmail = async (recepient, type) => {
     try {
         let temporaryPassword = generatePassword()
         const sendPassword = await transporter.sendMail({
             from: process.env.EMAIL,
             to: recepient,
-            subject: "Enter the below password to verify your account. This password is valid for 5 minutes",
+            subject: `Enter the below OTP to ${type}`,
             text: temporaryPassword
         })
         return { password: temporaryPassword, id: sendPassword.messageId }
