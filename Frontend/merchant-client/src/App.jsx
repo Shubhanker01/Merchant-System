@@ -1,6 +1,7 @@
 import './App.css'
 import Home from './Components/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import {ToastContainer} from 'react-toastify'
 import Login from './Components/User Login/Login'
 import Signup from './Components/User Registration/Signup'
 import EmailVerification from './Components/User Registration/EmailVerification'
@@ -10,6 +11,7 @@ function App() {
 
   return (
     <>
+      <ToastContainer/>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />}></Route>
