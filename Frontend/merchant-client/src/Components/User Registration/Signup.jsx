@@ -2,16 +2,17 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { setMerchant } from '../../Features/Merchant/merchantSlice'
+import { registerUserEmail } from '../../Async logic/merchantThunk'
 import { toast } from 'react-toastify'
 function Signup() {
     let [username, setUsername] = useState("")
     let [email, setEmail] = useState("")
     let merchant = useSelector(state => state.merchant)
     let dispatch = useDispatch()
-    const addMerchant = (e) => {
+    const addMerchant = async (e) => {
         e.preventDefault()
-        dispatch(setMerchant({ username: username, email: email }))
-        toast("successfully submitted", { position: 'top-center', className: 'bg-sky-950 text-slate-100' })
+        let response = await dispatch(registerUserEmail(username,email))
+        toast(response, { position: 'top-center', className: 'bg-sky-950 text-slate-100' })
         setUsername("")
         setEmail("")
     }

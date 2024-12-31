@@ -1,5 +1,6 @@
 // importing create slice
 import { createSlice } from '@reduxjs/toolkit'
+import { registerUserEmail } from '../../Async logic/merchantThunk'
 
 export const merchantSlice = createSlice({
     name: 'merchant',
@@ -10,11 +11,18 @@ export const merchantSlice = createSlice({
     reducers: {
         setMerchant: (state, action) => {
             state.username = action.payload.username,
-            state.email = action.payload.email
+                state.email = action.payload.email
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(registerUserEmail.fulfilled, (state, action) => {
+            state.username = action.username,
+                state.email = action.email
+        })
     }
 })
 
 export const { setMerchant } = merchantSlice.actions
 
 export default merchantSlice.reducer
+// export default merchantSlice.caseReducers
