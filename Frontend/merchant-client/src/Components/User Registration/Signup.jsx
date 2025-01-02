@@ -4,17 +4,25 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setMerchant } from '../../Features/Merchant/merchantSlice'
 import { registerUserEmail } from '../../Async logic/merchantThunk'
 import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
+import LoadingBar from 'react-top-loading-bar'
+
 function Signup() {
+    const [progess, setProgress] = useState(0)
     let [username, setUsername] = useState("")
     let [email, setEmail] = useState("")
     let merchant = useSelector(state => state.merchant)
     let dispatch = useDispatch()
-    
-    const addMerchant = async (e) => {
+    let navigate = useNavigate()
+
+    const addMerchant = (e) => {
         e.preventDefault()
+        setProgress(50)
         dispatch(registerUserEmail({ name: username, email: email })).unwrap().then((response) => {
             dispatch(setMerchant({ username: username, email: email }))
             toast(response, { position: 'top-center', className: 'bg-sky-950 text-slate-100' })
+            setProgress(progess+50)
+            navigate('/signup/email-verify')
         }).catch((error) => {
             toast(error.message, { position: 'top-center', className: 'bg-red-600 text-slate-100' })
         })
@@ -24,6 +32,7 @@ function Signup() {
 
     return (
         <>
+            <LoadingBar color='#f11946' progress={progess} height={3} onLoaderFinished={() => setProgress(0)} />
             <div>
                 <h1 className='text-center text-4xl text-bold'>Signup page</h1>
             </div>

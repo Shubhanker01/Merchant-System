@@ -1,6 +1,7 @@
 // importing create slice
 import { createSlice } from '@reduxjs/toolkit'
 import { registerUserEmail } from '../../Async logic/merchantThunk'
+import { verifyUserEmail } from '../../Async logic/merchantThunk'
 
 export const merchantSlice = createSlice({
     name: 'merchant',
@@ -16,8 +17,9 @@ export const merchantSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(registerUserEmail.fulfilled, (state, action) => {
-            
-        })
+
+        }),
+        builder.addCase(verifyUserEmail.fulfilled)
     }
 })
 
