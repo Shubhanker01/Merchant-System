@@ -16,8 +16,7 @@ export const merchantSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(registerUserEmail.fulfilled, (state, action) => {
-            state.username = action.username,
-                state.email = action.email
+            
         })
     }
 })

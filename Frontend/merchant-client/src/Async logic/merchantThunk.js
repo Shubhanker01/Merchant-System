@@ -3,9 +3,9 @@ import axios from 'axios'
 
 export const registerUserEmail = createAsyncThunk(
     'register/email',
-    async (name, email) => {
+    async ({ name, email }) => {
         try {
-            let response = await axios.post('api/merchant/registration', {
+            let response = await axios.post('http://localhost:8000/api/merchant/registration', {
                 name: name,
                 email: email
             }, {

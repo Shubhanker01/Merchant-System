@@ -4,8 +4,8 @@ const { registerUserEmail, verifyUserEmail, setUserPasswordFirstTime } = require
 const { limiter } = require('../../middlewares/rateLimiter')
 const { authenticateToken } = require('../../middlewares/authenticateToken')
 
-router.route('/registration', registerUserEmail)
-router.route('/verify', limiter, verifyUserEmail)
-router.route('/setpassword', authenticateToken, setUserPasswordFirstTime)
+router.route('/registration').post(limiter, registerUserEmail)
+router.route('/verify').post(verifyUserEmail)
+router.route('/setpassword').post(authenticateToken,setUserPasswordFirstTime)
 
 module.exports = router
