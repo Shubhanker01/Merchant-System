@@ -35,7 +35,7 @@ const registerUserEmail = async (req, res) => {
 const verifyUserEmail = async (req, res) => {
     try {
         // verify
-        let enteredPassword = req.body.password
+        let enteredPassword = req.body.otp
         let email = req.body.email
 
         // check if password is empty
@@ -47,13 +47,13 @@ const verifyUserEmail = async (req, res) => {
             if (!user) {
                 res.status(404).send("Email not found")
             }
-            else if (user.password !== enteredPassword) {
-                res.status(401).send("Incorrect password")
-            }
             else if (user.expiresAt.getTime() < new Date().getTime()) {
                 await TempPassword.deleteOne({ email: email })
                 await Merchant.deleteOne({ email: email })
                 res.status(401).send("Password expired , go back to registration page")
+            }
+            else if (user.password != enteredPassword) {
+                res.status(401).send("Incorrect password")
             }
             else {
                 await TempPassword.deleteOne({ email: email })
