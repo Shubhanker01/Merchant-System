@@ -14,7 +14,7 @@ export const registerUserEmail = createAsyncThunk(
                 }
             })
             let data = await response.data
-            return { message: data, status: response.status }
+            return data
         } catch (error) {
             console.log(error.message)
         }

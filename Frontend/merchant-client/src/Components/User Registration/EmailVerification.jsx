@@ -16,8 +16,9 @@ function EmailVerification() {
         e.preventDefault()
         dispatch(verifyUserEmail({ email: email, otp: otp })).unwrap().then((response) => {
             if (response != undefined) {
-                toast.success(response, { position: 'top-center' })
                 setProgress(80)
+                toast.success(response, { position: 'top-center' })
+                
                 navigate('/signup/password-set')
             }
         }).catch((err) => {

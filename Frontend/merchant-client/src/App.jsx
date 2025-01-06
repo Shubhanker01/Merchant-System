@@ -2,7 +2,6 @@ import './App.css'
 import Home from './Components/Home'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import {ToastContainer} from 'react-toastify'
-import { LoadingBarContainer } from "react-top-loading-bar";
 import Login from './Components/User Login/Login'
 import Signup from './Components/User Registration/Signup'
 import EmailVerification from './Components/User Registration/EmailVerification'
@@ -12,7 +11,6 @@ function App() {
 
   return (
     <>
-      <LoadingBarContainer />
       <ToastContainer/>
       <BrowserRouter>
         <Routes>
