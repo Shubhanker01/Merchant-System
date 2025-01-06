@@ -60,7 +60,7 @@ const verifyUserEmail = async (req, res) => {
                 await Merchant.findOneAndUpdate({ email: email }, { isVerified: true })
                 let token = generateToken(email)
                 console.log(token)
-                res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none' })
+                res.status(200).cookie('token', token, { path: '/', httpOnly: true, secure: true, sameSite: 'none' })
                     .send("User verified successfully")
             }
         }

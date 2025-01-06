@@ -43,9 +43,18 @@ export const verifyUserEmail = createAsyncThunk(
 
 export const setPassword = createAsyncThunk(
     'password/set',
-    async({password}) => {
+    async ({ password, token }) => {
         try {
-            
+            let response = await axios.post('http://localhost:8000/api/merchant/setpassword', {
+                password: password
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            })
+            let data = await response.data
+            return data
         } catch (error) {
             console.log(error)
         }
