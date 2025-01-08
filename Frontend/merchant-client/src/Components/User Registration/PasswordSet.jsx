@@ -1,35 +1,49 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
+import { setPassword } from '../../Async logic/merchantThunk'
+import LoadingBar from 'react-top-loading-bar'
 
 function PasswordSet() {
-    const [password, setPassword] = useState("")
+    const [progress, setProgress] = useState(0)
+    const [password, setPasswordField] = useState("")
     const [confPassword, setConfPassword] = useState("")
     const dispatch = useDispatch()
+    const token = document.cookie.split('; ').find((row) => row.startsWith("token="))?.split("=")[1]
 
     const handleSubmit = (e) => {
         e.preventDefault()
         if (password != confPassword) {
             toast.error('Password does not match', { position: 'top-center' })
         }
-        else{
-            
+        else {
+            dispatch(setPassword({ password: password, token: token })).unwrap().then((res) => {
+                toast.success(res, { position: 'top-center' })
+                setProgress(80)
+                setProgress(100)
+            }).catch((err) => {
+                console.log(err)
+            })
         }
+        setPasswordField("")
+        setConfPassword("")
     }
 
 
     return (
         <div>
+            <LoadingBar color="#f11946" progress={progress}
+                onLoaderFinished={() => setProgress(0)} height={3}/>
             <h1 className='text-center text-2xl mt-[30px] mb-[15px]'>This is last step. Please set your password to complete your registration</h1>
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-[0px_auto]">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Set your password
                     </h1>
-                    <form className="space-y-4 md:space-y-6" >
+                    <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                         <div>
                             <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-                            <input type="password" name="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required={true} value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                            <input type="password" name="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required={true} value={password} onChange={(e) => { setPasswordField(e.target.value) }} />
                         </div>
                         <div>
                             <label htmlFor="conf-password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>

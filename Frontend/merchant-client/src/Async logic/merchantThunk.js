@@ -34,7 +34,8 @@ export const verifyUserEmail = createAsyncThunk(
                 }
             })
             let data = await response.data
-            return data
+            document.cookie = `token=${data.token}; SameSite=None; Secure`
+            return data.message
         } catch (error) {
             console.log(error)
         }
