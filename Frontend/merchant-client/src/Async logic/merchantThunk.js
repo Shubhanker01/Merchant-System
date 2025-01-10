@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios'
+import { toast } from "react-toastify";
 
 export const registerUserEmail = createAsyncThunk(
     'register/email',
@@ -58,6 +59,28 @@ export const setPassword = createAsyncThunk(
             return data
         } catch (error) {
             console.log(error)
+        }
+    }
+)
+
+export const userLogin = createAsyncThunk(
+    'user/login',
+    async ({ email, password }) => {
+        try {
+            let response = await axios.post('http://localhost:8000/api/merchants/login', {
+                email: email,
+                password: password
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            let data = await response.data
+            document.cookie = `token=${data.token}; SameSite=None; Secure`
+            return data.message
+        } catch (error) {
+            console.log(error.response.data)
+            toast.error(error.response.data, { position: 'top-center' })
         }
     }
 )

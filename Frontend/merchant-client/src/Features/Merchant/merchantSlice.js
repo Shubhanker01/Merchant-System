@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { registerUserEmail } from '../../Async logic/merchantThunk'
 import { verifyUserEmail } from '../../Async logic/merchantThunk'
 import { setPassword } from '../../Async logic/merchantThunk'
+import { userLogin } from '../../Async logic/merchantThunk'
 
 export const merchantSlice = createSlice({
     name: 'merchant',
@@ -20,8 +21,9 @@ export const merchantSlice = createSlice({
         builder.addCase(registerUserEmail.fulfilled, (state, action) => {
 
         }),
-        builder.addCase(verifyUserEmail.fulfilled),
-        builder.addCase(setPassword.fulfilled)
+            builder.addCase(verifyUserEmail.fulfilled),
+            builder.addCase(setPassword.fulfilled),
+            builder.addCase(userLogin.fulfilled)
     }
 })
 

@@ -20,7 +20,7 @@ const merchantLogin = async (req, res) => {
             }
             else {
                 let token = generateToken(req.body.email)
-                return res.status(200).cookie('token', token, { httpOnly: true, secure: true, sameSite: 'none', }).send("Successfully logged in")
+                return res.status(200).send({ token: token, message: "User successfully logged in" })
             }
         }
     }
