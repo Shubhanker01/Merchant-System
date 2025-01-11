@@ -14,9 +14,12 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(userLogin({ email: email, password: password })).unwrap().then((res) => {
-      setProgress(60)
-      toast.success(res, { position: 'top-center' })
-      setProgress(90)
+      if (res != undefined) {
+        setProgress(60)
+        toast.success(res, { position: 'top-center' })
+        setProgress(90)
+      }
+
     }).catch((err) => {
       console.log(err)
     })

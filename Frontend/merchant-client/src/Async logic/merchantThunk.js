@@ -17,7 +17,7 @@ export const registerUserEmail = createAsyncThunk(
             let data = await response.data
             return data
         } catch (error) {
-            console.log(error.message)
+            toast.error(error.response.data, { position: 'top-center' })
         }
     }
 )
@@ -38,7 +38,7 @@ export const verifyUserEmail = createAsyncThunk(
             document.cookie = `token=${data.token}; SameSite=None; Secure`
             return data.message
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data, { position: 'top-center' })
         }
     }
 )
@@ -58,7 +58,7 @@ export const setPassword = createAsyncThunk(
             let data = await response.data
             return data
         } catch (error) {
-            console.log(error)
+            toast.error(error.response.data, { position: 'top-center' })
         }
     }
 )
