@@ -17,12 +17,14 @@ function Login() {
       if (res != undefined) {
         setProgress(60)
         toast.success(res, { position: 'top-center' })
-        setProgress(90)
+        setProgress(100)
       }
 
     }).catch((err) => {
       console.log(err)
     })
+    setEmail("")
+    setPassword("")
   }
   return (
     <>
