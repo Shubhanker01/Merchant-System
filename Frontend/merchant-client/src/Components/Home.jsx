@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 
 function Home() {
-  const [width, maxWidth] = useState(640)
+  const [show, setShow] = useState(false)
   const [bar, setBar] = useState(false)
   useEffect(() => {
     if (window.innerWidth <= 640) {
@@ -12,9 +12,14 @@ function Home() {
     else {
       setBar(false)
     }
-  }, [])
+  },[window.innerWidth])
   const handleShow = () => {
-
+    if (show) {
+      setShow(false)
+    }
+    else {
+      setShow(true)
+    }
   }
   return (
     <div>
@@ -34,10 +39,17 @@ function Home() {
               <Link to="/login" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>LogIn</Link>
             </div>
         }
-
-
       </div>
-
+      {
+        show == false ?
+          <div></div> :
+          <div className='h-[100px] w-full bg-gray-800 absolute z-10 transition duration-500 ease-in-out'>
+            <ul>
+              <li className='text-center p-4'><Link to="/signup" className='text-gray-100 p-2 m-2'>SignUp</Link></li>
+              <li className='text-center p-4'><Link to="/login" className='text-gray-100 p-2 m-2'>LogIn</Link></li>
+            </ul>
+          </div>
+      }
       <div className='mt-[30px] grid sm:grid-cols-2 gap-4' id='main-p'>
         <div className='ml-4 mr-4'>
           <p className='text-slate-800 sm:text-left text-center sm:text-2xl text-md'>Our platform provides an efficient solution for managing merchants with ease. Whether you need to create, view, update, or delete merchant information, our system streamlines the process. Additionally, you can monitor and evaluate merchant bids, ensuring optimal decision-making and transparency. Simplify your business operations and stay in control with our powerful management tools.</p>
