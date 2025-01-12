@@ -13,6 +13,9 @@ function Navbar() {
                 setBar(false)
             }
         })
+        return () => {
+            window.removeEventListener('resize',function(){})
+        }
     }, [])
     const handleShow = () => {
         if (show) {
@@ -24,7 +27,7 @@ function Navbar() {
     }
     return (
         <div>
-            <div className='bg-gray-800 fixed top-[-5px] grid grid-cols-2 z-20'>
+            <div className='bg-gray-800 w-full fixed top-[-5px] grid grid-cols-2 z-20'>
                 <div>
                     <h1 className='text-gray-100 sm:text-3xl sm:p-4 text-md p-2'>Merchant Management System</h1>
                 </div>
