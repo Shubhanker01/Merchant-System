@@ -34,12 +34,12 @@ function Signup() {
         <>
             <LoadingBar color='#f11946' progress={progess} height={3} onLoaderFinished={() => setProgress(0)} />
             <div>
-                <h1 className='text-center text-4xl text-bold'>Signup page</h1>
+                <h1 className='text-center sm:text-4xl font-bold text-2xl mt-[20px]'>Signup page</h1>
             </div>
-            <h1 className='text-center text-2xl mt-[30px] mb-[15px]'>This is Step 1 of 3. Enter your email and verify your account to register</h1>
+            <h1 className='text-center sm:text-2xl text-md mt-[30px] mb-[15px]'>This is Step 1 of 3. Enter your email and verify your account to register</h1>
             <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-[0px_auto]">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                    <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                    <h1 className="text-md font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Create an account
                     </h1>
                     <form className="space-y-4 md:space-y-6" onSubmit={addMerchant}>
