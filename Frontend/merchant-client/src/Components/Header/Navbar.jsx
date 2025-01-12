@@ -3,20 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Navbar() {
     const [show, setShow] = useState(false)
-    const [bar, setBar] = useState(false)
-    useEffect(() => {
-        window.addEventListener('resize', function () {
-            if (this.window.innerWidth <= 640) {
-                setBar(true)
-            }
-            else {
-                setBar(false)
-            }
-        })
-        return () => {
-            window.removeEventListener('resize',function(){})
-        }
-    }, [])
+    
     const handleShow = () => {
         if (show) {
             setShow(false)
@@ -32,12 +19,12 @@ function Navbar() {
                     <h1 className='text-gray-100 sm:text-3xl sm:p-4 text-md p-2'>Merchant Management System</h1>
                 </div>
                 {
-                    bar == true ?
-                        <div className='justify-self-end m-4' onClick={handleShow}>
-                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px]'></div>
-                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px]'></div>
-                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px]'></div>
-                        </div> :
+                    window.innerWidth <= 640 ?
+                        <button className='group justify-self-end mr-4' onClick={handleShow}>
+                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px] transition group-focus:rotate-45 group-focus:translate-y-2.5'></div>
+                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px]group-focus:translate-x-0'></div>
+                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px]group-focus:-rotate-45 group-focus:-translate-y-2.5'></div>
+                        </button> :
                         <div className='sm:justify-self-end sm:mt-4 sm:mr-4'>
                             <Link to="/signup" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>SignUp</Link>
                             <Link to="/login" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>LogIn</Link>
