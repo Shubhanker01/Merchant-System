@@ -77,7 +77,7 @@ export const userLogin = createAsyncThunk(
             })
             let data = await response.data
             document.cookie = `token=${data.token}; SameSite=None; Secure`
-            return data.message
+            return data
         } catch (error) {
             console.log(error.response.data)
             toast.error(error.response.data, { position: 'top-center' })

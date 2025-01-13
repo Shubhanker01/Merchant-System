@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { userLogin } from '../../Async logic/merchantThunk'
 import { toast } from 'react-toastify'
 import LoadingBar from 'react-top-loading-bar'
@@ -10,14 +10,16 @@ function Login() {
   let [email, setEmail] = useState("")
   let [password, setPassword] = useState("")
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const handleSubmit = (e) => {
     e.preventDefault()
     dispatch(userLogin({ email: email, password: password })).unwrap().then((res) => {
       if (res != undefined) {
         setProgress(60)
-        toast.success(res, { position: 'top-center' })
+        toast.success(res.message, { position: 'top-center' })
         setProgress(100)
+        navigate(`/main-app/${res.userId}`)
       }
 
     }).catch((err) => {
