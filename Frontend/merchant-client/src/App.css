@@ -14,3 +14,26 @@ button {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
 }
+
+/* adding hamburger animation */
+#navBtn .btn-line{
+    height: 2px;
+    width: 20px;
+    background-color: antiquewhite;
+    margin: 5px;
+    transition: all 0.5s ease-in-out;
+}
+
+#navBtn.close{
+    transform: rotate(180deg);
+}
+
+#navBtn.close .btn-line:nth-child(1){
+    transform: rotate(45deg) translate(5px,5px);
+}
+#navBtn.close .btn-line:nth-child(2){
+    opacity: 0;
+}
+#navBtn.close .btn-line:nth-child(3){
+    transform: rotate(-45deg) translate(5px,-5px);
+}

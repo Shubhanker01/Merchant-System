@@ -6,9 +6,11 @@ function Navbar() {
     
     const handleShow = () => {
         if (show) {
+            document.querySelector('#navBtn').classList.remove('close')
             setShow(false)
         }
         else {
+            document.querySelector('#navBtn').classList.add('close')
             setShow(true)
         }
     }
@@ -20,10 +22,10 @@ function Navbar() {
                 </div>
                 {
                     window.innerWidth <= 640 ?
-                        <button className='group justify-self-end mr-4' onClick={handleShow}>
-                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px] transition group-focus:rotate-45 group-focus:translate-y-2.5'></div>
-                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px]group-focus:translate-x-0'></div>
-                            <div className='bg-slate-100 h-[2px] w-[20px] m-[5px]group-focus:-rotate-45 group-focus:-translate-y-2.5'></div>
+                        <button className='justify-self-end mr-4' id='navBtn' onClick={handleShow}>
+                            <div className='btn-line'></div>
+                            <div className='btn-line'></div>
+                            <div className='btn-line'></div>
                         </button> :
                         <div className='sm:justify-self-end sm:mt-4 sm:mr-4'>
                             <Link to="/signup" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>SignUp</Link>
@@ -33,8 +35,8 @@ function Navbar() {
             </div>
             {
                 show == false ?
-                    <div></div> :
-                    <div className='h-[100px] w-full bg-gray-800 fixed top-[40px] z-10 transition duration-500 ease-in-out'>
+                    <div className='transition duration-500 delay-150 ease-in-out'></div> :
+                    <div className='h-[100px] w-full bg-gray-800 fixed top-[40px] z-10 transition duration-500 delay-150 ease-in-out'>
                         <ul>
                             <li className='text-center p-4'><Link to="/signup" className='text-gray-100 p-2 m-2'>SignUp</Link></li>
                             <li className='text-center p-4'><Link to="/login" className='text-gray-100 p-2 m-2'>LogIn</Link></li>

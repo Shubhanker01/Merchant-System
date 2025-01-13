@@ -6,7 +6,7 @@ function Home() {
   return (
     <div>
       <Navbar />
-      <div className='mt-[70px] grid sm:grid-cols-2 gap-4' id='main-p'>
+      <div className='mt-[100px] grid sm:grid-cols-2 gap-4' id='main-p'>
         <div className='ml-4 mr-4'>
           <p className='text-slate-800 sm:text-left text-center sm:text-2xl text-md'>Our platform provides an efficient solution for managing merchants with ease. Whether you need to create, view, update, or delete merchant information, our system streamlines the process. Additionally, you can monitor and evaluate merchant bids, ensuring optimal decision-making and transparency. Simplify your business operations and stay in control with our powerful management tools.</p>
         </div>
