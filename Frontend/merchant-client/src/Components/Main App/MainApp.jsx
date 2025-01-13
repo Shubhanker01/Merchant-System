@@ -1,11 +1,12 @@
 import React from 'react'
+import NavbarApp from '../Header/NavbarApp'
 
 function MainApp() {
-  return (
-    <div>
-        This is the main app
-    </div>
-  )
+    return (
+        <div>
+            <NavbarApp />
+        </div>
+    )
 }
 
 export default MainApp
