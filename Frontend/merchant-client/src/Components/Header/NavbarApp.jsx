@@ -20,8 +20,8 @@ function NavbarApp() {
                 <nav className="bg-slate-900 p-4">
                     <div className="container mx-auto flex justify-between items-center">
                         <div className='flex items-center'>
-                            <img width="48" height="48" src="https://img.icons8.com/color/48/bid.png" alt="bid" />
-                            <h1 className="text-white font-bold sm:text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer text-base">Merchant Management System </h1>
+                            <img className='' src="https://img.icons8.com/color/48/bid.png" alt="bid" />
+                            <h1 className="text-white font-bold sm:text-2xl mb-4 lg:mb-0 hover:text-orange-600 hover:cursor-pointer text-base self-center pt-[5px]">Merchant Management System </h1>
                         </div>
 
                         {/* Hamburger menu for small screens */}
@@ -43,12 +43,12 @@ function NavbarApp() {
                                     <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600">Contact Me</a>
                                     <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2'>Logout</button>
                                 </div> :
-                                <div className='fixed w-full h-full z-10 bg-slate-900 transition duration-500 delay-150 ease-in-out top-[40px]'>
-                                    <a href="/" className="text-white text-base px-4 py-2 hover:text-orange-600 ">Home</a>
-                                    <a href="#Projects" className="text-white text-base  px-4 py-2  hover:text-orange-600">Message</a>
-                                    <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600">About</a>
-                                    <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600">Contact Me</a>
-                                    <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2'>Logout</button>
+                                <div className='fixed flex flex-col w-[104%] h-full z-10 bg-slate-900 transition duration-500 delay-150 ease-in-out top-[70px] left-[-10px]'>
+                                    <a href="/" className="text-white text-base px-4 py-2 hover:text-orange-600 self-center">Home</a>
+                                    <a href="#Projects" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Message</a>
+                                    <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">About</a>
+                                    <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Contact Me</a>
+                                    <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2 self-center'>Logout</button>
                                 </div>
                         }
 
