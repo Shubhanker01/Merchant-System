@@ -3,7 +3,7 @@ import React from 'react'
 function BidsTable() {
     return (
         <div className='m-[100px_auto]'>
-            <table className='table-auto text-base text-gray-200 bg-gray-900 rounded-md ml-auto mr-auto'>
+            <table className='table-auto text-base text-gray-200 bg-gray-900 rounded-md ml-auto mr-auto sm:w-[70%] w-[50%]'>
                 <thead className=''>
                     <tr className=''>
                         <th className='px-4 py-4'>Sr No</th>
