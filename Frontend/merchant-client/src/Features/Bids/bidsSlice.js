@@ -7,7 +7,7 @@ export const bidsSlice = createSlice({
             id: 1,
             bidderName: 'bidder 1',
             title: 'Auction on building',
-            price: 'Rs 101',
+            price: 400,
             openingDate: '10-11-2025',
             closingDate: '10-11-2026'
         }
@@ -19,4 +19,5 @@ export const bidsSlice = createSlice({
     }
 })
 
+export const { addBids } = bidsSlice.actions
 export default bidsSlice.reducer

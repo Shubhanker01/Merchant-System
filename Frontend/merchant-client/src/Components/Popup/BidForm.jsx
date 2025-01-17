@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { addBids } from '../../Features/Bids/bidsSlice'
+import { toast } from 'react-toastify'
 
 function BidForm({ modal, openModal }) {
-    const handleSubmit = () => {
-
+    let id = 1000
+    const dispatch = useDispatch()
+    const [form, setForm] = useState({ id: id++, bidderName: 'bidder1', title: "", price: 0, openingDate: "", closingDate: "" })
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(addBids(form))
+        toast.success('Successfully added bid', { position: 'top-center' })
+        setForm({ ...form, title: "", price: 0, openingDate: "", closingDate: "" })
+        openModal(false)
     }
     return (
 
@@ -27,19 +37,19 @@ function BidForm({ modal, openModal }) {
                         <div className="grid gap-4 mb-4 grid-cols-2">
                             <div className="col-span-2">
                                 <label htmlFor="title" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                                <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Add Title" required="" />
+                                <input type="text" name="title" id="title" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Add Title" required={true} value={form.title} onChange={e => { setForm({ ...form, title: e.target.value }) }} />
                             </div>
                             <div className="col-span-2">
                                 <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                <input type="number" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Rs2999" required="" min="0" />
+                                <input type="number" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Rs2999" required={true} min="0" value={form.price} onChange={e => { setForm({ ...form, price: e.target.value }) }} />
                             </div>
                             <div className="col-span-2 sm:col-span-1">
                                 <label htmlFor="opening-date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Opening Date</label>
-                                <input type='date' id='opening-date' name='opening-date' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"></input>
+                                <input type='date' id='opening-date' name='opening-date' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={form.openingDate} onChange={e => { setForm({ ...form, openingDate: e.target.value }) }} required={true}></input>
                             </div>
                             <div className="col-span-2 sm:col-span-1">
                                 <label htmlFor="closing-date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Closing Date</label>
-                                <input type='date' id='closing-date' name='closing-date' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"></input>
+                                <input type='date' id='closing-date' name='closing-date' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={form.closingDate} onChange={e => { setForm({ ...form, closingDate: e.target.value }) }} required={true}></input>
                             </div>
                         </div>
                         <button type="submit" className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
