@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
+import { useParams, NavLink } from 'react-router-dom'
 
 function NavbarApp() {
+    let { userId } = useParams()
     const [toggle, setToggle] = useState(false)
 
     const handleToggle = () => {
@@ -37,17 +39,17 @@ function NavbarApp() {
                         {
                             toggle == false ?
                                 <div className='hidden sm:flex lg:space-x-4 lg:mt-0 mt-4 items-center text-xl'>
-                                    <a href="/" className="text-white text-base px-4 py-2 hover:text-orange-600 ">Home</a>
-                                    <a href="#Projects" className="text-white text-base  px-4 py-2  hover:text-orange-600">Message</a>
-                                    <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600">About</a>
-                                    <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600">Contact Me</a>
+                                    <NavLink to={`/main-app/${userId}`} className={`text-white text-base px-4 py-2 hover:text-orange-600 `}>Home</NavLink>
+                                    <NavLink to="/message" className="text-white text-base  px-4 py-2  hover:text-orange-600">Message</NavLink>
+                                    <NavLink to="/about" className="text-white text-base  px-4 py-2  hover:text-orange-600">About</NavLink>
+                                    <NavLink to="/contact" className="text-white text-base  px-4 py-2  hover:text-orange-600">Contact Me</NavLink>
                                     <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2'>Logout</button>
                                 </div> :
                                 <div className='fixed z-10 flex flex-col w-[104%] h-full z-10 bg-slate-900 transition duration-500 delay-150 ease-in-out top-[70px] left-[-10px]'>
-                                    <a href="/" className="text-white text-base px-4 py-2 hover:text-orange-600 self-center">Home</a>
-                                    <a href="#Projects" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Message</a>
-                                    <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">About</a>
-                                    <a href="/" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Contact Me</a>
+                                    <NavLink to={`/main-app/${userId}`} className="text-white text-base px-4 py-2 hover:text-orange-600 self-center">Home</NavLink>
+                                    <NavLink to="/message" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Message</NavLink>
+                                    <NavLink to="/about" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">About</NavLink>
+                                    <NavLink to="/contact" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Contact Me</NavLink>
                                     <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2 self-center'>Logout</button>
                                 </div>
                         }
