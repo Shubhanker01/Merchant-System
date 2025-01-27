@@ -7,7 +7,7 @@ const bidsSchema = new mongoose.Schema({
     },
     title: {
         type: String,
-        min: [6, "Minimum length of title should be 6"]
+        minLength: [5, 'Title should be atleast 5 characters long'],
     },
     price: {
         type: String,

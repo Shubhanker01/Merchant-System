@@ -20,9 +20,18 @@ const addBid = async (req, res) => {
 
         res.send('Bid added successfully')
     } catch (error) {
+        res.status(500).send('Internal Server Error')
+    }
+}
+
+// controller to show all bids
+const showAllBids = async (req, res) => {
+    try {
+        const bids = await Bids.find({})
+        res.send(bids)
+    } catch (error) {
         console.log(error)
     }
 }
 
-
-module.exports = { addBid }
+module.exports = { addBid, showAllBids }
