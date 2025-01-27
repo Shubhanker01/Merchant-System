@@ -21,6 +21,8 @@ app.use('/api/merchants', require('./routes/merchant login/merchantLogin'))
 app.use('/api/merchant/password', require('./routes/merchant password/passwordReset'))
 // forgot password route
 app.use('/api/merchant', require('./routes/merchant password/forgotPassword'))
+// bids routes
+app.use('/api/bids', require('./routes/bids/bids.routes'))
 
 app.listen(port, () => {
     console.log("Example app listening on port ", port)

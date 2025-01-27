@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const bidsSchema = new mongoose.Schema({
-    biddername: {
+    bidderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "merchant"
     },
@@ -23,4 +23,5 @@ const bidsSchema = new mongoose.Schema({
     }
 })
 
-export const Bids = mongoose.model('bids', bidsSchema)
+const Bids = mongoose.model('bids', bidsSchema)
+module.exports = { Bids }

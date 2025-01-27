@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { userLogin } from '../../Async logic/merchantThunk'
 import { toast } from 'react-toastify'
 import LoadingBar from 'react-top-loading-bar'
+import { setMerchant } from '../../Features/Merchant/merchantSlice'
 
 function Login() {
   let [progress, setProgress] = useState(0)
@@ -16,6 +17,7 @@ function Login() {
     e.preventDefault()
     dispatch(userLogin({ email: email, password: password })).unwrap().then((res) => {
       if (res != undefined) {
+        dispatch(setMerchant({ email: email }))
         setProgress(60)
         toast.success(res.message, { position: 'top-center' })
         setProgress(100)

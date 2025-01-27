@@ -8,13 +8,11 @@ import { userLogin } from '../../Async logic/merchantThunk'
 export const merchantSlice = createSlice({
     name: 'merchant',
     initialState: {
-        username: '',
         email: '',
     },
     reducers: {
         setMerchant: (state, action) => {
-            state.username = action.payload.username,
-                state.email = action.payload.email
+            state.email = action.payload.email
         }
     },
     extraReducers: (builder) => {

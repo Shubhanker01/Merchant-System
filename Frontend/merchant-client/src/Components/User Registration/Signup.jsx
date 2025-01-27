@@ -19,9 +19,9 @@ function Signup() {
         e.preventDefault()
         setProgress(50)
         dispatch(registerUserEmail({ name: username, email: email })).unwrap().then((response) => {
-            dispatch(setMerchant({ username: username, email: email }))
+            dispatch(setMerchant({ email: email }))
             toast(response, { position: 'top-center', className: 'bg-sky-950 text-slate-100' })
-            setProgress(progess+50)
+            setProgress(progess + 50)
             navigate('/signup/email-verify')
         }).catch((error) => {
             toast(error.message, { position: 'top-center', className: 'bg-red-600 text-slate-100' })
