@@ -5,11 +5,12 @@ import { showAllBids } from '../../Async logic/bidsThunk'
 import { useEffect } from 'react'
 
 function BidsTable() {
+    const dispatch = useDispatch()
     useEffect(() => {
         dispatch(showAllBids())
     }, [])
-    const state = useSelector(state => state.bids)
-    const dispatch = useDispatch()
+    const state = useSelector(state => state.bids.bids)
+
 
     console.log(state)
     return (

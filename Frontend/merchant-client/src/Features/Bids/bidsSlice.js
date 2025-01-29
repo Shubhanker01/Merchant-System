@@ -3,7 +3,9 @@ import { showAllBids } from "../../Async logic/bidsThunk";
 
 export const bidsSlice = createSlice({
     name: 'bids',
-    initialState: [],
+    initialState: {
+        bids: []
+    },
     reducers: {
         addBids: (state, action) => {
             state.push(action.payload)
@@ -11,7 +13,7 @@ export const bidsSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(showAllBids.fulfilled, (state, action) => {
-            state = action.payload
+            state.bids = action.payload
         })
     }
 })
