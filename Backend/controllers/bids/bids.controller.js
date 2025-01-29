@@ -11,7 +11,7 @@ const addBid = async (req, res) => {
         const closingDate = new Date(req.body.closingDate)
 
         await Bids.create({
-            biddername: bidderName,
+            bidderName: bidderName,
             title: title,
             price: price,
             openingDate: openingDate,

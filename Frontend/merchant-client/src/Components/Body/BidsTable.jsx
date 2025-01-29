@@ -1,7 +1,17 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { showAllBids } from '../../Async logic/bidsThunk'
+import { useEffect } from 'react'
+
 function BidsTable() {
+    useEffect(() => {
+        dispatch(showAllBids())
+    }, [])
     const state = useSelector(state => state.bids)
+    const dispatch = useDispatch()
+
+    console.log(state)
     return (
         <div className='m-[100px_auto]'>
             <table className='table-auto sm:text-base text-sm text-gray-200 bg-gray-900 rounded-md ml-auto mr-auto sm:w-[70%] w-[75%]'>

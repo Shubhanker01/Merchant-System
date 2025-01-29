@@ -9,10 +9,12 @@ export const merchantSlice = createSlice({
     name: 'merchant',
     initialState: {
         email: '',
+        username: ''
     },
     reducers: {
         setMerchant: (state, action) => {
             state.email = action.payload.email
+            state.username = action.payload.username
         }
     },
     extraReducers: (builder) => {

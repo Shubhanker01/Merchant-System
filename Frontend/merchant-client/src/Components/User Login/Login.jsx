@@ -17,7 +17,7 @@ function Login() {
     e.preventDefault()
     dispatch(userLogin({ email: email, password: password })).unwrap().then((res) => {
       if (res != undefined) {
-        dispatch(setMerchant({ email: email }))
+        dispatch(setMerchant({ email: email, username: res.username }))
         setProgress(60)
         toast.success(res.message, { position: 'top-center' })
         setProgress(100)
