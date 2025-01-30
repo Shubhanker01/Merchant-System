@@ -17,13 +17,12 @@ export const showAllBids = createAsyncThunk(
 
 export const addBid = createAsyncThunk(
     'bids/addbid',
-    async function (obj, id) {
+    async function (obj) {
         try {
             let cookie = getCookie()
             let response = await axios.post('http://localhost:8000/api/bids/v1/addbid', {
-                bidderId: id,
                 title: obj.title,
-                price: obj.price,
+                price: `Rs ${String(obj.price)}`,
                 openingDate: obj.openingDate,
                 closingDate: obj.closingDate
             }, {

@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { addBids } from '../../Features/Bids/bidsSlice'
 import { toast } from 'react-toastify'
 import compareDate from '../../utils/compareDate.js'
+import { addBid } from '../../Async logic/bidsThunk.js'
 
 function BidForm({ modal, openModal }) {
-    let id = 1000
     const dispatch = useDispatch()
-    const [form, setForm] = useState({ id: id++, bidderName: 'bidder1', title: "", price: 0, openingDate: "", closingDate: "" })
+    const [form, setForm] = useState({ title: "", price: 0, openingDate: "", closingDate: "" })
     const handleSubmit = (e) => {
         e.preventDefault()
         if (!compareDate(form.openingDate, form.closingDate)) {
             toast.error('Closing date should not be earlier than opening date', { position: 'top-center' })
             return
         }
-        dispatch(addBids(form))
-        toast.success('Successfully added bid', { position: 'top-center' })
+        dispatch(addBid(form)).unwrap().then((res) => {
+            toast.success(res, { position: 'top-center' })
+        }).catch((err) => {
+            console.log(err);
+            toast.error('Error adding bid', { position: 'top-center' })
+        })
         setForm({ ...form, title: "", price: 0, openingDate: "", closingDate: "" })
         openModal(false)
     }
