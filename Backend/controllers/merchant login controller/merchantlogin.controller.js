@@ -19,7 +19,7 @@ const merchantLogin = async (req, res) => {
                 return res.status(401).send("Incorrect Password")
             }
             else {
-                let token = generateToken(req.body.email)
+                let token = generateToken(req.body.email, user.name)
                 return res.status(200).send({ token: token, message: "User successfully logged in", userId: user._id, username: user.name })
             }
         }

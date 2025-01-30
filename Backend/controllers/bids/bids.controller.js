@@ -1,10 +1,11 @@
 // controller to add a bid
 
 const { Bids } = require('../../models/bids.model')
+const convertDateToString = require('../../utils/dateToString')
 
 const addBid = async (req, res) => {
     try {
-        const bidderName = req.body.bidderName
+        const bidderName = req.user.name
         const title = req.body.title
         const price = req.body.price
         const openingDate = new Date(req.body.openingDate)
@@ -27,8 +28,22 @@ const addBid = async (req, res) => {
 // controller to show all bids
 const showAllBids = async (req, res) => {
     try {
+        let result = [];
         const bids = await Bids.find({})
-        res.send(bids)
+        if (bids.length !== 0) {
+            bids.map((bid) => {
+                result.push({
+                    id: bid._id,
+                    bidderName: bid.bidderName,
+                    title: bid.title,
+                    price: bid.price,
+                    openingDate: convertDateToString(bid.openingDate),
+                    closingDate: convertDateToString(bid.closingDate)
+                })
+            })
+        }
+        res.send(result)
+
     } catch (error) {
         console.log(error)
     }
