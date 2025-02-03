@@ -11,7 +11,7 @@ function BidsTable() {
     useEffect(() => {
         dispatch(showAllBids())
     }, [])
-
+    
     return (
         <div className='m-[100px_auto]'>
             <table className='table-auto sm:text-base text-sm text-gray-200 bg-gray-900 rounded-md ml-auto mr-auto sm:w-[70%] w-[85%]'>

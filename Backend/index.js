@@ -4,6 +4,15 @@ const port = 8000
 const cors = require('cors')
 const connectToMongo = require('./db/connectToDb')
 const cookieParser = require('cookie-parser')
+const { createServer } = require('node:http')
+const server = createServer(app)
+const { Server } = require('socket.io')
+
+const io = new Server(server)
+console.log(io)
+io.on('connection', (socket) => {
+    console.log("A user connected")
+})
 
 app.use(cors({
     origin: 'http://localhost:5173',
@@ -24,7 +33,7 @@ app.use('/api/merchant', require('./routes/merchant password/forgotPassword'))
 // bids routes
 app.use('/api/bids', require('./routes/bids/bids.routes'))
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log("Example app listening on port ", port)
 })
 
