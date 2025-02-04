@@ -8,9 +8,14 @@ const { createServer } = require('node:http')
 const server = createServer(app)
 const { Server } = require('socket.io')
 
-const io = new Server(server)
+const io = new Server(server, {
+    cors: {
+        origin: '*'
+    }
+})
 io.on('connection', (socket) => {
-    console.log("A user connected")
+    console.log("Socket is active to be connected")
+    socket.emit("msg", "This message is for client")
 })
 
 app.use(cors({
