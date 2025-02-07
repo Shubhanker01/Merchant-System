@@ -2,22 +2,32 @@ import React, { useEffect, useState } from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import AddBid from '../Footer/AddBid'
 import BidsTable from '../Body/BidsTable'
-import io from 'socket.io-client'
 import { toast } from 'react-toastify'
-
-const socket = io('http://localhost:8000')
-socket.on('msg', (arg) => {
-    console.log(arg)
-    toast.info(arg)
-})
+import { socket } from '../../socket'
 
 function MainApp() {
     const [message, setMessage] = useState('')
-    // useEffect(() => {
-    //     socket.on("msg", (arg) => {
-    //         console.log(arg)
-    //     })
-    // })
+    useEffect(() => {
+        socket.connect()
+        return () => {
+            socket.disconnect()
+        }
+    }, [])
+    useEffect(() => {
+        socket.on("msg", (arg) => {
+            toast.info(arg)
+            console.log(arg)
+        })
+        socket.on('bidadded', (arg) => {
+            toast.info(arg)
+        })
+        return () => {
+            socket.off('msg', () => {
+                console.log('disconnected')
+            })
+        }
+
+    }, [])
     return (
         <div>
             <NavbarApp />

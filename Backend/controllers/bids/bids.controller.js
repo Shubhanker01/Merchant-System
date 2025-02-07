@@ -18,7 +18,7 @@ const addBid = async (req, res) => {
             openingDate: openingDate,
             closingDate: closingDate
         })
-
+        req.io.emit('bidadded', `Bid has been added by ${bidderName}`)
         res.send('Bid added successfully')
     } catch (error) {
         res.status(500).send('Internal Server Error')

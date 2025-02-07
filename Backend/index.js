@@ -17,6 +17,11 @@ io.on('connection', (socket) => {
     console.log("Socket is active to be connected")
     socket.emit("msg", "This message is for client")
 })
+// creating a middleware to use io in routes
+app.use((req, res, next) => {
+    req.io = io
+    next()
+})
 
 app.use(cors({
     origin: 'http://localhost:5173',
