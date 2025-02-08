@@ -6,7 +6,6 @@ import { toast } from 'react-toastify'
 import { socket } from '../../socket'
 
 function MainApp() {
-    const [message, setMessage] = useState('')
     useEffect(() => {
         socket.connect()
         return () => {
