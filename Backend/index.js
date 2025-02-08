@@ -12,7 +12,7 @@ const { Server } = require('socket.io')
 
 const io = new Server(server, {
     cors: {
-        origin: '*'
+        origin: 'https://merchant-system-frontend.vercel.app/'
     }
 })
 io.on('connection', (socket) => {
