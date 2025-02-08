@@ -6,7 +6,7 @@ export const registerUserEmail = createAsyncThunk(
     'register/email',
     async ({ name, email }) => {
         try {
-            let response = await axios.post('http://localhost:8000/api/merchant/registration', {
+            let response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/merchant/registration`, {
                 name: name,
                 email: email
             }, {
@@ -26,7 +26,7 @@ export const verifyUserEmail = createAsyncThunk(
     'verify/email',
     async ({ email, otp }) => {
         try {
-            let response = await axios.post('http://localhost:8000/api/merchant/verify', {
+            let response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/merchant/verify`, {
                 email: email,
                 otp: otp
             }, {
@@ -47,7 +47,7 @@ export const setPassword = createAsyncThunk(
     'password/set',
     async ({ password, token }) => {
         try {
-            let response = await axios.post('http://localhost:8000/api/merchant/setpassword', {
+            let response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/merchant/setpassword`, {
                 password: password
             }, {
                 headers: {
@@ -67,7 +67,7 @@ export const userLogin = createAsyncThunk(
     'user/login',
     async ({ email, password }) => {
         try {
-            let response = await axios.post('http://localhost:8000/api/merchants/login', {
+            let response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/merchants/login`, {
                 email: email,
                 password: password
             }, {

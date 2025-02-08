@@ -2,11 +2,12 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import getCookie from "../utils/getCookie";
 
+
 export const showAllBids = createAsyncThunk(
     'bids/showallbids',
     async function () {
         try {
-            let response = await axios.get('http://localhost:8000/api/bids/v1/showallbids')
+            let response = await axios.get(`${import.meta.env.VITE_PROD_SERVER}/api/bids/v1/showallbids`)
             let data = await response.data
             return data
         } catch (error) {
@@ -20,7 +21,7 @@ export const addBid = createAsyncThunk(
     async function (obj) {
         try {
             let cookie = getCookie()
-            let response = await axios.post('http://localhost:8000/api/bids/v1/addbid', {
+            let response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/bids/v1/addbid`, {
                 title: obj.title,
                 price: `Rs ${String(obj.price)}`,
                 openingDate: obj.openingDate,
