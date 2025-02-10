@@ -9,7 +9,10 @@ function Message() {
 
     const sendMessage = () => {
         if (message.trim === '') return
-        setMessages([...messages, { text: message, timestamp: new Date() }])
+        else {
+            setMessages([...messages, { id: nanoid(), text: message, timestamp: new Date() }])
+        }
+
         setMessage('')
     }
     useEffect(() => {
@@ -19,9 +22,9 @@ function Message() {
         <>
             <NavbarApp />
             <div className="w-full fixed mx-auto my-6 p-4 bg-gray-800 h-full">
-                <div className="fixed top-[50px] h-[75%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto w-[70%]">
+                <div className="fixed top-[50px] h-[75%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto w-[90%]">
                     {messages.map((msg) => (
-                        <div key={nanoid()} className="p-2 border-b">
+                        <div key={msg.id} className="p-2 border-b">
                             <p className="text-gray-100">{msg.text}</p>
                             <span className="text-xs text-gray-100">
                                 {msg.timestamp.toLocaleTimeString()}
@@ -31,7 +34,7 @@ function Message() {
                     <div ref={messageEndRef}></div>
                 </div>
 
-                <div className="fixed w-[70%] bottom-[60px] flex gap-2">
+                <div className="fixed sm:w-[70%] w-[90%] sm:bottom-[60px] bottom-[25px] flex gap-2">
                     <input
                         type="text"
                         className="flex-1 text-white p-2 border bg-slate-700 rounded"
@@ -40,8 +43,8 @@ function Message() {
                         onChange={(e) => setMessage(e.target.value)}
                     />
                     <button
-                        className="bg-blue-500 text-white px-4 py-2 rounded"
-                        onClick={sendMessage}
+                        className="bg-blue-500 text-white px-4 py-2 rounded disabled"
+                        onClick={sendMessage} disabled={message === '' ? true : false}
                     >
                         Send
                     </button>
