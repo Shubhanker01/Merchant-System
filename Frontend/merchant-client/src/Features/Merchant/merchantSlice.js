@@ -6,6 +6,7 @@ import { setPassword } from '../../Async logic/merchantThunk'
 import { userLogin } from '../../Async logic/merchantThunk'
 import { toast } from 'react-toastify'
 var id;
+
 export const merchantSlice = createSlice({
     name: 'merchant',
     initialState: {

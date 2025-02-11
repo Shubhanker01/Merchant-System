@@ -9,7 +9,6 @@ const { createServer } = require('node:http')
 const server = createServer(app)
 const { Server } = require('socket.io')
 
-
 const io = new Server(server, {
     cors: {
         origin: ['https://merchant-system-frontend.vercel.app', 'http://localhost:5173']
@@ -19,6 +18,8 @@ io.on('connection', (socket) => {
     console.log("Socket is active to be connected")
     socket.emit("msg", "This message is for client")
 })
+
+
 // creating a middleware to use io in routes
 app.use((req, res, next) => {
     req.io = io
@@ -46,3 +47,4 @@ server.listen(port, () => {
 })
 
 connectToMongo()
+module.exports = { io }
