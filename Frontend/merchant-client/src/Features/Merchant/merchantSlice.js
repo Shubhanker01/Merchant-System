@@ -4,7 +4,8 @@ import { registerUserEmail } from '../../Async logic/merchantThunk'
 import { verifyUserEmail } from '../../Async logic/merchantThunk'
 import { setPassword } from '../../Async logic/merchantThunk'
 import { userLogin } from '../../Async logic/merchantThunk'
-
+import { toast } from 'react-toastify'
+var id;
 export const merchantSlice = createSlice({
     name: 'merchant',
     initialState: {
@@ -23,7 +24,12 @@ export const merchantSlice = createSlice({
         }),
             builder.addCase(verifyUserEmail.fulfilled),
             builder.addCase(setPassword.fulfilled),
-            builder.addCase(userLogin.fulfilled)
+            builder.addCase(userLogin.pending, () => {
+                id = toast.loading("Please wait......", { position: 'top-center' })
+            }),
+            builder.addCase(userLogin.fulfilled, () => {
+                toast.dismiss(id)
+            })
     }
 })
 
