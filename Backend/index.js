@@ -8,19 +8,17 @@ const cookieParser = require('cookie-parser')
 const { createServer } = require('node:http')
 const server = createServer(app)
 const { Server } = require('socket.io')
+const { initializeSocketio } = require('../Backend/socket/main')
 
 const io = new Server(server, {
     cors: {
         origin: ['https://merchant-system-frontend.vercel.app', 'http://localhost:5173']
     }
 })
-io.on('connection', (socket) => {
-    console.log("Socket is active to be connected")
-    socket.emit("msg", "This message is for client")
-})
-
-
+initializeSocketio(io)
+app.set('io', io)
 // creating a middleware to use io in routes
+
 app.use((req, res, next) => {
     req.io = io
     next()
@@ -47,4 +45,3 @@ server.listen(port, () => {
 })
 
 connectToMongo()
-module.exports = { io }
