@@ -40,6 +40,9 @@ app.use('/api/merchant', require('./routes/merchant password/forgotPassword'))
 // bids routes
 app.use('/api/bids', require('./routes/bids/bids.routes'))
 
+// group chat routes
+app.use('/api/chats',require('./routes/chat room/chatRoom.routes'))
+
 server.listen(port, () => {
     console.log("Example app listening on port ", port)
 })
