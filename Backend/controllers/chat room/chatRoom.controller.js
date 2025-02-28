@@ -1,6 +1,6 @@
 const { groupChat } = require('../../models/groupchat.mode')
 const { Merchant } = require('../../models/merchant.model')
-const mongoose = require('mongoose')
+
 // create a new group chat
 const createGroupChat = async (req, res) => {
     try {
@@ -39,7 +39,20 @@ const addParticipants = async (req, res) => {
 }
 
 // delete chat group
+const deleteGroupChat = async (req, res) => {
+    try {
+        let id = req.body.id
+        let chat = await groupChat.findOne({ _id: id })
+        if (!chat) {
+            return res.status(400).send("Cannot find group chat")
+        }
+        await groupChat.findByIdAndDelete(id)
+        return res.send("Group successfully deleted")
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
-module.exports = { createGroupChat, addParticipants }
+module.exports = { createGroupChat, addParticipants, deleteGroupChat }
 
