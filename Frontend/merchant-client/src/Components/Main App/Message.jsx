@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import { nanoid } from 'nanoid'
+import CreateChat from './CreateChat'
 
 function Message() {
     let [messages, setMessages] = useState([])
@@ -50,6 +51,7 @@ function Message() {
                     </button>
                 </div>
             </div>
+            <CreateChat/>
         </>
     )
 }
