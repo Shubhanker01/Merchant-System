@@ -4,6 +4,7 @@ import Participants from '../Main App/Participants'
 
 function CreateChatModal({ modal, setModal }) {
     const [selectedParticipants, setSelectedParticipants] = useState([])
+    const [search,setSearch] = useState("")
     return (
         <>
             <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>
@@ -27,7 +28,7 @@ function CreateChatModal({ modal, setModal }) {
                             <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' placeholder='Enter group name...'></input>
                         </div>
                         <div>
-                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' placeholder='Search Participants...'></input>
+                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search Participants...'></input>
                         </div>
                         <div className='flex m-4'>
                             <Users color="#f4f1f1" />
