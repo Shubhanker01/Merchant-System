@@ -1,10 +1,24 @@
 import React, { useState } from 'react'
 import { Users } from 'lucide-react'
 import Participants from '../Main App/Participants'
+import Dropdown from './Dropdown'
+import queryUser from '../../Async logic/queryUser'
 
 function CreateChatModal({ modal, setModal }) {
     const [selectedParticipants, setSelectedParticipants] = useState([])
-    const [search,setSearch] = useState("")
+    const [search, setSearch] = useState("")
+    const [results,setResults] = useState([])
+
+    const handleChange = (e) => {
+        setSearch(e.target.value)
+        if (e.target.value != '') {
+            queryUser(e.target.value).then((res) => {
+                setResults(res)
+            }).catch((err) => {
+                console.log(err)
+            })
+        }
+    }
     return (
         <>
             <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>
@@ -28,14 +42,20 @@ function CreateChatModal({ modal, setModal }) {
                             <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' placeholder='Enter group name...'></input>
                         </div>
                         <div>
-                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search Participants...'></input>
+                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={search} onChange={handleChange} placeholder='Search Participants...'></input>
+
+                            <Dropdown names={results} search={search} selectedParticipants={selectedParticipants} setSelectedParticipants={setSelectedParticipants} />
                         </div>
                         <div className='flex m-4'>
                             <Users color="#f4f1f1" />
                             <h2 className='text-gray-100 font-bold ml-4'>Selected Participants</h2>
                         </div>
                         <div className='m-4 grid grid-cols-4'>
-                            
+                            {
+                                selectedParticipants.map((name) => {
+                                    return <Participants name={name} />
+                                })
+                            }
                         </div>
                         <div className='p-5'>
                             <p className='text-gray-100'>Are you sure you want to create a new group?</p>
