@@ -50,13 +50,14 @@ function CreateChatModal({ modal, setModal }) {
                             <Users color="#f4f1f1" />
                             <h2 className='text-gray-100 font-bold ml-4'>Selected Participants</h2>
                         </div>
-                        <div className='m-4 grid grid-cols-4'>
+                        {/* <div className='m-4 grid grid-cols-4'>
                             {
-                                selectedParticipants.map((name) => {
-                                    return <Participants name={name} />
+                                selectedParticipants.map((user) => {
+                                    return <Participants key={user.id} name={user.name} selectedParticipants={selectedParticipants} setSelectedParticipants={setSelectedParticipants}/>
                                 })
                             }
-                        </div>
+                        </div> */}
+                        <Participants selectedParticipants={selectedParticipants} setSelectedParticipants={setSelectedParticipants}/>
                         <div className='p-5'>
                             <p className='text-gray-100'>Are you sure you want to create a new group?</p>
                             <button type="button" className="mt-4 text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
