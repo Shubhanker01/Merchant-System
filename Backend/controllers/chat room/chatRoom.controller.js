@@ -6,6 +6,7 @@ const createGroupChat = async (req, res) => {
     try {
         let email = req.body.email
         let name = req.body.name
+        let participants = req.body.participants
         let admin = await Merchant.findOne({ email: email })
         if (!admin) {
             return res.status(400).send("Some error occured")
@@ -13,7 +14,7 @@ const createGroupChat = async (req, res) => {
         await groupChat.create({
             name: name,
             admin: admin._id,
-            participants: admin._id
+            participants: [admin._id, ...participants]
         })
         return res.send("Group successfully created")
     } catch (error) {

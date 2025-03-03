@@ -3,11 +3,14 @@ import { Users } from 'lucide-react'
 import Participants from '../Main App/Participants'
 import Dropdown from './Dropdown'
 import queryUser from '../../Async logic/queryUser'
+import createGroupChat from '../../Async logic/createChatGroup'
+import { toast } from 'react-toastify'
 
 function CreateChatModal({ modal, setModal }) {
     const [selectedParticipants, setSelectedParticipants] = useState([])
     const [search, setSearch] = useState("")
-    const [results,setResults] = useState([])
+    const [results, setResults] = useState([])
+    const [groupName, setGroupName] = useState("")
 
     const handleChange = (e) => {
         setSearch(e.target.value)
@@ -18,6 +21,21 @@ function CreateChatModal({ modal, setModal }) {
                 console.log(err)
             })
         }
+    }
+
+    const createChat = () => {
+        if (!groupName) {
+            toast.error("Please enter group name", { position: 'top-center' })
+            return
+        }
+        createGroupChat(selectedParticipants, groupName).then((res) => {
+            toast.success(res, { position: 'top-center' })
+        }).catch(err => {
+            console.log(err)
+        })
+        setModal(false)
+        setSelectedParticipants([])
+        setGroupName("")
     }
     return (
         <>
@@ -39,7 +57,7 @@ function CreateChatModal({ modal, setModal }) {
 
                         </div>
                         <div>
-                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' placeholder='Enter group name...'></input>
+                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={groupName} onChange={(e) => { setGroupName(e.target.value) }} placeholder='Enter group name...'></input>
                         </div>
                         <div>
                             <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={search} onChange={handleChange} placeholder='Search Participants...'></input>
@@ -50,10 +68,10 @@ function CreateChatModal({ modal, setModal }) {
                             <Users color="#f4f1f1" />
                             <h2 className='text-gray-100 font-bold ml-4'>Selected Participants</h2>
                         </div>
-                        <Participants selectedParticipants={selectedParticipants} setSelectedParticipants={setSelectedParticipants}/>
+                        <Participants selectedParticipants={selectedParticipants} setSelectedParticipants={setSelectedParticipants} />
                         <div className='p-5'>
                             <p className='text-gray-100'>Are you sure you want to create a new group?</p>
-                            <button type="button" className="mt-4 text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            <button onClick={createChat} type="button" className="mt-4 text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 Create
                             </button>
                         </div>
