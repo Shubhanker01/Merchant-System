@@ -1,5 +1,6 @@
 const { groupChat } = require('../../models/groupchat.mode')
 const { Merchant } = require('../../models/merchant.model')
+const mongoose = require('mongoose')
 
 // create a new group chat
 const createGroupChat = async (req, res) => {
@@ -54,6 +55,21 @@ const deleteGroupChat = async (req, res) => {
     }
 }
 
-
-module.exports = { createGroupChat, addParticipants, deleteGroupChat }
+// show group that the user is part of
+const showGroups = async (req, res) => {
+    try {
+        let id = req.body.id
+        let groups = await groupChat.aggregate([
+            {
+                $match: {
+                    participants: { $elemMatch: { $eq: new mongoose.Types.ObjectId(id) } }
+                }
+            }
+        ])
+        res.json(groups)
+    } catch (error) {
+        console.log(error)
+    }
+}
+module.exports = { createGroupChat, addParticipants, deleteGroupChat, showGroups }
 
