@@ -62,7 +62,7 @@ const showGroups = async (req, res) => {
         let groups = await groupChat.aggregate([
             {
                 $match: {
-                    participants: { $elemMatch: { $eq: new mongoose.Types.ObjectId(id) } }
+                    participants: { $elemMatch: { $eq: new mongoose.Types.ObjectId(`${id}`) } }
                 }
             }
         ])
