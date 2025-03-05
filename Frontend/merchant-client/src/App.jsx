@@ -7,7 +7,7 @@ import Signup from './Components/User Registration/Signup'
 import EmailVerification from './Components/User Registration/EmailVerification'
 import PasswordSet from './Components/User Registration/PasswordSet'
 import MainApp from './Components/Main App/MainApp'
-import Message from './Components/Main App/Message'
+import MessageApp from './Components/Main App/MessageApp'
 
 function App() {
 
@@ -25,7 +25,7 @@ function App() {
           </Route>
           <Route path='/main-app/:userId'>
             <Route index element={<MainApp />}></Route>
-            <Route path='message' element={<Message />}></Route>
+            <Route path='message' element={<MessageApp />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
