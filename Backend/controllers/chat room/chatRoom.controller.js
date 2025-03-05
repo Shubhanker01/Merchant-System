@@ -60,9 +60,31 @@ const showGroups = async (req, res) => {
     try {
         let id = req.body.id
         let groups = await groupChat.aggregate([
+            // only give the chat in which the user is part of
             {
                 $match: {
                     participants: { $elemMatch: { $eq: new mongoose.Types.ObjectId(`${id}`) } }
+                }
+            },
+            // join two collection merchant through participants
+            {
+                $lookup: {
+                    from: 'merchants',
+                    localField: 'participants',
+                    foreignField: '_id',
+                    as: 'members'
+                }
+            },
+            // filter in only name and email from foreign field
+            {
+                $project: {
+                    _id: 1,
+                    name: 1,
+                    admin: 1,
+                    members: {
+                        name: 1,
+                        email: 1
+                    }
                 }
             }
         ])

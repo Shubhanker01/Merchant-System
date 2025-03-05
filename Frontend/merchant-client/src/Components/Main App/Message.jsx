@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import { nanoid } from 'nanoid'
 import CreateChat from './CreateChat'
+import ShowGroups from './ShowGroups'
 
 function Message() {
     let [messages, setMessages] = useState([])
@@ -23,6 +24,7 @@ function Message() {
         <>
             <NavbarApp />
             <div className="w-full fixed mx-auto my-6 p-4 bg-gray-800 h-full">
+                <ShowGroups />
                 <div className="fixed top-[50px] h-[75%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto w-[90%]">
                     {messages.map((msg) => (
                         <div key={msg.id} className="p-2 border-b">
@@ -51,7 +53,7 @@ function Message() {
                     </button>
                 </div>
             </div>
-            <CreateChat/>
+            <CreateChat />
         </>
     )
 }
