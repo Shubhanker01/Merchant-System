@@ -58,7 +58,7 @@ const deleteGroupChat = async (req, res) => {
 // show group that the user is part of
 const showGroups = async (req, res) => {
     try {
-        let id = req.body.id
+        let id = req.params.id
         let groups = await groupChat.aggregate([
             // only give the chat in which the user is part of
             {

@@ -8,5 +8,5 @@ router.route('/addmembers').post(addParticipants)
 // route for deleting group
 router.route('/deletegroup').delete(deleteGroupChat)
 // route for getting group chats
-router.route('/getchats').get(showGroups)
+router.route('/getchats/:id').get(showGroups)
 module.exports = router

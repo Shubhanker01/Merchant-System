@@ -16,9 +16,7 @@ const createGroupChat = async (participants, groupName) => {
 }
 
 export const showGroupChat = async (id) => {
-    let response = await axios.get(`${import.meta.env.VITE_PROD_SERVER}/api/chats/getchats`, {
-        id: id
-    })
+    let response = await axios.get(`${import.meta.env.VITE_PROD_SERVER}/api/chats/getchats/${id}`)
     let data = await response.data
     return data
 }
