@@ -83,7 +83,8 @@ const showGroups = async (req, res) => {
                     admin: 1,
                     members: {
                         name: 1,
-                        email: 1
+                        email: 1,
+                        _id:1
                     }
                 }
             }

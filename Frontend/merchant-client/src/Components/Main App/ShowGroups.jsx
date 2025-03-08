@@ -38,14 +38,16 @@ function ShowGroups() {
                 <h1 className='text-slate-100 text-bold m-2'>{group.name}</h1>
                 <p className='text-slate-200'>{group.members.length} participants</p>
               </div>
-
+              <AboutGroup modal={modal} setModal={setModal} participants={group.members} admin={group.admin}/>
             </div>
+
+
           })
         }
 
 
       </div>
-      <AboutGroup modal={modal} setModal={setModal} participants={participants} />
+
     </>
   )
 }
