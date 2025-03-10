@@ -1,15 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { UsersRound, User } from 'lucide-react'
 import RemoveParticipant from '../Main App/RemoveParticipant'
 
 function AboutGroup({ modal, setModal, participants, admin }) {
-
+  
   return (
     <>
-      <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>
-        <div className="relative p-4 w-[90%] max-h-full m-[50px_auto]">
+      <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `w-[100%] block transition duration-300 ease-in-out` : `w-0 hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full`}>
+        <div className="fixed left-[-20px] p-4 w-[50%] h-screen mt-[50px]">
 
-          <div className="relative bg-[#282828] w-[50%] rounded-lg shadow">
+          <div className="relative bg-[#282828] w-full rounded-lg shadow">
 
             <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
               <div className='m-[0px_auto]'>
@@ -41,6 +41,7 @@ function AboutGroup({ modal, setModal, participants, admin }) {
                   </div>
                 })
               }
+
             </div>
           </div>
         </div>
