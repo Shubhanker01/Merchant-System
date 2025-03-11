@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { UsersRound, User } from 'lucide-react'
 import RemoveParticipant from '../Main App/RemoveParticipant'
+import AddParticipant from '../Main App/AddParticipant'
 
 function AboutGroup({ modal, setModal, participants, admin }) {
   
@@ -43,6 +44,7 @@ function AboutGroup({ modal, setModal, participants, admin }) {
               }
 
             </div>
+            <AddParticipant participants={participants} admin={admin}/>
           </div>
         </div>
       </div>

@@ -1,11 +1,9 @@
-import decodeToken from "./decodeJwt";
-import getCookie from "./getCookie";
 
-function checkAdmin(email) {
-    let cookie = getCookie()
-    let decode = decodeToken(cookie)
-    if (decode.email === email) {
-        return true
+function checkAdmin(participants, admin) {
+    for (let i = 0; i < participants.length; i++) {
+        if (participants[i]._id === admin) {
+            return true
+        }
     }
     return false
 }
