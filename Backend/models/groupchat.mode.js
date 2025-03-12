@@ -9,7 +9,8 @@ const groupChatSchema = new Schema({
     participants: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Merchant'
+            ref: 'Merchant',
+            unique: true
         }
     ],
     admin: {

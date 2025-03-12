@@ -3,7 +3,6 @@ import checkAdmin from '../../utils/checkAdmin'
 
 function AddParticipant({ participants, admin }) {
     let isAdmin = checkAdmin(participants, admin)
-    console.log(isAdmin)
     return (
         <>
             <div className={`${isAdmin ? 'block w-[80%] m-4' : 'hidden'}`}>
