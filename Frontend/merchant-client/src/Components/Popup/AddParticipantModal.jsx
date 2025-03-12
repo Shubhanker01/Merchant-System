@@ -2,19 +2,23 @@ import React, { useState } from 'react'
 import { Users } from 'lucide-react'
 import queryUser from '../../Async logic/queryUser'
 import Dropdown from './Dropdown'
-function AddParticipantModal({ modal, setModal }) {
+function AddParticipantModal({ modal, setModal, groupId }) {
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
     const [selectedParticipants, setSelectedParticipants] = useState([])
     const handleChange = (e) => {
         setSearch(e.target.value)
         if (e.target.value !== '') {
-            queryUser().then((res) => {
+            queryUser(e.target.value).then((res) => {
                 setResults(res)
             }).catch(err => {
                 console.log(err)
             })
         }
+    }
+
+    const addMembersToGroup = () => {
+
     }
     return (
         <>

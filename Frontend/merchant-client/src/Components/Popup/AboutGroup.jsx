@@ -3,8 +3,8 @@ import { UsersRound, User } from 'lucide-react'
 import RemoveParticipant from '../Main App/RemoveParticipant'
 import AddParticipant from '../Main App/AddParticipant'
 
-function AboutGroup({ modal, setModal, participants, admin }) {
-  
+function AboutGroup({ modal, setModal, participants, admin, groupId }) {
+
   return (
     <>
       <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `w-[100%] block transition duration-300 ease-in-out` : `w-0 hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full`}>
@@ -44,7 +44,7 @@ function AboutGroup({ modal, setModal, participants, admin }) {
               }
 
             </div>
-            <AddParticipant participants={participants} admin={admin}/>
+            <AddParticipant participants={participants} admin={admin} groupId={groupId}/>
           </div>
         </div>
       </div>

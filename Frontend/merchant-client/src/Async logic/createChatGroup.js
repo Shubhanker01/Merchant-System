@@ -21,4 +21,13 @@ export const showGroupChat = async (id) => {
     return data
 }
 
+export const addMembers = async (groupId, participants) => {
+    let response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/chats/addmembers`, {
+        id: groupId,
+        participants: participants
+    })
+    let data = await response.data
+    return data
+}
+
 export default createGroupChat

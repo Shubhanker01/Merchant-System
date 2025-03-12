@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import checkAdmin from '../../utils/checkAdmin'
 import AddParticipantModal from '../Popup/AddParticipantModal'
 
-function AddParticipant({ participants, admin }) {
+function AddParticipant({ participants, admin, groupId }) {
     let isAdmin = checkAdmin(participants, admin)
     let [modal, setModal] = useState(false)
     return (
@@ -12,7 +12,7 @@ function AddParticipant({ participants, admin }) {
                     Add Participant
                 </button>
             </div>
-            <AddParticipantModal modal={modal} setModal={setModal} />
+            <AddParticipantModal groupId={groupId} modal={modal} setModal={setModal} />
         </>
     )
 }
