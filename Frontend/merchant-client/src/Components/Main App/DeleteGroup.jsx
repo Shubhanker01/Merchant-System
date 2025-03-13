@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import checkAdmin from '../../utils/checkAdmin'
+import DeleteGroupModal from '../Popup/DeleteGroupModal'
 
 function DeleteGroup({ admin, participants, groupId }) {
     let isAdmin = checkAdmin(participants, admin)
@@ -9,10 +10,11 @@ function DeleteGroup({ admin, participants, groupId }) {
             {
                 isAdmin ? <>
                     <div className='w-[80%] m-4'>
-                        <button className='bg-red-700 text-slate-100 rounded-md p-2'>
+                        <button onClick={() => setModal(true)} className='bg-red-700 text-slate-100 rounded-md p-2'>
                             Delete Group
                         </button>
                     </div>
+                    <DeleteGroupModal modal={modal} setModal={setModal} groupId={groupId} />
                 </> : <></>
             }
 

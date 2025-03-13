@@ -32,11 +32,7 @@ export const addMembers = async (groupId, participants) => {
 }
 
 export const deleteGroup = async (groupId) => {
-    let response = await axios.delete(`${import.meta.env.VITE_PROD_SERVER}/api/deletegroup`, {
-        data: {
-            id: groupId
-        }
-    })
+    let response = await axios.delete(`${import.meta.env.VITE_PROD_SERVER}/api/chats/deletegroup/${groupId}`)
     let data = await response.data
     return data
 }

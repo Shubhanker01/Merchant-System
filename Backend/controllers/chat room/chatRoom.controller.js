@@ -43,7 +43,7 @@ const addParticipants = async (req, res) => {
 // delete chat group
 const deleteGroupChat = async (req, res) => {
     try {
-        let id = req.body.id
+        let id = req.params.groupId
         let chat = await groupChat.findOne({ _id: id })
         if (!chat) {
             return res.status(400).send("Cannot find group chat")
@@ -84,7 +84,7 @@ const showGroups = async (req, res) => {
                     members: {
                         name: 1,
                         email: 1,
-                        _id:1
+                        _id: 1
                     }
                 }
             }
