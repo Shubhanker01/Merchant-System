@@ -22,9 +22,10 @@ export const showGroupChat = async (id) => {
 }
 
 export const addMembers = async (groupId, participants) => {
+    let participantsId = participants.map((user) => user.id)
     let response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/chats/addmembers`, {
         id: groupId,
-        participants: participants
+        participants: participantsId
     })
     let data = await response.data
     return data

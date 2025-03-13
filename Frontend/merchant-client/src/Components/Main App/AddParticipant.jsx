@@ -7,12 +7,18 @@ function AddParticipant({ participants, admin, groupId }) {
     let [modal, setModal] = useState(false)
     return (
         <>
-            <div className={`${isAdmin ? 'block w-[80%] m-4' : 'hidden'}`}>
-                <button onClick={() => setModal(true)} className='bg-blue-600 text-slate-100 rounded-md p-2'>
-                    Add Participant
-                </button>
-            </div>
-            <AddParticipantModal groupId={groupId} modal={modal} setModal={setModal} />
+            {
+                isAdmin ? <>
+                    <div className='w-[80%] m-4'>
+                        <button onClick={() => setModal(true)} className='bg-blue-600 text-slate-100 rounded-md p-2'>
+                            Add Participant
+                        </button>
+                    </div>
+                    <AddParticipantModal groupId={groupId} modal={modal} setModal={setModal} />
+                </> : <></>
+            }
+
+
         </>
     )
 }

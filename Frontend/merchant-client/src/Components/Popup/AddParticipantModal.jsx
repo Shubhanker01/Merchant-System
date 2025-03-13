@@ -2,6 +2,10 @@ import React, { useState } from 'react'
 import { Users } from 'lucide-react'
 import queryUser from '../../Async logic/queryUser'
 import Dropdown from './Dropdown'
+import { addMembers } from '../../Async logic/createChatGroup'
+import Participants from '../Main App/Participants'
+import { toast } from 'react-toastify'
+
 function AddParticipantModal({ modal, setModal, groupId }) {
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
@@ -18,7 +22,13 @@ function AddParticipantModal({ modal, setModal, groupId }) {
     }
 
     const addMembersToGroup = () => {
-
+        addMembers(groupId, selectedParticipants).then((res) => {
+            toast.success(res, { position: 'top-center' })
+        }).catch((err) => {
+            console.log(err)
+        })
+        setModal(false)
+        setSelectedParticipants([])
     }
     return (
         <>
@@ -45,10 +55,12 @@ function AddParticipantModal({ modal, setModal, groupId }) {
                             <Users color="#f4f1f1" />
                             <h2 className='text-gray-100 font-bold ml-4'>Selected Participants</h2>
                         </div>
-
+                        <div>
+                            <Participants selectedParticipants={selectedParticipants} setSelectedParticipants={setSelectedParticipants} />
+                        </div>
                         <div className='p-5'>
                             <p className='text-gray-100'>Are you sure you want to add more participants?</p>
-                            <button type="button" className="mt-4 text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            <button onClick={addMembersToGroup} type="button" className="mt-4 text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 Add
                             </button>
                         </div>
