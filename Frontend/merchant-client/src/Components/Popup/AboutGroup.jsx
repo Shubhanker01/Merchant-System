@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { UsersRound, User } from 'lucide-react'
 import RemoveParticipant from '../Main App/RemoveParticipant'
 import AddParticipant from '../Main App/AddParticipant'
+import DeleteGroup from '../Main App/DeleteGroup'
 
 function AboutGroup({ modal, setModal, participants, admin, groupId }) {
 
@@ -44,7 +45,8 @@ function AboutGroup({ modal, setModal, participants, admin, groupId }) {
               }
 
             </div>
-            <AddParticipant participants={participants} admin={admin} groupId={groupId}/>
+            <AddParticipant participants={participants} admin={admin} groupId={groupId} />
+            <DeleteGroup admin={admin} participants={participants} groupId={groupId} />
           </div>
         </div>
       </div>
