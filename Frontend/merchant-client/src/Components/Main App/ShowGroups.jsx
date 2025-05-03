@@ -4,11 +4,12 @@ import { showGroupChat } from '../../Async logic/createChatGroup'
 import { useParams } from 'react-router-dom'
 import AboutGroup from '../Popup/AboutGroup'
 
-function ShowGroups() {
+function ShowGroups({ groups, showGroups }) {
   const params = useParams()
-  const [groups, showGroups] = useState([])
+  // const [groups, showGroups] = useState([])
   const [modal, setModal] = useState(false)
   const [participants, showParticipants] = useState([])
+
   useEffect(() => {
     showGroupChat(params.userId).then((res) => {
       showGroups(res)
@@ -19,11 +20,13 @@ function ShowGroups() {
       console.log(err)
     })
   }, [])
+
   if (groups.length == 0) {
     return <div>No groups to show</div>
   }
   return (
     <>
+      {console.log(groups)}
       <div className='mt-[50px] fixed z-20'>
         <h1 className='text-slate-200'>Your Groups</h1>
         {
@@ -38,7 +41,7 @@ function ShowGroups() {
                 <h1 className='text-slate-100 text-bold m-2'>{group.name}</h1>
                 <p className='text-slate-200'>{group.members.length} participants</p>
               </div>
-              <AboutGroup groupId={group._id} modal={modal} setModal={setModal} participants={group.members} admin={group.admin}/>
+              <AboutGroup groupId={group._id} modal={modal} setModal={setModal} participants={group.members} admin={group.admin} />
             </div>
 
 
