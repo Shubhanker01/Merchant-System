@@ -12,6 +12,7 @@ function CreateChat() {
             setModal(false)
         }
     }
+
     return (
         <>
             <button onClick={toggleModal} className='flex fixed p-2 bottom-4 right-4 bg-green-700 text-slate-100 rounded-md hover:bg-green-800'>

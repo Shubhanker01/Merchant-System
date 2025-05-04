@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import CreateChat from './CreateChat'
 import ShowGroups from './ShowGroups'
 
 function MessageApp() {
     const [groups, showGroups] = useState([])
+
     return (
         <>
             <NavbarApp />

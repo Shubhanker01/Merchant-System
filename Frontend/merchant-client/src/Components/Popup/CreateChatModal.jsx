@@ -36,7 +36,9 @@ function CreateChatModal({ modal, setModal }) {
         setModal(false)
         setSelectedParticipants([])
         setGroupName("")
+        
     }
+    
     return (
         <>
             <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>
