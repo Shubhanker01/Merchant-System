@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import checkAdmin from '../../utils/checkAdmin'
 import DeleteGroupModal from '../Popup/DeleteGroupModal'
 
-function DeleteGroup({ admin, participants, groupId }) {
+function DeleteGroup({ admin, participants, groupId, checkDelete, isCheckDelete }) {
     let isAdmin = checkAdmin(participants, admin)
     let [modal, setModal] = useState(false)
     return (
@@ -14,7 +14,7 @@ function DeleteGroup({ admin, participants, groupId }) {
                             Delete Group
                         </button>
                     </div>
-                    <DeleteGroupModal modal={modal} setModal={setModal} groupId={groupId} />
+                    <DeleteGroupModal checkDelete={checkDelete} isCheckDelete={isCheckDelete} modal={modal} setModal={setModal} groupId={groupId} />
                 </> : <></>
             }
 

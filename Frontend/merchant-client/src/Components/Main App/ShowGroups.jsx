@@ -4,12 +4,23 @@ import { showGroupChat } from '../../Async logic/createChatGroup'
 import { useParams } from 'react-router-dom'
 import AboutGroup from '../Popup/AboutGroup'
 
-function ShowGroups({ groups, showGroups }) {
+function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
+  let [checkDelete, isCheckDelete] = useState(false)
   const params = useParams()
   const [modal, setModal] = useState(false)
   const [participants, showParticipants] = useState([])
 
   useEffect(() => {
+    // check if a new group is created
+    if (chatAdded == true) {
+      isChatAdded(false)
+    }
+    // to check if the group is deleted
+    if (checkDelete == true) {
+      setModal(false)
+      isCheckDelete(false)
+    }
+    // shows only the group that the user is a part of 
     showGroupChat(params.userId).then((res) => {
       showGroups(res)
       showParticipants(res.map((group) => {
@@ -18,38 +29,36 @@ function ShowGroups({ groups, showGroups }) {
     }).catch((err) => {
       console.log(err)
     })
-  }, [])
+  }, [checkDelete, chatAdded])
 
   if (groups.length == 0) {
     return <div>No groups to show</div>
   }
   return (
     <>
-      {console.log(groups)}
       <div className='mt-[50px] fixed z-20'>
         <h1 className='text-slate-200'>Your Groups</h1>
         {
           groups.map((group) => {
-            return <div key={group._id} className='flex items-center m-2 bg-zinc-900 cursor-pointer rounded-xl'>
-              <button onClick={() => { setModal(true) }}>
-                <EllipsisVertical color="#e9e2e2" />
-              </button>
+            return (
+              <div key={group._id}>
+                <div className='flex items-center m-2 bg-zinc-900 cursor-pointer rounded-xl'>
+                  <button onClick={() => { setModal(true) }}>
+                    <EllipsisVertical color="#e9e2e2" />
+                  </button>
 
-              <Users className='m-2' color="#ebe5e5" />
-              <div className='m-2'>
-                <h1 className='text-slate-100 text-bold m-2'>{group.name}</h1>
-                <p className='text-slate-200'>{group.members.length} participants</p>
+                  <Users className='m-2' color="#ebe5e5" />
+                  <div className='m-2'>
+                    <h1 className='text-slate-100 text-bold m-2'>{group.name}</h1>
+                    <p className='text-slate-200'>{group.members.length} participants</p>
+                  </div>
+                  <AboutGroup groupId={group._id} modal={modal} setModal={setModal} participants={group.members} admin={group.admin} checkDelete={checkDelete} isCheckDelete={isCheckDelete} />
+                </div>
               </div>
-              <AboutGroup groupId={group._id} modal={modal} setModal={setModal} participants={group.members} admin={group.admin} />
-            </div>
-
-
+            )
           })
         }
-
-
       </div>
-
     </>
   )
 }

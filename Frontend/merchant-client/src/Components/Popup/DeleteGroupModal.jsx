@@ -2,10 +2,11 @@ import React from 'react'
 import { toast } from 'react-toastify'
 import { deleteGroup } from '../../Async logic/createChatGroup'
 
-function DeleteGroupModal({ modal, setModal, groupId }) {
+function DeleteGroupModal({ modal, setModal, groupId, checkDelete, isCheckDelete }) {
     const deleteGroupChat = () => {
         deleteGroup(groupId).then((res) => {
             toast.success(res, { position: 'top-center' })
+            isCheckDelete(true)
             setModal(false)
         }).catch((err) => {
             console.log(err)

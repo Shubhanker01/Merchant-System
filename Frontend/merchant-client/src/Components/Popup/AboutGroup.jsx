@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { UsersRound, User } from 'lucide-react'
 import RemoveParticipant from '../Main App/RemoveParticipant'
 import AddParticipant from '../Main App/AddParticipant'
 import DeleteGroup from '../Main App/DeleteGroup'
 
-function AboutGroup({ modal, setModal, participants, admin, groupId }) {
-
+function AboutGroup({ modal, setModal, participants, admin, groupId, checkDelete, isCheckDelete }) {
   return (
     <>
       <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `w-[100%] block transition duration-300 ease-in-out` : `w-0 hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full`}>
@@ -46,7 +45,7 @@ function AboutGroup({ modal, setModal, participants, admin, groupId }) {
 
             </div>
             <AddParticipant participants={participants} admin={admin} groupId={groupId} />
-            <DeleteGroup admin={admin} participants={participants} groupId={groupId} />
+            <DeleteGroup checkDelete={checkDelete} isCheckDelete={isCheckDelete} admin={admin} participants={participants} groupId={groupId} />
           </div>
         </div>
       </div>
