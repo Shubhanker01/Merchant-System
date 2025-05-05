@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Plus } from 'lucide-react'
 import CreateChatModal from '../Popup/CreateChatModal'
 
-function CreateChat() {
+function CreateChat({ groups, showGroups }) {
     const [modal, setModal] = useState(false)
     const toggleModal = () => {
         if (!modal) {
@@ -23,7 +23,7 @@ function CreateChat() {
                     Add Chat
                 </div>
             </button>
-            <CreateChatModal modal={modal} setModal={setModal} />
+            <CreateChatModal groups={groups} showGroups={showGroups} modal={modal} setModal={setModal} />
         </>
     )
 }

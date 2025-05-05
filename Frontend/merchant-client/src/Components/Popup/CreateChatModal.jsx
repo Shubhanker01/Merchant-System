@@ -5,8 +5,11 @@ import Dropdown from './Dropdown'
 import queryUser from '../../Async logic/queryUser'
 import createGroupChat from '../../Async logic/createChatGroup'
 import { toast } from 'react-toastify'
+import { showGroupChat } from '../../Async logic/createChatGroup'
+import { useParams } from 'react-router-dom'
 
-function CreateChatModal({ modal, setModal }) {
+function CreateChatModal({ modal, setModal, groups, showGroups }) {
+    const params = useParams()
     const [selectedParticipants, setSelectedParticipants] = useState([])
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
@@ -30,15 +33,20 @@ function CreateChatModal({ modal, setModal }) {
         }
         createGroupChat(selectedParticipants, groupName).then((res) => {
             toast.success(res, { position: 'top-center' })
+            showGroupChat(params.userId).then((res) => {
+                showGroups(res)
+            }).catch(err => {
+                console.log(err)
+            })
         }).catch(err => {
             console.log(err)
         })
         setModal(false)
         setSelectedParticipants([])
         setGroupName("")
-        
+
     }
-    
+    console.log(groups)
     return (
         <>
             <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>

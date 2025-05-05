@@ -11,7 +11,7 @@ function MessageApp() {
             <NavbarApp />
             <div className="w-full fixed mx-auto my-6 p-4 bg-gray-800 h-full">
                 <ShowGroups groups={groups} showGroups={showGroups} />
-                <CreateChat />
+                <CreateChat groups={groups} showGroups={showGroups}/>
             </div>
 
         </>

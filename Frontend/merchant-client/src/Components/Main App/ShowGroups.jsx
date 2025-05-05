@@ -6,7 +6,6 @@ import AboutGroup from '../Popup/AboutGroup'
 
 function ShowGroups({ groups, showGroups }) {
   const params = useParams()
-  // const [groups, showGroups] = useState([])
   const [modal, setModal] = useState(false)
   const [participants, showParticipants] = useState([])
 
