@@ -6,6 +6,7 @@ import ShowGroups from './ShowGroups'
 function MessageApp() {
     const [groups, showGroups] = useState([])
     const [chatAdded, isChatAdded] = useState(false)
+    console.log(groups)
     return (
         <>
             <NavbarApp />

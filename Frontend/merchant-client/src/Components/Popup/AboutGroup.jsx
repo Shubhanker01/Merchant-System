@@ -5,6 +5,7 @@ import AddParticipant from '../Main App/AddParticipant'
 import DeleteGroup from '../Main App/DeleteGroup'
 
 function AboutGroup({ modal, setModal, participants, admin, groupId, checkDelete, isCheckDelete }) {
+  console.log(participants)
   return (
     <>
       <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `w-[100%] block transition duration-300 ease-in-out` : `w-0 hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full`}>

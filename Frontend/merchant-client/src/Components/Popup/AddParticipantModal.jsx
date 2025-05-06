@@ -5,8 +5,9 @@ import Dropdown from './Dropdown'
 import { addMembers } from '../../Async logic/createChatGroup'
 import Participants from '../Main App/Participants'
 import { toast } from 'react-toastify'
+import checkParticipantDuplicate from '../../utils/checkParticipantDuplicate'
 
-function AddParticipantModal({ modal, setModal, groupId }) {
+function AddParticipantModal({ currentParticipants, modal, setModal, groupId }) {
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
     const [selectedParticipants, setSelectedParticipants] = useState([])
@@ -30,6 +31,7 @@ function AddParticipantModal({ modal, setModal, groupId }) {
         setModal(false)
         setSelectedParticipants([])
     }
+    
     return (
         <>
             <div id="add-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>

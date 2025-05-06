@@ -14,7 +14,7 @@ function AddParticipant({ participants, admin, groupId }) {
                             Add Participant
                         </button>
                     </div>
-                    <AddParticipantModal groupId={groupId} modal={modal} setModal={setModal} />
+                    <AddParticipantModal currentParticipants={participants} groupId={groupId} modal={modal} setModal={setModal} />
                 </> : <></>
             }
 
