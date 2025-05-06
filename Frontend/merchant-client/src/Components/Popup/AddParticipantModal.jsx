@@ -23,6 +23,14 @@ function AddParticipantModal({ currentParticipants, modal, setModal, groupId }) 
     }
 
     const addMembersToGroup = () => {
+        if (selectedParticipants.length === 0) {
+            toast.error("Select atleast one participant", { position: 'top-center' })
+            return
+        }
+        if (checkParticipantDuplicate(currentParticipants, selectedParticipants)) {
+            toast.error("Participants are already added", { position: 'top-center' })
+            return
+        }
         addMembers(groupId, selectedParticipants).then((res) => {
             toast.success(res, { position: 'top-center' })
         }).catch((err) => {
