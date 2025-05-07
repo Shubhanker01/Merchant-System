@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Users } from 'lucide-react'
 import Participants from '../Main App/Participants'
 import Dropdown from './Dropdown'
 import queryUser from '../../Async logic/queryUser'
 import createGroupChat from '../../Async logic/createChatGroup'
 import { toast } from 'react-toastify'
-import { showGroupChat } from '../../Async logic/createChatGroup'
 import { useParams } from 'react-router-dom'
 
 function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isChatAdded }) {
@@ -15,16 +14,19 @@ function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isCha
     const [results, setResults] = useState([])
     const [groupName, setGroupName] = useState("")
 
-    const handleChange = (e) => {
-        setSearch(e.target.value)
-        if (e.target.value != '') {
-            queryUser(e.target.value).then((res) => {
+    useEffect(() => {
+        if (search === "") return;
+        const getQuery = setTimeout(() => {
+            queryUser(search).then((res) => {
                 setResults(res)
             }).catch((err) => {
                 console.log(err)
             })
-        }
-    }
+        }, 2000)
+
+        return () => clearTimeout(getQuery)
+    }, [search])
+    
 
     const createChat = () => {
         if (!groupName) {
@@ -42,7 +44,7 @@ function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isCha
         setGroupName("")
 
     }
-    
+
     return (
         <>
             <div id="create-chat-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>
@@ -66,7 +68,7 @@ function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isCha
                             <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={groupName} onChange={(e) => { setGroupName(e.target.value) }} placeholder='Enter group name...'></input>
                         </div>
                         <div>
-                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={search} onChange={handleChange} placeholder='Search Participants...'></input>
+                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={search} onChange={(e) => { setSearch(e.target.value) }} placeholder='Search Participants...'></input>
 
                             <Dropdown names={results} search={search} selectedParticipants={selectedParticipants} setSelectedParticipants={setSelectedParticipants} />
                         </div>

@@ -3,6 +3,7 @@ function debounce(cb, delay = 2000) {
     return (...args) => {
         clearTimeout(timeout)
         timeout = setTimeout(() => {
+            console.log(...args)
             cb(...args)
         }, delay)
     }

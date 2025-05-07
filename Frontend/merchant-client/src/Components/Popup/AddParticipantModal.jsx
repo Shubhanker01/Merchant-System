@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Users } from 'lucide-react'
 import queryUser from '../../Async logic/queryUser'
 import Dropdown from './Dropdown'
@@ -11,16 +11,20 @@ function AddParticipantModal({ currentParticipants, modal, setModal, groupId }) 
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
     const [selectedParticipants, setSelectedParticipants] = useState([])
-    const handleChange = (e) => {
-        setSearch(e.target.value)
-        if (e.target.value !== '') {
-            queryUser(e.target.value).then((res) => {
+    
+    // useEffect for debouncing effect
+    useEffect(() => {
+        if (search === "") return;
+        const getQuery = setTimeout(() => {
+            queryUser(search).then((res) => {
                 setResults(res)
-            }).catch(err => {
+            }).catch((err) => {
                 console.log(err)
             })
-        }
-    }
+        }, 2000)
+
+        return () => clearTimeout(getQuery)
+    }, [search])
 
     const addMembersToGroup = () => {
         if (selectedParticipants.length === 0) {
@@ -57,7 +61,7 @@ function AddParticipantModal({ currentParticipants, modal, setModal, groupId }) 
 
                         </div>
                         <div>
-                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={search} onChange={handleChange} placeholder='Search Participants...'></input>
+                            <input type='text' className='bg-gray-600 text-gray-100 w-[90%] m-4 rounded-md p-4 border-solid border-2 border-gray-200' value={search} onChange={(e) => setSearch(e.target.value)} placeholder='Search Participants...'></input>
                             <Dropdown names={results} search={search} selectedParticipants={selectedParticipants} setSelectedParticipants={setSelectedParticipants} />
                         </div>
 
