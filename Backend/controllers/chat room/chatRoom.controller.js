@@ -94,5 +94,29 @@ const showGroups = async (req, res) => {
         console.log(error)
     }
 }
-module.exports = { createGroupChat, addParticipants, deleteGroupChat, showGroups }
+
+// remove particular participant from group
+const removeParticipant = async (req, res) => {
+    try {
+        let id = req.params.id
+        let groupId = req.body.groupId
+        // find group
+        let group = await groupChat.findOne({ _id: groupId })
+        if (!group) {
+            return res.status(400).send("Cannot find group")
+        }
+        let index = group.participants.indexOf(id)
+        if (index == -1) {
+            return res.status(400).send("Cannot find participant")
+        }
+        group.participants.splice(index, 1)
+        await group.save()
+        return res.send("participant successfully removed")
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { createGroupChat, addParticipants, deleteGroupChat, showGroups, removeParticipant }
 
