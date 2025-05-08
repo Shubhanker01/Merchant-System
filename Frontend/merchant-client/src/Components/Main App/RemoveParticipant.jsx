@@ -2,6 +2,7 @@ import React from 'react'
 import { Trash2 } from 'lucide-react'
 
 function RemoveParticipant({ isAdmin, id }) {
+    console.log(id)
     return (
         <>
             <div className={`${isAdmin ? `block` : 'hidden'} m-2`}>
