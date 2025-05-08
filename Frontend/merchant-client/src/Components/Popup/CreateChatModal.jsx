@@ -5,28 +5,24 @@ import Dropdown from './Dropdown'
 import queryUser from '../../Async logic/queryUser'
 import createGroupChat from '../../Async logic/createChatGroup'
 import { toast } from 'react-toastify'
-import { useParams } from 'react-router-dom'
+import useDebounce from '../../hooks/useDebounce'
 
 function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isChatAdded }) {
-    const params = useParams()
     const [selectedParticipants, setSelectedParticipants] = useState([])
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
     const [groupName, setGroupName] = useState("")
+    const debouncedSearchValue = useDebounce(search, 800)
 
     useEffect(() => {
         if (search === "") return;
-        const getQuery = setTimeout(() => {
-            queryUser(search).then((res) => {
-                setResults(res)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }, 2000)
+        queryUser(debouncedSearchValue).then((res) => {
+            setResults(res)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }, [debouncedSearchValue])
 
-        return () => clearTimeout(getQuery)
-    }, [search])
-    
 
     const createChat = () => {
         if (!groupName) {

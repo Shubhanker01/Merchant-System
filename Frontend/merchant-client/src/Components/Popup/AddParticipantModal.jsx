@@ -6,25 +6,24 @@ import { addMembers } from '../../Async logic/createChatGroup'
 import Participants from '../Main App/Participants'
 import { toast } from 'react-toastify'
 import checkParticipantDuplicate from '../../utils/checkParticipantDuplicate'
+import useDebounce from '../../hooks/useDebounce'
 
 function AddParticipantModal({ currentParticipants, modal, setModal, groupId }) {
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
     const [selectedParticipants, setSelectedParticipants] = useState([])
-    
+    const debouncedSearchValue = useDebounce(search, 800)
+
     // useEffect for debouncing effect
     useEffect(() => {
         if (search === "") return;
-        const getQuery = setTimeout(() => {
-            queryUser(search).then((res) => {
-                setResults(res)
-            }).catch((err) => {
-                console.log(err)
-            })
-        }, 2000)
+        queryUser(search).then((res) => {
+            setResults(res)
+        }).catch((err) => {
+            console.log(err)
+        })
 
-        return () => clearTimeout(getQuery)
-    }, [search])
+    }, [debouncedSearchValue])
 
     const addMembersToGroup = () => {
         if (selectedParticipants.length === 0) {
@@ -43,7 +42,7 @@ function AddParticipantModal({ currentParticipants, modal, setModal, groupId }) 
         setModal(false)
         setSelectedParticipants([])
     }
-    
+
     return (
         <>
             <div id="add-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>
