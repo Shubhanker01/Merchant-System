@@ -2,11 +2,12 @@ import React from 'react'
 import { removeParticipant } from '../../Async logic/createChatGroup'
 import { toast } from 'react-toastify'
 
-function RemoveParticipantModal({ modal, setModal, name, id, groupId }) {
+function RemoveParticipantModal({ modal, setModal, name, id, groupId, participants, showGroupParticipants }) {
 
     const handleRemoveParticipant = () => {
         removeParticipant(id, groupId).then((res) => {
             toast.success(res, { position: 'top-center' })
+            showGroupParticipants(participants.filter((participant) => participant._id !== id))
         }).catch((err) => {
             console.log(err)
         })

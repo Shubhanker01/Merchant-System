@@ -4,7 +4,7 @@ import RemoveParticipant from '../Main App/RemoveParticipant'
 import AddParticipant from '../Main App/AddParticipant'
 import DeleteGroup from '../Main App/DeleteGroup'
 
-function AboutGroup({ modal, setModal, participants, admin, groupId, checkDelete, isCheckDelete,showGroupParticipants }) {
+function AboutGroup({ modal, setModal, participants, admin, groupId, checkDelete, isCheckDelete, showGroupParticipants }) {
   console.log(participants)
   return (
     <>
@@ -34,7 +34,7 @@ function AboutGroup({ modal, setModal, participants, admin, groupId, checkDelete
                   return <div key={members.email} className='flex mx-auto'>
                     <User className='m-2' size={20} color="#f4e1e1" />
                     <p className='text-slate-100 m-2'>{members.name}</p>
-                    <RemoveParticipant isAdmin={members._id !== admin} id={members._id} name={members.name} groupId={groupId} participants={participants}/>
+                    <RemoveParticipant isAdmin={members._id !== admin} id={members._id} name={members.name} groupId={groupId} participants={participants} showGroupParticipants={showGroupParticipants} />
                     {
                       admin === members._id ? <>
                         <p className='text-slate-200 p-2 border-2 border-solid border-green-600 rounded-xl text-sm'>Admin</p>

@@ -72,7 +72,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
             )
           })
         }
-        <AboutGroup groupId={groupId} modal={modal} setModal={setModal} participants={groupParticipants} admin={admin} checkDelete={checkDelete} isCheckDelete={isCheckDelete} />
+        <AboutGroup groupId={groupId} modal={modal} setModal={setModal} participants={groupParticipants} admin={admin} checkDelete={checkDelete} isCheckDelete={isCheckDelete} showGroupParticipants={showGroupParticipants} />
       </div>
     </>
   )
