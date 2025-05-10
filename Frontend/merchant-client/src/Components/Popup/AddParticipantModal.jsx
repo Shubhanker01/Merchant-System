@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 import checkParticipantDuplicate from '../../utils/checkParticipantDuplicate'
 import useDebounce from '../../hooks/useDebounce'
 
-function AddParticipantModal({ currentParticipants, modal, setModal, groupId }) {
+function AddParticipantModal({ currentParticipants, modal, setModal, groupId, showGroupParticipants }) {
     const [search, setSearch] = useState("")
     const [results, setResults] = useState([])
     const [selectedParticipants, setSelectedParticipants] = useState([])
@@ -36,13 +36,15 @@ function AddParticipantModal({ currentParticipants, modal, setModal, groupId }) 
         }
         addMembers(groupId, selectedParticipants).then((res) => {
             toast.success(res, { position: 'top-center' })
+            showGroupParticipants([...currentParticipants, ...selectedParticipants])
         }).catch((err) => {
             console.log(err)
         })
         setModal(false)
         setSelectedParticipants([])
     }
-
+    console.log(selectedParticipants)
+    console.log(results)
     return (
         <>
             <div id="add-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>

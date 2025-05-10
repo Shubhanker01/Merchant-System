@@ -6,19 +6,20 @@ import { useParams } from 'react-router-dom'
 
 function Dropdown({ names, search, selectedParticipants, setSelectedParticipants }) {
     let params = useParams()
-    const select = (id) => {
+    const select = (id, email) => {
         let parent = document.getElementById(id)
         let val = parent.querySelector('p')
-        if(params.userId===id){
-            toast.error("Cannot add yourself",{position:'top-center'})
+        if (params.userId === id) {
+            toast.error("Cannot add yourself", { position: 'top-center' })
             return
         }
         if (checkDuplicate(selectedParticipants, id)) {
             toast.error("User already added", { position: 'top-center' })
             return
         }
-        setSelectedParticipants([...selectedParticipants, { id: id, name: val.innerHTML }])
+        setSelectedParticipants([...selectedParticipants, { id: id, name: val.innerHTML, email: email }])
     }
+
     return (
         <>
 

@@ -45,7 +45,7 @@ function AboutGroup({ modal, setModal, participants, admin, groupId, checkDelete
               }
 
             </div>
-            <AddParticipant participants={participants} admin={admin} groupId={groupId} />
+            <AddParticipant participants={participants} admin={admin} groupId={groupId} showGroupParticipants={showGroupParticipants} />
             <DeleteGroup checkDelete={checkDelete} isCheckDelete={isCheckDelete} admin={admin} participants={participants} groupId={groupId} />
           </div>
         </div>
