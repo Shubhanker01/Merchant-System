@@ -1,6 +1,17 @@
 import React from 'react'
+import { removeParticipant } from '../../Async logic/createChatGroup'
+import { toast } from 'react-toastify'
 
-function RemoveParticipantModal({ modal, setModal, name }) {
+function RemoveParticipantModal({ modal, setModal, name, id, groupId }) {
+
+    const handleRemoveParticipant = () => {
+        removeParticipant(id, groupId).then((res) => {
+            toast.success(res, { position: 'top-center' })
+        }).catch((err) => {
+            console.log(err)
+        })
+        setModal(false)
+    }
     return (
         <>
             <div id="remove-participant-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`} z-50 inset-0 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>
@@ -23,7 +34,7 @@ function RemoveParticipantModal({ modal, setModal, name }) {
 
                         <div className='p-5'>
                             <p className='text-gray-100'>Are you sure you want to remove {name}?</p>
-                            <button type="button" className="mt-4 text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                            <button type="button" onClick={handleRemoveParticipant} className="mt-4 text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                 Delete
                             </button>
                         </div>

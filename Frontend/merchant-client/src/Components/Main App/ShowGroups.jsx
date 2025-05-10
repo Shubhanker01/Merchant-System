@@ -45,6 +45,8 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
     showGroupParticipants(participants)
     setAdmin(admin)
   }
+  console.log(participants)
+  console.log(groupParticipants)
   return (
     <>
       <div className='mt-[50px] fixed z-20'>

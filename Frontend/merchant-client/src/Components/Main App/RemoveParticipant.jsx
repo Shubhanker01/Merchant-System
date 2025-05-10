@@ -3,7 +3,7 @@ import { Trash2 } from 'lucide-react'
 import RemoveParticipantModal from '../Popup/RemoveParticipantModal'
 
 
-function RemoveParticipant({ isAdmin, id, name }) {
+function RemoveParticipant({ isAdmin, id, name, groupId, participants }) {
     const [modal, setModal] = useState(false)
     const handleClick = () => {
         setModal(true)
@@ -17,7 +17,7 @@ function RemoveParticipant({ isAdmin, id, name }) {
                 </button>
 
             </div>
-            <RemoveParticipantModal modal={modal} setModal={setModal} name={name} />
+            <RemoveParticipantModal modal={modal} setModal={setModal} name={name} groupId={groupId} id={id} />
         </>
     )
 }
