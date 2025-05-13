@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
-import NavbarApp from '../Header/NavbarApp'
 import { nanoid } from 'nanoid'
 
-function Message() {
+function Message({ currentGroupChat }) {
     let [messages, setMessages] = useState([])
     let [message, setMessage] = useState('')
     const messageEndRef = useRef(null)
@@ -20,9 +19,8 @@ function Message() {
     }, [messages])
     return (
         <>
-            <NavbarApp />
-            <div className="w-full fixed mx-auto my-6 p-4 bg-gray-800 h-full">
-                <div className="fixed top-[50px] h-[75%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto w-[90%]">
+            <div className="my-6 p-4 bg-gray-800 h-[80%]">
+                <div className="h-[75%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto">
                     {messages.map((msg) => (
                         <div key={msg.id} className="p-2 border-b">
                             <p className="text-gray-100">{msg.text}</p>
@@ -50,7 +48,7 @@ function Message() {
                     </button>
                 </div>
             </div>
-            
+
         </>
     )
 }
