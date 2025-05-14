@@ -12,10 +12,16 @@ function MessageApp() {
     return (
         <>
             <NavbarApp />
-            <div className="grid grid-cols-2 w-full mx-auto p-4 bg-gray-800 h-screen">
-                <ShowGroups groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} />
+            <div className="grid grid-cols-4 w-full mx-auto p-4 bg-gray-800 h-screen fixed">
+                <div>
+                    <ShowGroups groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} />
+                </div>
+
                 {/* <CreateChat groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} /> */}
-                <Message />
+                <div className='col-span-3'>
+                    <Message />
+                </div>
+
             </div>
 
         </>

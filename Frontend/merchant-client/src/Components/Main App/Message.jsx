@@ -19,8 +19,8 @@ function Message({ currentGroupChat }) {
     }, [messages])
     return (
         <>
-            <div className="my-6 p-4 bg-gray-800 h-[80%]">
-                <div className="h-[75%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto">
+            <div className="my-6 p-4 bg-gray-800 h-[85%] w-[100%] mr-4">
+                <div className="h-[90%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto">
                     {messages.map((msg) => (
                         <div key={msg.id} className="p-2 border-b">
                             <p className="text-gray-100">{msg.text}</p>
@@ -32,7 +32,7 @@ function Message({ currentGroupChat }) {
                     <div ref={messageEndRef}></div>
                 </div>
 
-                <div className="fixed sm:w-[70%] w-[90%] sm:bottom-[60px] bottom-[25px] flex gap-2">
+                <div className="fixed sm:w-[45%] w-[70%] sm:bottom-[50px] bottom-[20px] flex gap-2">
                     <input
                         type="text"
                         className="flex-1 text-white p-2 border bg-slate-700 rounded"

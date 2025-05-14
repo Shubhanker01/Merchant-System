@@ -118,5 +118,8 @@ const removeParticipant = async (req, res) => {
     }
 }
 
+// creating room for chats
+
+
 module.exports = { createGroupChat, addParticipants, deleteGroupChat, showGroups, removeParticipant }
 

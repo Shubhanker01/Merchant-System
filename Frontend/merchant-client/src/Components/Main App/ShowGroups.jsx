@@ -48,8 +48,8 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
 
   return (
     <>
-      <div className='mt-[50px] h-full w-[50%]'>
-        <h1 className='text-slate-200'>Your Groups</h1>
+      <div className='mt-[50px] h-full w-[70%]'>
+        <h1 className='text-slate-200 ml-4 pt-4'>Your Groups</h1>
         {
           groups.map((group) => {
             console.log(group)
