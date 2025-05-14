@@ -1,6 +1,7 @@
 const { groupChat } = require('../../models/groupchat.mode')
 const { Merchant } = require('../../models/merchant.model')
 const mongoose = require('mongoose')
+const { io } = require('../../index')
 
 // create a new group chat
 const createGroupChat = async (req, res) => {

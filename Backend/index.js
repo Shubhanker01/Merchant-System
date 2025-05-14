@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const { createServer } = require('node:http')
 const server = createServer(app)
 const { Server } = require('socket.io')
-const { initializeSocketio } = require('../Backend/socket/main')
+const { initializeSocketio, createChatRoom } = require('../Backend/socket/main')
 
 const io = new Server(server, {
     cors: {
@@ -16,6 +16,8 @@ const io = new Server(server, {
     }
 })
 initializeSocketio(io)
+createChatRoom(io, "123")
+
 app.set('io', io)
 // creating a middleware to use io in routes
 
@@ -41,12 +43,13 @@ app.use('/api/merchant', require('./routes/merchant password/forgotPassword'))
 app.use('/api/bids', require('./routes/bids/bids.routes'))
 
 // group chat routes
-app.use('/api/chats',require('./routes/chat room/chatRoom.routes'))
+app.use('/api/chats', require('./routes/chat room/chatRoom.routes'))
 
 // query user
-app.use('/api',require('./routes/chat room/queryParticipant.routes'))
+app.use('/api', require('./routes/chat room/queryParticipant.routes'))
 server.listen(port, () => {
     console.log("Example app listening on port ", port)
 })
 
 connectToMongo()
+module.exports = { io }
