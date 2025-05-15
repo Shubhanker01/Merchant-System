@@ -3,8 +3,26 @@ import NavbarApp from '../Header/NavbarApp'
 import CreateChat from './CreateChat'
 import ShowGroups from './ShowGroups'
 import Message from './Message'
+import { socket } from '../../socket'
 
 function MessageApp() {
+    useEffect(() => {
+        socket.connect()
+        return () => {
+            socket.disconnect()
+        }
+    }, [])
+    useEffect(() => {
+        socket.on('chat', (arg) => {
+            console.log(arg)
+        })
+
+        return () => {
+            socket.off('chat', () => {
+                console.log('disconnected')
+            })
+        }
+    }, [])
     const [groups, showGroups] = useState([])
     const [chatAdded, isChatAdded] = useState(false)
     const [currentGroupChat, showCurrentGroupChat] = useState('')
@@ -17,13 +35,13 @@ function MessageApp() {
                     <ShowGroups groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} />
                 </div>
 
-                {/* <CreateChat groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} /> */}
+
                 <div className='col-span-3'>
                     <Message />
                 </div>
 
             </div>
-
+            <CreateChat groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} />
         </>
     )
 }

@@ -1,11 +1,12 @@
 const { groupChat } = require('../../models/groupchat.mode')
 const { Merchant } = require('../../models/merchant.model')
 const mongoose = require('mongoose')
-const { io } = require('../../index')
+const { createChatRoom } = require('../../socket/main')
 
 // create a new group chat
 const createGroupChat = async (req, res) => {
     try {
+        let io = req.io
         let email = req.body.email
         let name = req.body.name
         let participants = req.body.participants
@@ -13,11 +14,13 @@ const createGroupChat = async (req, res) => {
         if (!admin) {
             return res.status(400).send("Some error occured")
         }
-        await groupChat.create({
+        let group = await groupChat.create({
             name: name,
             admin: admin._id,
             participants: [admin._id, ...participants]
         })
+        let chatRoomId = group._id.toString()
+        createChatRoom(io, chatRoomId)
         return res.send("Group successfully created")
     } catch (error) {
         console.log(error)

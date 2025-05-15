@@ -13,10 +13,12 @@ const initializeSocketio = (io) => {
 
 // const create chat room
 const createChatRoom = (io, groupId) => {
-    return io.on("connection", async (socket) => {
+    io.on("connection", async (socket) => {
         try {
             socket.join(groupId)
-            io.to(groupId).emit("hi welcome to the group")
+            console.log(socket.id)
+            console.log(socket.rooms)
+            io.to(groupId).emit("chat", "hi welcome to the group")
         } catch (error) {
             console.log(error)
         }
