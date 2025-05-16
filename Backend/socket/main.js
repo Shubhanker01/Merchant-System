@@ -1,9 +1,22 @@
 const { Server, Socket } = require('socket.io')
 // initialize socket io event
+
+// const create chat room
+const createChatRoom = (socket) => {
+    socket.on("chat", (arg) => {
+        console.log(arg)
+        socket.join("Room123")
+        console.log("Room 123 joined")
+        console.log(socket.rooms)
+        socket.emit("join", "Hello to the group")
+    })
+}
+
 const initializeSocketio = (io) => {
     return io.on('connection', async (socket) => {
         try {
             socket.emit('msg', 'This message is for client')
+            createChatRoom(socket)
         }
         catch (err) {
             console.log(err)
@@ -11,19 +24,6 @@ const initializeSocketio = (io) => {
     })
 }
 
-// const create chat room
-const createChatRoom = (io, groupId) => {
-    io.on("connection", async (socket) => {
-        try {
-            socket.join(groupId)
-            console.log(socket.id)
-            console.log(socket.rooms)
-            io.to(groupId).emit("chat", "hi welcome to the group")
-        } catch (error) {
-            console.log(error)
-        }
-    })
-}
 
 
 module.exports = { initializeSocketio, createChatRoom }

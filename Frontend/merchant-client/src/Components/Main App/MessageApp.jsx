@@ -6,19 +6,19 @@ import Message from './Message'
 import { socket } from '../../socket'
 
 function MessageApp() {
+    // useEffect(() => {
+    //     socket.connect()
+    //     return () => {
+    //         socket.disconnect()
+    //     }
+    // }, [])
     useEffect(() => {
-        socket.connect()
-        return () => {
-            socket.disconnect()
-        }
-    }, [])
-    useEffect(() => {
-        socket.on('chat', (arg) => {
+        socket.emit('chat', "I am in chat room")
+        socket.on('join', (arg) => {
             console.log(arg)
         })
-
         return () => {
-            socket.off('chat', () => {
+            socket.off('join', () => {
                 console.log('disconnected')
             })
         }

@@ -20,7 +20,6 @@ const createGroupChat = async (req, res) => {
             participants: [admin._id, ...participants]
         })
         let chatRoomId = group._id.toString()
-        createChatRoom(io, chatRoomId)
         return res.send("Group successfully created")
     } catch (error) {
         console.log(error)
