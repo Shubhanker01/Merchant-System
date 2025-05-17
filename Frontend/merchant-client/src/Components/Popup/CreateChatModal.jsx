@@ -6,6 +6,7 @@ import queryUser from '../../Async logic/queryUser'
 import createGroupChat from '../../Async logic/createChatGroup'
 import { toast } from 'react-toastify'
 import useDebounce from '../../hooks/useDebounce'
+import { socket } from '../../socket'
 
 function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isChatAdded }) {
     const [selectedParticipants, setSelectedParticipants] = useState([])
@@ -31,6 +32,7 @@ function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isCha
         }
         createGroupChat(selectedParticipants, groupName).then((res) => {
             toast.success(res, { position: 'top-center' })
+            socket.emit('chat-room', groupName)
             isChatAdded(true)
         }).catch(err => {
             console.log(err)

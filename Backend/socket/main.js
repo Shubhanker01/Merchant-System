@@ -3,10 +3,9 @@ const { Server, Socket } = require('socket.io')
 
 // const create chat room
 const createChatRoom = (socket) => {
-    socket.on("chat", (arg) => {
-        console.log(arg)
-        socket.join("Room123")
-        console.log("Room 123 joined")
+    socket.on("chat-room", (arg) => {
+        socket.join(arg)
+        console.log("A new chat room has been created")
         console.log(socket.rooms)
         socket.emit("join", "Hello to the group")
     })
@@ -24,6 +23,9 @@ const initializeSocketio = (io) => {
     })
 }
 
+const emitSocketEvent = (req, groupName, event, payload) => {
+    req.app.get('io').in(groupName).emit(event, payload)
+}
 
 
-module.exports = { initializeSocketio, createChatRoom }
+module.exports = { initializeSocketio, createChatRoom, emitSocketEvent }

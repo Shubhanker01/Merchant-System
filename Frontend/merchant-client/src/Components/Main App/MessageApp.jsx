@@ -6,14 +6,15 @@ import Message from './Message'
 import { socket } from '../../socket'
 
 function MessageApp() {
-    // useEffect(() => {
-    //     socket.connect()
-    //     return () => {
-    //         socket.disconnect()
-    //     }
-    // }, [])
+    const [currentSocket, setCurrentSocket] = useState(null)
     useEffect(() => {
-        socket.emit('chat', "I am in chat room")
+        socket.connect()
+        return () => {
+            socket.disconnect()
+        }
+    }, [])
+    useEffect(() => {
+        // socket.emit('chat', "I am in chat room")
         socket.on('join', (arg) => {
             console.log(arg)
         })
