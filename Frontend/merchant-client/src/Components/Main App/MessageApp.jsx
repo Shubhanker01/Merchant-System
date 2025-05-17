@@ -15,6 +15,9 @@ function MessageApp() {
     }, [])
     useEffect(() => {
         // socket.emit('chat', "I am in chat room")
+        socket.on('message', (arg) => {
+            console.log(arg)
+        })
         socket.on('join', (arg) => {
             console.log(arg)
         })

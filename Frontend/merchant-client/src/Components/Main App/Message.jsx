@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { sendMessage } from '../../Async logic/message'
 import { nanoid } from 'nanoid'
 
 function Message({ currentGroupChat }) {
@@ -6,10 +7,15 @@ function Message({ currentGroupChat }) {
     let [message, setMessage] = useState('')
     const messageEndRef = useRef(null)
 
-    const sendMessage = () => {
+    const sendMsg = () => {
         if (message.trim === '') return
         else {
             setMessages([...messages, { id: nanoid(), text: message, timestamp: new Date() }])
+            sendMessage('group1', message).then((res) => {
+                console.log(res)
+            }).catch((err) => {
+                console.log(err)
+            })
         }
 
         setMessage('')
@@ -42,7 +48,7 @@ function Message({ currentGroupChat }) {
                     />
                     <button
                         className="bg-blue-500 text-white px-4 py-2 rounded disabled"
-                        onClick={sendMessage} disabled={message === '' ? true : false}
+                        onClick={sendMsg} disabled={message === '' ? true : false}
                     >
                         Send
                     </button>

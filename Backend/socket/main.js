@@ -9,6 +9,9 @@ const createChatRoom = (socket) => {
         console.log(socket.rooms)
         socket.emit("join", "Hello to the group")
     })
+    socket.on('message', (arg) => {
+        console.log(arg)
+    })
 }
 
 const initializeSocketio = (io) => {

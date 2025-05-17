@@ -47,6 +47,11 @@ app.use('/api/chats', require('./routes/chat room/chatRoom.routes'))
 
 // query user
 app.use('/api', require('./routes/chat room/queryParticipant.routes'))
+
+// message router
+app.use('/api/message', require('./routes/chat room/message.routes'))
+
+
 server.listen(port, () => {
     console.log("Example app listening on port ", port)
 })
