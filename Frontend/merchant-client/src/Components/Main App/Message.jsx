@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { sendMessage } from '../../Async logic/message'
 import { nanoid } from 'nanoid'
+import { socket } from '../../socket'
 
 function Message({ currentGroupChat }) {
+
     let [messages, setMessages] = useState([])
     let [message, setMessage] = useState('')
     const messageEndRef = useRef(null)
@@ -10,9 +12,15 @@ function Message({ currentGroupChat }) {
     const sendMsg = () => {
         if (message.trim === '') return
         else {
-            setMessages([...messages, { id: nanoid(), text: message, timestamp: new Date() }])
+            let newMsg = {
+                id: nanoid(),
+                text: message,
+                timestamp: new Date()
+            }
+            setMessages([...messages, newMsg])
             sendMessage('group1', message).then((res) => {
                 console.log(res)
+                socket.emit('send-message', newMsg)
             }).catch((err) => {
                 console.log(err)
             })
@@ -21,6 +29,16 @@ function Message({ currentGroupChat }) {
         setMessage('')
     }
     useEffect(() => {
+        socket.connect()
+        return () => {
+            socket.disconnect()
+        }
+    }, [])
+    useEffect(() => {
+        socket.on('messages', (arg) => {
+            console.log(arg)
+            setMessages(arg)
+        })
         messageEndRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }, [messages])
     return (
@@ -30,9 +48,9 @@ function Message({ currentGroupChat }) {
                     {messages.map((msg) => (
                         <div key={msg.id} className="p-2 border-b">
                             <p className="text-gray-100">{msg.text}</p>
-                            <span className="text-xs text-gray-100">
+                            {/* <span className="text-xs text-gray-100">
                                 {msg.timestamp.toLocaleTimeString()}
-                            </span>
+                            </span> */}
                         </div>
                     ))}
                     <div ref={messageEndRef}></div>
