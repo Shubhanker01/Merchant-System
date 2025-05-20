@@ -17,9 +17,9 @@ function Message({ currentGroupChat }) {
                 text: message,
                 timestamp: new Date()
             }
-            setMessages([...messages, newMsg])
             sendMessage('group1', message).then((res) => {
                 console.log(res)
+                // emit message to the server
                 socket.emit('send-message', newMsg)
             }).catch((err) => {
                 console.log(err)
@@ -35,6 +35,7 @@ function Message({ currentGroupChat }) {
         }
     }, [])
     useEffect(() => {
+        
         socket.on('messages', (arg) => {
             console.log(arg)
             setMessages(arg)
@@ -48,9 +49,9 @@ function Message({ currentGroupChat }) {
                     {messages.map((msg) => (
                         <div key={msg.id} className="p-2 border-b">
                             <p className="text-gray-100">{msg.text}</p>
-                            {/* <span className="text-xs text-gray-100">
-                                {msg.timestamp.toLocaleTimeString()}
-                            </span> */}
+                            <span className="text-xs text-gray-100">
+                                {msg.timestamp.toString()}
+                            </span>
                         </div>
                     ))}
                     <div ref={messageEndRef}></div>

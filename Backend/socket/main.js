@@ -15,12 +15,13 @@ const createChatRoom = (socket) => {
     })
 }
 
-const sendMessageToRoom = (socket) => {
+const sendMessageToRoom = (socket, io) => {
+    // listen for chat message
     socket.on('send-message', (arg) => {
         console.log(arg)
-        socket.to('group1').emit('message', arg)
+        io.to('group1').emit('message', arg)
         messages.push(arg)
-        socket.emit('messages', messages)
+        io.emit('messages', messages)
     })
 }
 const initializeSocketio = (io) => {
@@ -28,7 +29,11 @@ const initializeSocketio = (io) => {
         try {
             socket.emit('msg', 'This message is for client')
             createChatRoom(socket)
-            sendMessageToRoom(socket)
+            sendMessageToRoom(socket, io)
+
+            socket.on('disconnect', () => {
+                io.emit('left', 'a user has left the chat')
+            })
         }
         catch (err) {
             console.log(err)
