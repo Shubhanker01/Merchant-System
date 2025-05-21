@@ -2,9 +2,12 @@ import React, { useEffect, useRef, useState } from 'react'
 import { sendMessage } from '../../Async logic/message'
 import { nanoid } from 'nanoid'
 import { socket } from '../../socket'
+import decodeToken from '../../utils/decodeJwt'
+import getCookie from '../../utils/getCookie'
 
 function Message({ currentGroupChat }) {
-
+    let token = getCookie()
+    let user = decodeToken(token)
     let [messages, setMessages] = useState([])
     let [message, setMessage] = useState('')
     const messageEndRef = useRef(null)
@@ -13,6 +16,7 @@ function Message({ currentGroupChat }) {
         if (message.trim === '') return
         else {
             let newMsg = {
+                user: user.name,
                 id: nanoid(),
                 text: message,
                 timestamp: new Date()
@@ -35,7 +39,7 @@ function Message({ currentGroupChat }) {
         }
     }, [])
     useEffect(() => {
-        
+
         socket.on('messages', (arg) => {
             console.log(arg)
             setMessages(arg)
@@ -48,6 +52,9 @@ function Message({ currentGroupChat }) {
                 <div className="h-[90%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto">
                     {messages.map((msg) => (
                         <div key={msg.id} className="p-2 border-b">
+                            <div>
+                                
+                            </div>
                             <p className="text-gray-100">{msg.text}</p>
                             <span className="text-xs text-gray-100">
                                 {msg.timestamp.toString()}
