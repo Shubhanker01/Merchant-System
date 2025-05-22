@@ -18,6 +18,7 @@ const createChatRoom = (socket) => {
 const sendMessageToRoom = (socket, io) => {
     // listen for chat message
     socket.on('send-message', (arg) => {
+
         console.log(arg)
         io.to('group1').emit('message', arg)
         messages.push(arg)
@@ -28,9 +29,11 @@ const initializeSocketio = (io) => {
     return io.on('connection', async (socket) => {
         try {
             socket.emit('msg', 'This message is for client')
+            console.log(socket.id)
             createChatRoom(socket)
             sendMessageToRoom(socket, io)
-
+            // const sockets = await io.in('group1').fetchSockets();
+            // console.log('Sockets in group1:', sockets.map(s => s.id));
             socket.on('disconnect', () => {
                 io.emit('left', 'a user has left the chat')
             })

@@ -5,6 +5,7 @@ import { socket } from '../../socket'
 import decodeToken from '../../utils/decodeJwt'
 import getCookie from '../../utils/getCookie'
 import { User } from 'lucide-react'
+import { io } from 'socket.io-client'
 
 function Message({ currentGroupChat }) {
     let token = getCookie()

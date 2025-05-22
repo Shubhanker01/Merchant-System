@@ -5,6 +5,7 @@ import ShowGroups from './ShowGroups'
 import Message from './Message'
 import { socket } from '../../socket'
 
+
 function MessageApp() {
     const [currentSocket, setCurrentSocket] = useState(null)
     useEffect(() => {
