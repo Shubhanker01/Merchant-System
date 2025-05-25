@@ -34,12 +34,12 @@ function Message({ currentGroupChat }) {
 
         setMessage('')
     }
-    useEffect(() => {
-        socket.connect()
-        return () => {
-            socket.disconnect()
-        }
-    }, [])
+    // useEffect(() => {
+    //     socket.connect()
+    //     return () => {
+    //         socket.disconnect()
+    //     }
+    // }, [])
     useEffect(() => {
 
         socket.on('messages', (arg) => {

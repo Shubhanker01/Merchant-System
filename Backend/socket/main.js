@@ -8,7 +8,8 @@ let messages = [];
 // const create chat room
 const createChatRoom = (socket) => {
     socket.on("chat-room", (arg) => {
-        socket.join(arg)
+        socket.join(socket.id)
+        console.log(`${socket.id} has joined the chat`)
         console.log("A new chat room has been created")
         console.log(socket.rooms)
         socket.emit("join", "Hello to the group")
