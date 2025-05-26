@@ -32,7 +32,6 @@ function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isCha
         }
         createGroupChat(selectedParticipants, groupName).then((res) => {
             toast.success(res, { position: 'top-center' })
-            socket.emit('chat-room', groupName)
             isChatAdded(true)
         }).catch(err => {
             console.log(err)

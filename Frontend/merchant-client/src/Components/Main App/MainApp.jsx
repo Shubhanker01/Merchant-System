@@ -8,6 +8,9 @@ import { socket } from '../../socket'
 function MainApp() {
     useEffect(() => {
         socket.connect()
+        socket.on('connect', () => {
+            console.log(`${socket.id} is connected`)
+        })
         return () => {
             socket.disconnect()
         }

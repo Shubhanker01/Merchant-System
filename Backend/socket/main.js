@@ -8,8 +8,8 @@ let messages = [];
 // const create chat room
 const createChatRoom = (socket) => {
     socket.on("chat-room", (arg) => {
-        socket.join(socket.id)
-        console.log(`${socket.id} has joined the chat`)
+        socket.join(arg)
+        console.log(`${arg} has joined the chat`)
         console.log("A new chat room has been created")
         console.log(socket.rooms)
         socket.emit("join", "Hello to the group")
@@ -33,8 +33,6 @@ const initializeSocketio = (io) => {
             console.log(socket.id)
             createChatRoom(socket)
             sendMessageToRoom(socket, io)
-            // const sockets = await io.in('group1').fetchSockets();
-            // console.log('Sockets in group1:', sockets.map(s => s.id));
             socket.on('disconnect', () => {
                 io.emit('left', 'a user has left the chat')
             })
