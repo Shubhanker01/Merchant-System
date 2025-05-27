@@ -4,9 +4,10 @@ import CreateChat from './CreateChat'
 import ShowGroups from './ShowGroups'
 import Message from './Message'
 import { socket } from '../../socket'
-
+import { useParams } from 'react-router-dom'
 
 function MessageApp() {
+    const params = useParams()
     const [currentSocket, setCurrentSocket] = useState(null)
     useEffect(() => {
         socket.connect()
@@ -16,12 +17,17 @@ function MessageApp() {
     }, [])
     useEffect(() => {
         // socket.emit('chat', "I am in chat room")
+
         socket.on('message', (arg) => {
             console.log(arg)
+            socket.emit('enter-room', params.userId)
         })
-        socket.on('join', (arg) => {
+        socket.on('entry', (arg) => {
             console.log(arg)
         })
+        // socket.on('join', (arg) => {
+        //     console.log(arg)
+        // })
         return () => {
             socket.off('join', () => {
                 console.log('disconnected')
