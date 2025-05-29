@@ -40,7 +40,10 @@ function Message({ currentGroupChat }) {
     //     }
     // }, [])
     useEffect(() => {
+        socket.on('message', (arg) => {
+            console.log(arg)
 
+        })
         socket.on('messages', (arg) => {
             console.log(arg)
             setMessages(arg)

@@ -21,7 +21,7 @@ const sendMessageToRoom = (socket, io) => {
     socket.on('send-message', (arg) => {
 
         console.log(arg)
-        io.to('group1').emit('message', arg)
+        // io.to('67a5b7ec63e24cc8bc378722').emit('message', arg)
         messages.push(arg)
         io.emit('messages', messages)
     })
@@ -35,9 +35,10 @@ const initializeSocketio = (io) => {
                 socket.join(arg)
                 console.log(`${arg} entered the room`)
                 console.log(socket.rooms)
-                // io.to(arg).emit('entry', "You have joined the room")
+                io.to(arg).emit('entry', "You have joined the room")
             })
             sendMessageToRoom(socket, io)
+
             socket.on('disconnect', () => {
                 io.emit('left', 'a user has left the chat')
             })

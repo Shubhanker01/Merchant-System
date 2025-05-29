@@ -11,6 +11,12 @@ function MessageApp() {
     const [currentSocket, setCurrentSocket] = useState(null)
     useEffect(() => {
         socket.connect()
+        socket.on('connect', () => {
+            socket.emit('enter-room', params.userId)
+            socket.on('entry', (msg) => {
+                console.log(msg)
+            })
+        })
         return () => {
             socket.disconnect()
         }
@@ -18,13 +24,6 @@ function MessageApp() {
     useEffect(() => {
         // socket.emit('chat', "I am in chat room")
 
-        socket.on('message', (arg) => {
-            console.log(arg)
-            socket.emit('enter-room', params.userId)
-        })
-        socket.on('entry', (arg) => {
-            console.log(arg)
-        })
         // socket.on('join', (arg) => {
         //     console.log(arg)
         // })
