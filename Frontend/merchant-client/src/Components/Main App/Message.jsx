@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { sendMessage } from '../../Async logic/message'
 import { nanoid } from 'nanoid'
-import { socket } from '../../socket'
+import { socket, userSocket } from '../../socket'
 import decodeToken from '../../utils/decodeJwt'
 import getCookie from '../../utils/getCookie'
 import { User } from 'lucide-react'
@@ -25,7 +25,8 @@ function Message({ currentGroupChat }) {
             sendMessage('group1', message).then((res) => {
                 console.log(res)
                 // emit message to the server
-                socket.emit('send-message', newMsg)
+                // socket.emit('send-message', newMsg)
+                userSocket.emit('send-message', newMsg)
             }).catch((err) => {
                 console.log(err)
             })
@@ -34,20 +35,20 @@ function Message({ currentGroupChat }) {
         setMessage('')
     }
     // useEffect(() => {
-    //     socket.connect()
+    //     userSocket.connect()
     //     return () => {
-    //         socket.disconnect()
+    //         userSocket.disconnect()
     //     }
     // }, [])
     useEffect(() => {
-        socket.on('message', (arg) => {
+        userSocket.on('message', (arg) => {
             console.log(arg)
-
+            setMessages([...messages, arg])
         })
-        socket.on('messages', (arg) => {
-            console.log(arg)
-            setMessages(arg)
-        })
+        // userSocket.on('messages', (arg) => {
+        //     console.log(arg)
+        //     setMessages(arg)
+        // })
         messageEndRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }, [messages])
     return (

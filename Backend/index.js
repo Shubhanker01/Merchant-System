@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const { createServer } = require('node:http')
 const server = createServer(app)
 const { Server } = require('socket.io')
-const { initializeSocketio } = require('../Backend/socket/main')
+const { initializeSocketio, createNamspace } = require('../Backend/socket/main')
 
 const io = new Server(server, {
     cors: {
@@ -16,7 +16,7 @@ const io = new Server(server, {
     }
 })
 initializeSocketio(io)
-// createChatRoom(io, "123")
+createNamspace(io)
 
 app.set('io', io)
 // creating a middleware to use io in routes
