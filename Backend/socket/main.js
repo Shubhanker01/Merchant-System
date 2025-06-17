@@ -6,7 +6,12 @@ let messages = [];
 // initialize socket io event
 
 // const create chat room
-
+const createChatRoom = (socket) => {
+    socket.on('create-room', (arg) => {
+        socket.join(arg)
+        console.log(socket.rooms)
+    })
+}
 
 const sendMessageToRoom = (socket, io) => {
     // listen for chat message
@@ -27,6 +32,7 @@ const createNamspace = (io) => {
             socket.join("room1")
             console.log(socket.rooms)
         })
+        createChatRoom(socket)
         sendMessageToRoom(socket, users)
     })
 }
