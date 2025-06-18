@@ -26,7 +26,7 @@ function Message({ currentGroupChat }) {
                 console.log(res)
                 // emit message to the server
                 // socket.emit('send-message', newMsg)
-                userSocket.emit('send-message', newMsg)
+                userSocket.emit('send-message', { room: currentGroupChat, message: newMsg })
             }).catch((err) => {
                 console.log(err)
             })
@@ -43,6 +43,7 @@ function Message({ currentGroupChat }) {
     useEffect(() => {
         userSocket.on('message', (arg) => {
             console.log(arg)
+
             setMessages([...messages, arg])
         })
         // userSocket.on('messages', (arg) => {
@@ -51,10 +52,12 @@ function Message({ currentGroupChat }) {
         // })
         messageEndRef.current?.scrollIntoView({ behaviour: 'smooth' })
     }, [messages])
+    console.log(currentGroupChat)
     return (
         <>
             <div className="my-6 p-4 bg-gray-800 h-[85%] w-[100%] mr-4">
                 <div className="fixed h-[70%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto w-[80%]">
+                    <h1 className='text-gray-200'>{currentGroupChat || "Please Select Group to continue chatting"}</h1>
                     {messages.map((msg) => (
                         <div key={msg.id} className="p-2 bg-gray-700 border-b">
                             <div className='flex'>
@@ -63,7 +66,7 @@ function Message({ currentGroupChat }) {
                             </div>
                             <p className="text-gray-100">{msg.text}</p>
                             <span className="text-xs text-gray-100">
-                                {msg.timestamp.toString()}
+                                {msg.timestamp}
                             </span>
                         </div>
                     ))}

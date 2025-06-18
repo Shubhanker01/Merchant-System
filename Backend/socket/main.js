@@ -7,9 +7,18 @@ let messages = [];
 
 // const create chat room
 const createChatRoom = (socket) => {
-    socket.on('create-room', (arg) => {
-        socket.join(arg)
+    socket.on('create-room', (groups) => {
+        for (let i = 0; i < groups.length; i++) {
+            socket.join(groups[i].name)
+        }
         console.log(socket.rooms)
+    })
+}
+
+// send notification about user being added to chat
+const userAddedToChat = (socket) => {
+    socket.on('user-added', (arg) => {
+        socket.emit('user-added-success', arg)
     })
 }
 
@@ -18,10 +27,12 @@ const sendMessageToRoom = (socket, io) => {
     socket.on('send-message', (arg) => {
 
         console.log(arg)
-        io.to('room1').emit('message', arg)
+        io.to(arg.room).emit('message', arg.message)
         messages.push(arg)
+        console.log(socket.rooms)
         // io.emit('messages', messages)
     })
+
 }
 
 // create namespace for users
@@ -34,6 +45,7 @@ const createNamspace = (io) => {
         // })
         createChatRoom(socket)
         sendMessageToRoom(socket, users)
+        // userAddedToChat(socket)
     })
 }
 

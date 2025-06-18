@@ -3,8 +3,9 @@ import { Users, EllipsisVertical } from 'lucide-react'
 import { showGroupChat } from '../../Async logic/createChatGroup'
 import { useParams } from 'react-router-dom'
 import AboutGroup from '../Popup/AboutGroup'
+import { userSocket } from '../../socket'
 
-function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
+function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGroupChat }) {
   const params = useParams()
   let [checkDelete, isCheckDelete] = useState(false)
   const [modal, setModal] = useState(false)
@@ -25,6 +26,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
     }
     // shows only the group that the user is a part of 
     showGroupChat(params.userId).then((res) => {
+
       showGroups(res)
       showParticipants(res.map((group) => {
         return group.members
@@ -33,6 +35,10 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
       console.log(err)
     })
   }, [checkDelete, chatAdded])
+
+  useEffect(() => {
+    userSocket.emit('create-room', groups)
+  }, [groups])
 
   if (groups.length == 0) {
     return <div>No groups to show</div>
@@ -46,6 +52,8 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
     setAdmin(admin)
   }
 
+
+
   return (
     <>
       <div className='mt-[50px] h-full w-[70%]'>
@@ -55,7 +63,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded }) {
             console.log(group)
             return (
               <div key={group._id}>
-                <div className='flex items-center m-2 bg-zinc-900 cursor-pointer rounded-xl'>
+                <div className='flex items-center m-2 bg-zinc-900 cursor-pointer rounded-xl' onClick={() => { showCurrentGroupChat(group.name) }}>
                   <button onClick={() => { showGroupInfo(group._id, group.members, group.admin) }}>
                     <EllipsisVertical color="#e9e2e2" />
                   </button>

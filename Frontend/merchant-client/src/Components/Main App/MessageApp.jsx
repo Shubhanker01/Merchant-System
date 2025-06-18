@@ -33,12 +33,12 @@ function MessageApp() {
             <NavbarApp />
             <div className="grid grid-cols-4 w-full mx-auto p-4 bg-gray-800 h-screen fixed">
                 <div>
-                    <ShowGroups groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} />
+                    <ShowGroups groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} showCurrentGroupChat={showCurrentGroupChat} />
                 </div>
 
 
                 <div className='col-span-3'>
-                    <Message />
+                    <Message currentGroupChat={currentGroupChat} />
                 </div>
 
             </div>
