@@ -7,6 +7,7 @@ import createGroupChat from '../../Async logic/createChatGroup'
 import { toast } from 'react-toastify'
 import useDebounce from '../../hooks/useDebounce'
 import { userSocket } from '../../socket'
+import saveRooms from '../../utils/saveRoom'
 
 function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isChatAdded }) {
     const [selectedParticipants, setSelectedParticipants] = useState([])
@@ -33,6 +34,7 @@ function CreateChatModal({ modal, setModal, groups, showGroups, chatAdded, isCha
         createGroupChat(selectedParticipants, groupName).then((res) => {
             toast.success(res, { position: 'top-center' })
             userSocket.emit('create-room', groupName)
+            saveRooms([groupName])
             isChatAdded(true)
 
         }).catch(err => {

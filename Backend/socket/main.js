@@ -28,10 +28,10 @@ const sendMessageToRoom = (socket, io) => {
 const createNamspace = (io) => {
     const users = io.of('/users')
     users.on('connection', (socket) => {
-        socket.on('enter-user', (arg) => {
-            socket.join("room1")
-            console.log(socket.rooms)
-        })
+        // socket.on('enter-user', (arg) => {
+        //     socket.join("room1")
+        //     console.log(socket.rooms)
+        // })
         createChatRoom(socket)
         sendMessageToRoom(socket, users)
     })
