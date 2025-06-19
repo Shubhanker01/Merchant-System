@@ -9,8 +9,9 @@ import { User } from 'lucide-react'
 function Message({ currentGroupChat }) {
     let token = getCookie()
     let user = decodeToken(token)
-    let [messages, setMessages] = useState([])
+    // let [messages, setMessages] = useState([])
     let [message, setMessage] = useState('')
+    let [currentGroup, setCurrentGroup] = useState({ group: '', messages: [] })
     const messageEndRef = useRef(null)
 
     const sendMsg = () => {
@@ -43,22 +44,23 @@ function Message({ currentGroupChat }) {
     useEffect(() => {
         userSocket.on('message', (arg) => {
             console.log(arg)
-
-            setMessages([...messages, arg])
+            setCurrentGroup({ group: currentGroupChat, messages: [...currentGroup.messages, arg] })
+            // setMessages([...messages, arg])
         })
         // userSocket.on('messages', (arg) => {
         //     console.log(arg)
         //     setMessages(arg)
         // })
         messageEndRef.current?.scrollIntoView({ behaviour: 'smooth' })
-    }, [messages])
+    }, [currentGroup.messages, currentGroup.group])
+    console.log(currentGroup)
     console.log(currentGroupChat)
     return (
         <>
             <div className="my-6 p-4 bg-gray-800 h-[85%] w-[100%] mr-4">
                 <div className="fixed h-[70%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto w-[80%]">
                     <h1 className='text-gray-200'>{currentGroupChat || "Please Select Group to continue chatting"}</h1>
-                    {messages.map((msg) => (
+                    {currentGroup.messages.map((msg) => (
                         <div key={msg.id} className="p-2 bg-gray-700 border-b">
                             <div className='flex'>
                                 <User color="#e7dada" />
@@ -96,6 +98,7 @@ function Message({ currentGroupChat }) {
                     placeholder="Type a message..."
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
+                    disabled={currentGroupChat === '' ? true : false}
                 />
                 <button
                     className="bg-blue-500 text-white px-4 py-2 rounded disabled"
