@@ -16,20 +16,20 @@ const createChatRoom = (socket) => {
 }
 
 // send notification about user being added to chat
-const userAddedToChat = (socket) => {
-    socket.on('user-added', (arg) => {
-        socket.emit('user-added-success', arg)
-    })
-}
+// const userAddedToChat = (socket) => {
+//     socket.on('user-added', (arg) => {
+//         socket.emit('user-added-success', arg)
+//     })
+// }
 
 const sendMessageToRoom = (socket, io) => {
     // listen for chat message
     socket.on('send-message', (arg) => {
 
         console.log(arg)
-        io.to(arg.room).emit('message', arg.message)
+        io.to(arg.room).emit('message', arg)
         messages.push(arg)
-        console.log(socket.rooms)
+        console.log(`${socket.id} sent the message`)
         // io.emit('messages', messages)
     })
 
@@ -39,13 +39,10 @@ const sendMessageToRoom = (socket, io) => {
 const createNamspace = (io) => {
     const users = io.of('/users')
     users.on('connection', (socket) => {
-        // socket.on('enter-user', (arg) => {
-        //     socket.join("room1")
-        //     console.log(socket.rooms)
-        // })
+        console.log(socket.id)
         createChatRoom(socket)
         sendMessageToRoom(socket, users)
-        // userAddedToChat(socket)
+
     })
 }
 

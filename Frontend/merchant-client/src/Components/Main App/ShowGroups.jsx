@@ -45,7 +45,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
   }
 
   const showGroupInfo = (groupId, participants, admin) => {
-    console.log("This group is clicked", groupId)
+    // console.log("This group is clicked", groupId)
     setModal(true)
     currentGroupId(groupId)
     showGroupParticipants(participants)
@@ -60,7 +60,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
         <h1 className='text-slate-200 ml-4 pt-4'>Your Groups</h1>
         {
           groups.map((group) => {
-            console.log(group)
+            // console.log(group)
             return (
               <div key={group._id}>
                 <div className='flex items-center m-2 bg-zinc-900 cursor-pointer rounded-xl' onClick={() => { showCurrentGroupChat(group.name) }}>

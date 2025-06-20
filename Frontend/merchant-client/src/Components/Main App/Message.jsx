@@ -1,17 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { sendMessage } from '../../Async logic/message'
 import { nanoid } from 'nanoid'
-import { socket, userSocket } from '../../socket'
+import { userSocket } from '../../socket'
 import decodeToken from '../../utils/decodeJwt'
 import getCookie from '../../utils/getCookie'
 import { User } from 'lucide-react'
+import { toast } from 'react-toastify'
 
 function Message({ currentGroupChat }) {
     let token = getCookie()
     let user = decodeToken(token)
-    // let [messages, setMessages] = useState([])
+    let [messages, setMessages] = useState([])
     let [message, setMessage] = useState('')
-    let [currentGroup, setCurrentGroup] = useState({ group: '', messages: [] })
+    // let [currentGroup, setCurrentGroup] = useState({ group: '', messages: [] })
     const messageEndRef = useRef(null)
 
     const sendMsg = () => {
@@ -24,9 +25,8 @@ function Message({ currentGroupChat }) {
                 timestamp: new Date()
             }
             sendMessage('group1', message).then((res) => {
-                console.log(res)
+                // console.log(res)
                 // emit message to the server
-                // socket.emit('send-message', newMsg)
                 userSocket.emit('send-message', { room: currentGroupChat, message: newMsg })
             }).catch((err) => {
                 console.log(err)
@@ -35,32 +35,42 @@ function Message({ currentGroupChat }) {
 
         setMessage('')
     }
-    // useEffect(() => {
-    //     userSocket.connect()
-    //     return () => {
-    //         userSocket.disconnect()
-    //     }
-    // }, [])
+
     useEffect(() => {
+        console.log("I am called")
         userSocket.on('message', (arg) => {
-            console.log(arg)
-            setCurrentGroup({ group: currentGroupChat, messages: [...currentGroup.messages, arg] })
-            // setMessages([...messages, arg])
+            console.log(arg.room)
+            console.log(currentGroupChat)
+            // check if the message sent by other user is of the same group
+            // check if someone else is sending the message
+            if (arg.message.user !== user.name) {
+                console.log("Someone else is sending the message")
+                if (arg.room !== currentGroupChat) {
+                    toast.info(`${arg.message.user} has sent you a message in other group please check`)
+                }
+                else {
+                    setMessages([...messages, arg.message])
+                }
+            }
+
         })
-        // userSocket.on('messages', (arg) => {
-        //     console.log(arg)
-        //     setMessages(arg)
-        // })
+
         messageEndRef.current?.scrollIntoView({ behaviour: 'smooth' })
-    }, [currentGroup.messages, currentGroup.group])
-    console.log(currentGroup)
-    console.log(currentGroupChat)
+    }, [messages])
+
+    useEffect(() => {
+        console.log(`I am currently in ${currentGroupChat}`)
+        console.log(`Messages of ${currentGroupChat}`)
+        setMessages([])
+    }, [currentGroupChat])
+    console.log(messages)
     return (
         <>
+
             <div className="my-6 p-4 bg-gray-800 h-[85%] w-[100%] mr-4">
                 <div className="fixed h-[70%] bg-gray-800 p-4 rounded shadow mb-4 overflow-y-auto w-[80%]">
                     <h1 className='text-gray-200'>{currentGroupChat || "Please Select Group to continue chatting"}</h1>
-                    {currentGroup.messages.map((msg) => (
+                    {messages.map((msg) => (
                         <div key={msg.id} className="p-2 bg-gray-700 border-b">
                             <div className='flex'>
                                 <User color="#e7dada" />

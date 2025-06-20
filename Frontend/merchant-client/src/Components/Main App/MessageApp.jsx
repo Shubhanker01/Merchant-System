@@ -9,21 +9,21 @@ import { useParams } from 'react-router-dom'
 
 function MessageApp() {
     const params = useParams()
-    const [currentSocket, setCurrentSocket] = useState(null)
+    // connect the user socket instance with the namespace user
     useEffect(() => {
         userSocket.connect()
         return () => {
             userSocket.disconnect()
         }
     }, [])
-    useEffect(() => {
-        userSocket.emit('enter-user', params.userId)
-        return () => {
-            socket.off('join', () => {
-                console.log('disconnected')
-            })
-        }
-    }, [])
+    // useEffect(() => {
+    //     userSocket.emit('enter-user', params.userId)
+    //     return () => {
+    //         socket.off('join', () => {
+    //             console.log('disconnected')
+    //         })
+    //     }
+    // }, [])
     const [groups, showGroups] = useState([])
     const [chatAdded, isChatAdded] = useState(false)
     const [currentGroupChat, showCurrentGroupChat] = useState('')
