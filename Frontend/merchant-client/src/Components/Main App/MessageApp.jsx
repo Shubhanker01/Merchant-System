@@ -3,33 +3,50 @@ import NavbarApp from '../Header/NavbarApp'
 import CreateChat from './CreateChat'
 import ShowGroups from './ShowGroups'
 import Message from './Message'
-import { socket, userSocket } from '../../socket'
+import { userSocket } from '../../socket'
 import { useParams } from 'react-router-dom'
 
 
 function MessageApp() {
     const params = useParams()
+    const [groups, showGroups] = useState([])
+    const [chatAdded, isChatAdded] = useState(false)
+    const [currentGroupChat, showCurrentGroupChat] = useState('')
+    const [groupMessages, setGroupMessages] = useState({ group: "", messages: [] })
     // connect the user socket instance with the namespace user
+
     useEffect(() => {
         userSocket.connect()
+
         return () => {
             userSocket.disconnect()
         }
     }, [])
-    // useEffect(() => {
-    //     userSocket.emit('enter-user', params.userId)
-    //     return () => {
-    //         socket.off('join', () => {
-    //             console.log('disconnected')
-    //         })
-    //     }
-    // }, [])
-    const [groups, showGroups] = useState([])
-    const [chatAdded, isChatAdded] = useState(false)
-    const [currentGroupChat, showCurrentGroupChat] = useState('')
+    useEffect(() => {
+        function receiveMessageEvent(arg) {
+            if (arg.room !== currentGroupChat) {
+                console.log("This message is from other group chat")
+            }
+            else {
+                setGroupMessages({ ...groupMessages, group: currentGroupChat, messages: [...groupMessages.messages, arg.message] })
+            }
+        }
+        userSocket.on('message', receiveMessageEvent)
+        // clean up function to remove duplicate events
+        return () => {
+            console.log("Clean up function is called")
+            userSocket.off('message', receiveMessageEvent)
+        }
+
+    }, [groupMessages])
+    useEffect(() => {
+        setGroupMessages({ ...setGroupMessages, group: currentGroupChat, messages: [] })
+    }, [currentGroupChat])
+    console.log(groupMessages)
 
     return (
         <>
+            {/* {console.log(tempMessages)} */}
             <NavbarApp />
             <div className="grid grid-cols-4 w-full mx-auto p-4 bg-gray-800 h-screen fixed">
                 <div>
@@ -38,7 +55,7 @@ function MessageApp() {
 
 
                 <div className='col-span-3'>
-                    <Message currentGroupChat={currentGroupChat} />
+                    <Message currentGroupChat={currentGroupChat} groupMessages={groupMessages} setGroupMessages={setGroupMessages} />
                 </div>
 
             </div>

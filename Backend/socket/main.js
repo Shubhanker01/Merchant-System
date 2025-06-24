@@ -30,7 +30,9 @@ const sendMessageToRoom = (socket, io) => {
         io.to(arg.room).emit('message', arg)
         messages.push(arg)
         console.log(`${socket.id} sent the message`)
-        // io.emit('messages', messages)
+        
+        // let users = io.sockets.adapter.rooms.get(arg.room)
+        // console.log(users)
     })
 
 }
