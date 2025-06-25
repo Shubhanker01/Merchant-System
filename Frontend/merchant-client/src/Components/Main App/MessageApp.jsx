@@ -26,7 +26,18 @@ function MessageApp() {
         function receiveMessageEvent(arg) {
             if (arg.room !== currentGroupChat) {
                 console.log("This message is from other group chat")
-                setOtherMessages([...otherMessages, { groupName: arg.room, message: arg.message }])
+                let index = otherMessages.find((group) => group.groupName == arg.room)
+                if (index == undefined) {
+                    setOtherMessages([...otherMessages, { groupName: arg.room, noOfMessages: 1 }])
+                }
+                else {
+                    setOtherMessages(otherMessages.map((group) => {
+                        if (group.groupName == arg.room) {
+                            group.noOfMessages++
+                        }
+                        return group
+                    }))
+                }
             }
             else {
                 setGroupMessages({ ...groupMessages, group: currentGroupChat, messages: [...groupMessages.messages, arg.message] })

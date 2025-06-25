@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import AboutGroup from '../Popup/AboutGroup'
 import { userSocket } from '../../socket'
 
-function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGroupChat, otherMessages }) {
+function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGroupChat, otherMessages, currentGroupChat }) {
   const params = useParams()
   let [checkDelete, isCheckDelete] = useState(false)
   const [modal, setModal] = useState(false)
@@ -13,6 +13,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
   const [groupId, currentGroupId] = useState("")
   const [groupParticipants, showGroupParticipants] = useState([])
   const [admin, setAdmin] = useState("")
+  
 
   useEffect(() => {
     // check if a new group is created
@@ -52,8 +53,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
     showGroupParticipants(participants)
     setAdmin(admin)
   }
-
-
+  console.log(groups)
 
   return (
     <>
@@ -75,7 +75,10 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
                     <p className='text-slate-200'>{group.members.length} participants</p>
                   </div>
                   <div className='w-[30px] h-[25px] ml-2 justify-end bg-green-800 rounded-full text-slate-100'>
-                    <p className='text-center'>2</p>
+                    <p className='text-center'>
+
+
+                    </p>
                   </div>
                 </div>
 
