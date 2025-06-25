@@ -1,7 +1,6 @@
 const { Server, Socket } = require('socket.io')
+const { Message } = require('../models/message.model')
 // store temporary messages
-let messages = [];
-
 
 // initialize socket io event
 
@@ -24,15 +23,18 @@ const createChatRoom = (socket) => {
 
 const sendMessageToRoom = (socket, io) => {
     // listen for chat message
-    socket.on('send-message', (arg) => {
+    socket.on('send-message', async (arg) => {
 
         console.log(arg)
         io.to(arg.room).emit('message', arg)
-        messages.push(arg)
+        await Message.create({
+            groupName: arg.room,
+            username: arg.message.user,
+            userId: arg.message.userId,
+            message: arg.message.text
+        })
         console.log(`${socket.id} sent the message`)
-        
-        // let users = io.sockets.adapter.rooms.get(arg.room)
-        // console.log(users)
+
     })
 
 }
@@ -53,7 +55,6 @@ const initializeSocketio = (io) => {
     return io.on('connection', async (socket) => {
         try {
             socket.emit('msg', 'This message is for client')
-            // createChatRoom(socket)
 
             socket.on('disconnect', () => {
                 io.emit('left', 'a user has left the chat')

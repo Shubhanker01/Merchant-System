@@ -4,15 +4,15 @@ import CreateChat from './CreateChat'
 import ShowGroups from './ShowGroups'
 import Message from './Message'
 import { userSocket } from '../../socket'
-import { useParams } from 'react-router-dom'
 
 
 function MessageApp() {
-    const params = useParams()
     const [groups, showGroups] = useState([])
     const [chatAdded, isChatAdded] = useState(false)
     const [currentGroupChat, showCurrentGroupChat] = useState('')
     const [groupMessages, setGroupMessages] = useState({ group: "", messages: [] })
+    const [otherMessages, setOtherMessages] = useState([])
+
     // connect the user socket instance with the namespace user
 
     useEffect(() => {
@@ -26,6 +26,7 @@ function MessageApp() {
         function receiveMessageEvent(arg) {
             if (arg.room !== currentGroupChat) {
                 console.log("This message is from other group chat")
+                setOtherMessages([...otherMessages, { groupName: arg.room, message: arg.message }])
             }
             else {
                 setGroupMessages({ ...groupMessages, group: currentGroupChat, messages: [...groupMessages.messages, arg.message] })
@@ -34,23 +35,21 @@ function MessageApp() {
         userSocket.on('message', receiveMessageEvent)
         // clean up function to remove duplicate events
         return () => {
-            console.log("Clean up function is called")
             userSocket.off('message', receiveMessageEvent)
         }
 
-    }, [groupMessages])
+    }, [groupMessages, otherMessages])
     useEffect(() => {
         setGroupMessages({ ...setGroupMessages, group: currentGroupChat, messages: [] })
     }, [currentGroupChat])
-    console.log(groupMessages)
-
+    console.log(otherMessages)
     return (
         <>
             {/* {console.log(tempMessages)} */}
             <NavbarApp />
             <div className="grid grid-cols-4 w-full mx-auto p-4 bg-gray-800 h-screen fixed">
                 <div>
-                    <ShowGroups groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} showCurrentGroupChat={showCurrentGroupChat} />
+                    <ShowGroups groups={groups} showGroups={showGroups} chatAdded={chatAdded} isChatAdded={isChatAdded} showCurrentGroupChat={showCurrentGroupChat} otherMessages={otherMessages} />
                 </div>
 
 

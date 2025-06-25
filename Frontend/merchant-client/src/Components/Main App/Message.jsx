@@ -6,18 +6,20 @@ import decodeToken from '../../utils/decodeJwt'
 import getCookie from '../../utils/getCookie'
 import { User } from 'lucide-react'
 import { toast } from 'react-toastify'
+import { useParams } from 'react-router-dom'
 
-function Message({ currentGroupChat, groupMessages, setGroupMessages }) {
+function Message({ currentGroupChat, groupMessages }) {
+    const params = useParams()
     let token = getCookie()
     let user = decodeToken(token)
     let [message, setMessage] = useState('')
     const messageEndRef = useRef(null)
-
     const sendMsg = () => {
         if (message.trim === '') return
         else {
             let newMsg = {
                 user: user.name,
+                userId: params.userId,
                 id: nanoid(),
                 text: message,
                 timestamp: new Date()

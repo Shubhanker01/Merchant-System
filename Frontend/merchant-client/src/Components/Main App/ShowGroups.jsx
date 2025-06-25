@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 import AboutGroup from '../Popup/AboutGroup'
 import { userSocket } from '../../socket'
 
-function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGroupChat }) {
+function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGroupChat, otherMessages }) {
   const params = useParams()
   let [checkDelete, isCheckDelete] = useState(false)
   const [modal, setModal] = useState(false)
@@ -34,6 +34,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
     }).catch((err) => {
       console.log(err)
     })
+
   }, [checkDelete, chatAdded])
 
   useEffect(() => {
@@ -56,7 +57,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
 
   return (
     <>
-      <div className='mt-[50px] h-full w-[70%]'>
+      <div className='mt-[50px] h-full w-[80%]'>
         <h1 className='text-slate-200 ml-4 pt-4'>Your Groups</h1>
         {
           groups.map((group) => {
@@ -73,8 +74,11 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
                     <h1 className='text-slate-100 text-bold m-2'>{group.name}</h1>
                     <p className='text-slate-200'>{group.members.length} participants</p>
                   </div>
-
+                  <div className='w-[30px] h-[25px] ml-2 justify-end bg-green-800 rounded-full text-slate-100'>
+                    <p className='text-center'>2</p>
+                  </div>
                 </div>
+
               </div>
             )
           })

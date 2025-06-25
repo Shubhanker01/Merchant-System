@@ -2,21 +2,25 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const messageModel = new Schema({
-    group: {
-        type: Schema.Types.ObjectId,
-        ref: 'groupChat'
+    groupName: {
+        type: String,
+        ref: 'groupchats'
     },
     message: {
         type: String,
-        required: 'true'
+        required: true
     },
-    user: {
+    username: {
+        type: String,
+        required: true
+    },
+    userId: {
         type: Schema.Types.ObjectId,
-        ref: 'Merchant'
+        ref: 'merchants'
     },
 }, {
     timestamps: true
 })
 
-const message = mongoose.model('message', messageModel)
-module.exports = { message }
+const Message = mongoose.model('message', messageModel)
+module.exports = { Message }
