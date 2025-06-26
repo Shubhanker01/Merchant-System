@@ -52,6 +52,14 @@ function MessageApp() {
     }, [groupMessages, otherMessages])
     useEffect(() => {
         setGroupMessages({ ...setGroupMessages, group: currentGroupChat, messages: [] })
+        let ind = otherMessages.findIndex((group) => group.groupName == currentGroupChat)
+        if (ind !== -1) {
+            setOtherMessages(otherMessages.filter((group) => {
+                if (group.groupName !== currentGroupChat) {
+                    return group
+                }
+            }))
+        }
     }, [currentGroupChat])
     console.log(otherMessages)
     return (

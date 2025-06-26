@@ -4,6 +4,7 @@ import { showGroupChat } from '../../Async logic/createChatGroup'
 import { useParams } from 'react-router-dom'
 import AboutGroup from '../Popup/AboutGroup'
 import { userSocket } from '../../socket'
+import noOfUnreadMessages from '../../utils/unreadMessages'
 
 function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGroupChat, otherMessages, currentGroupChat }) {
   const params = useParams()
@@ -13,7 +14,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
   const [groupId, currentGroupId] = useState("")
   const [groupParticipants, showGroupParticipants] = useState([])
   const [admin, setAdmin] = useState("")
-  
+
 
   useEffect(() => {
     // check if a new group is created
@@ -53,7 +54,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
     showGroupParticipants(participants)
     setAdmin(admin)
   }
-  console.log(groups)
+  console.log(otherMessages)
 
   return (
     <>
@@ -76,8 +77,7 @@ function ShowGroups({ groups, showGroups, chatAdded, isChatAdded, showCurrentGro
                   </div>
                   <div className='w-[30px] h-[25px] ml-2 justify-end bg-green-800 rounded-full text-slate-100'>
                     <p className='text-center'>
-
-
+                      {noOfUnreadMessages(group.name, otherMessages)}
                     </p>
                   </div>
                 </div>
