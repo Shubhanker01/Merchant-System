@@ -4,7 +4,7 @@ import CreateChat from './CreateChat'
 import ShowGroups from './ShowGroups'
 import Message from './Message'
 import { userSocket } from '../../socket'
-
+import { getOldMessages } from '../../Async logic/message'
 
 function MessageApp() {
     const [groups, showGroups] = useState([])
@@ -51,7 +51,22 @@ function MessageApp() {
 
     }, [groupMessages, otherMessages])
     useEffect(() => {
-        setGroupMessages({ ...setGroupMessages, group: currentGroupChat, messages: [] })
+        async function retrieveMessages() {
+            if (currentGroupChat !== '') {
+                let data = await getOldMessages(currentGroupChat)
+                data.map((chat) => {
+                    let msg = {
+                        id: chat._id,
+                        user: chat.username,
+                        text: chat.message,
+                        timeStamp: chat.updatedAt
+                    }
+                    setGroupMessages({ ...setGroupMessages, group: currentGroupChat, messages: [...groupMessages.messages, msg] })
+                })
+            }
+        }
+        retrieveMessages()
+        // setGroupMessages({ ...setGroupMessages, group: currentGroupChat, messages: [] })
         let ind = otherMessages.findIndex((group) => group.groupName == currentGroupChat)
         if (ind !== -1) {
             setOtherMessages(otherMessages.filter((group) => {

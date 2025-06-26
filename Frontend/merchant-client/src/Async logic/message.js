@@ -13,3 +13,13 @@ export const sendMessage = async (groupName, message) => {
     }
 }
 
+export const getOldMessages = async (groupName) => {
+    try {
+        let response = await axios.get(`${import.meta.env.VITE_PROD_SERVER}/api/message/getmessages/${groupName}`)
+        let data = await response.data
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}
+
