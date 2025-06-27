@@ -87,8 +87,6 @@ function MessageApp() {
             }))
         }
     }, [currentGroupChat])
-    // console.log(otherMessages)
-    // console.log(groupMessages)
     return (
         <>
             <NavbarApp />

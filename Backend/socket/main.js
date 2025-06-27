@@ -1,6 +1,6 @@
-const { Server, Socket } = require('socket.io')
+
 const { Message } = require('../models/message.model')
-// store temporary messages
+
 
 // initialize socket io event
 
@@ -24,8 +24,6 @@ const createChatRoom = (socket) => {
 const sendMessageToRoom = (socket, io) => {
     // listen for chat message
     socket.on('send-message', async (arg) => {
-
-        console.log(arg)
         io.to(arg.room).emit('message', arg)
         await Message.create({
             groupName: arg.room,
