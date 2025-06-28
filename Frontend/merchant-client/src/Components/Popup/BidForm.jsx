@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import compareDate from '../../utils/compareDate.js'
 import { addBid } from '../../Async logic/bidsThunk.js'
+import { bidsSocket } from '../../socket.js'
 
 function BidForm({ modal, openModal }) {
     const dispatch = useDispatch()
@@ -15,6 +16,7 @@ function BidForm({ modal, openModal }) {
         }
         dispatch(addBid(form)).unwrap().then((res) => {
             toast.success(res, { position: 'top-center' })
+            bidsSocket.emit('create-bids', "Bid is successfully added")
         }).catch((err) => {
             console.log(err);
             toast.error('Error adding bid', { position: 'top-center' })

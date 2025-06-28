@@ -42,7 +42,8 @@ const showAllBids = async (req, res) => {
                 })
             })
         }
-        res.send(result)
+        // res.send(result)
+        return result
 
     } catch (error) {
         console.log(error)

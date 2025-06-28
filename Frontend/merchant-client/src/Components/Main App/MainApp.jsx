@@ -3,37 +3,51 @@ import NavbarApp from '../Header/NavbarApp'
 import AddBid from '../Footer/AddBid'
 import BidsTable from '../Body/BidsTable'
 import { toast } from 'react-toastify'
-import { socket } from '../../socket'
+import { bidsSocket } from '../../socket'
 
 function MainApp() {
+    const [bids, setBids] = useState([])
     useEffect(() => {
-        socket.connect()
-        socket.on('connect', () => {
-            console.log(`${socket.id} is connected`)
-        })
+        // socket.connect()
+        bidsSocket.connect()
+        // socket.on('connect', () => {
+        //     console.log(`${socket.id} is connected`)
+        // })
         return () => {
-            socket.disconnect()
+            // socket.disconnect()
+            bidsSocket.disconnect()
         }
     }, [])
     useEffect(() => {
-        socket.on("msg", (arg) => {
+        function receiveBids(arg) {
+            setBids(arg)
+        }
+        function receiveEventForCreation(arg) {
             toast.info(arg)
-            console.log(arg)
-        })
-        socket.on('bidadded', (arg) => {
-            toast.info(arg)
-        })
+        }
+        bidsSocket.on('read-bids', receiveBids)
+        bidsSocket.on('success-creation-bids', receiveEventForCreation)
+        // socket.on('read-bids', receiveBids)
+        // socket.on("msg", (arg) => {
+        //     toast.info(arg)
+        //     console.log(arg)
+        // })
+        // socket.on('bidadded', (arg) => {
+        //     toast.info(arg)
+        // })
         return () => {
-            socket.off('msg', () => {
-                console.log('disconnected')
-            })
+            // socket.off('read-bids', receiveBids)
+            // socket.off('msg', () => {
+            //     console.log('disconnected')
+            // })
+            bidsSocket.off('read-bids', receiveBids)
         }
 
     }, [])
     return (
         <div>
             <NavbarApp />
-            <BidsTable />
+            <BidsTable bids={bids} />
             <AddBid />
         </div>
     )

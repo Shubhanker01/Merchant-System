@@ -6,6 +6,10 @@ export const socket = io(URL, {
     autoConnect: false
 })
 
+export const bidsSocket = io(`${URL}/bids`, {
+    autoConnect: false
+})
+
 export const userSocket = io(`${URL}/users`, {
     autoConnect: false
 })

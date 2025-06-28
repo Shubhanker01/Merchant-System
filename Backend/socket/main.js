@@ -1,6 +1,6 @@
 
 const { Message } = require('../models/message.model')
-
+const { showAllBids } = require('../controllers/bids/bids.controller')
 
 // initialize socket io event
 
@@ -23,6 +23,7 @@ const createChatRoom = (socket) => {
 
 const sendMessageToRoom = (socket, io) => {
     // listen for chat message
+
     socket.on('send-message', async (arg) => {
         io.to(arg.room).emit('message', arg)
         await Message.create({
@@ -36,6 +37,29 @@ const sendMessageToRoom = (socket, io) => {
     })
 
 }
+
+const sendBids = async (io) => {
+    let bids = await showAllBids()
+    io.emit("read-bids", bids)
+}
+
+// create namespace for bids crud
+const bidsNamespace = (io) => {
+    const bids = io.of('/bids')
+    bids.on('connection', (socket) => {
+        // console.log(`${socket.id} connected to bids namespace`)
+        sendBids(bids)
+        // listen to different events 
+        socket.on('create-bids', (arg) => {
+            console.log(arg)
+            // broadcast the message to all user except the sender
+            socket.broadcast.emit('success-creation-bids', "A new bid has been added")
+            sendBids(bids)
+        })
+
+    })
+}
+
 
 // create namespace for users
 const createNamspace = (io) => {
@@ -53,7 +77,10 @@ const initializeSocketio = (io) => {
     return io.on('connection', async (socket) => {
         try {
             socket.emit('msg', 'This message is for client')
-
+            socket.on('bid-added', (arg) => {
+                console.log(arg)
+            })
+            // sendBids(io)
             socket.on('disconnect', () => {
                 io.emit('left', 'a user has left the chat')
             })
@@ -65,4 +92,4 @@ const initializeSocketio = (io) => {
 }
 
 
-module.exports = { initializeSocketio, createNamspace }
+module.exports = { initializeSocketio, createNamspace, bidsNamespace }
