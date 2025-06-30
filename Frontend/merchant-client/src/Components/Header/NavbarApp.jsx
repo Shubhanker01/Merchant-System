@@ -52,6 +52,7 @@ function NavbarApp() {
                                     <div className='hidden sm:flex lg:space-x-4 lg:mt-0 mt-4 items-center text-xl'>
                                         <NavLink to={`/main-app/${userId}`} className={`text-white text-base px-4 py-2 hover:text-orange-600 `}>Home</NavLink>
                                         <NavLink to={`/main-app/${userId}/message`} className="text-white text-base  px-4 py-2  hover:text-orange-600">Message</NavLink>
+                                        <NavLink to={`/main-app/${userId}/mybids`} className='text-white text-base  px-4 py-2  hover:text-orange-600'>My Bids</NavLink>
                                         <NavLink to="/about" className="text-white text-base  px-4 py-2  hover:text-orange-600">About</NavLink>
                                         <NavLink to="/contact" className="text-white text-base  px-4 py-2  hover:text-orange-600">Contact Me</NavLink>
                                         <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2' onClick={openLogoutModal}>Logout</button>
@@ -59,6 +60,7 @@ function NavbarApp() {
                                     <div className='fixed z-10 flex flex-col w-[104%] h-full z-10 bg-slate-900 transition duration-500 delay-150 ease-in-out top-[70px] left-[-10px]'>
                                         <NavLink to={`/main-app/${userId}`} className="text-white text-base px-4 py-2 hover:text-orange-600 self-center">Home</NavLink>
                                         <NavLink to={`/main-app/${userId}/message`} className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Message</NavLink>
+                                        <NavLink to={`/main-app/${userId}/mybids`} className='text-white text-base  px-4 py-2  hover:text-orange-600 self-center'>My Bids</NavLink>
                                         <NavLink to="/about" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">About</NavLink>
                                         <NavLink to="/contact" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Contact Me</NavLink>
                                         <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2 self-center' onClick={openLogoutModal}>Logout</button>
