@@ -50,4 +50,23 @@ const showAllBids = async (req, res) => {
     }
 }
 
-module.exports = { addBid, showAllBids }
+const showUserBids = async (bidderName) => {
+    try {
+        let result = []
+        let bids = await Bids.find({ bidderName: bidderName })
+        bids.map((bid) => {
+            result.push({
+                id: bid._id,
+                title: bid.title,
+                price: bid.price,
+                openingDate: convertDateToString(bid.openingDate),
+                closingDate: convertDateToString(bid.closingDate)
+            })
+        })
+        return result
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { addBid, showAllBids, showUserBids }

@@ -1,6 +1,6 @@
 
 const { Message } = require('../models/message.model')
-const { showAllBids } = require('../controllers/bids/bids.controller')
+const { showAllBids, showUserBids } = require('../controllers/bids/bids.controller')
 
 // initialize socket io event
 
@@ -55,6 +55,11 @@ const bidsNamespace = (io) => {
             // broadcast the message to all user except the sender
             socket.broadcast.emit('success-creation-bids', "A new bid has been added")
             sendBids(bids)
+        })
+        socket.on('send-user-bids', async (user) => {
+            console.log(user)
+            let userBids = await showUserBids(user)
+            socket.emit('user-bids', userBids)
         })
 
     })
