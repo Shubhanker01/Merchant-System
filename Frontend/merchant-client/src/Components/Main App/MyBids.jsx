@@ -20,7 +20,6 @@ function MyBids() {
     useEffect(() => {
         bidsSocket.emit('send-user-bids', user.name)
         function getUserBids(bids) {
-            console.log(bids)
             setUserBids(bids)
         }
         bidsSocket.on('user-bids', getUserBids)

@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Pencil, Trash } from 'lucide-react'
+import DeleteBid from '../Popup/DeleteBid'
 
 function UserBids({ bids }) {
+    const [modal, setModal] = useState(false)
+    const deleteBid = () => {
+        setModal(true)
+    }
     if (bids.length == 0) {
         return <div>You have added no bids</div>
     }
@@ -100,10 +105,16 @@ function UserBids({ bids }) {
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <Pencil size={'18px'} />
+                                                        <button>
+                                                            <Pencil size={'18px'} />
+                                                        </button>
+
                                                     </td>
                                                     <td>
-                                                        <Trash size={'18px'} />
+                                                        <button onClick={deleteBid}>
+                                                            <Trash size={'18px'} />
+                                                        </button>
+
                                                     </td>
                                                 </tr>
 
@@ -133,6 +144,7 @@ function UserBids({ bids }) {
                     </div>
                 </div>
             </div>
+            <DeleteBid modal={modal} setModal={setModal} />
         </>
     )
 }
