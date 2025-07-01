@@ -23,7 +23,7 @@ export const addBid = createAsyncThunk(
             let cookie = getCookie()
             let response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/bids/v1/addbid`, {
                 title: obj.title,
-                price: `Rs ${String(obj.price)}`,
+                price: obj.price,
                 openingDate: obj.openingDate,
                 closingDate: obj.closingDate
             }, {

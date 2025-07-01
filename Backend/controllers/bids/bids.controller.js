@@ -10,7 +10,9 @@ const addBid = async (req, res) => {
         const price = req.body.price
         const openingDate = new Date(req.body.openingDate)
         const closingDate = new Date(req.body.closingDate)
-
+        if (closingDate < openingDate) {
+            return res.status(400).send("Opening Date should be less than closing date")
+        }
         await Bids.create({
             bidderName: bidderName,
             title: title,
@@ -79,4 +81,23 @@ const deleteBid = async (req, res) => {
     }
 }
 
-module.exports = { addBid, showAllBids, showUserBids, deleteBid }
+const updateBid = async (req, res) => {
+    try {
+        let { id } = req.params
+        let { title, price, closingDate } = req.body
+        let bids = await Bids.findOne({ _id: id })
+        if (!bids) return res.status(400).send("Bid not found")
+        if (closingDate && bids.openingDate > new Date(closingDate)) {
+            return res.status(400).send("Your closing date should not be less than opening date")
+        }
+        bids.title = title || bids.title
+        bids.price = price || bids.price
+        bids.closingDate = new Date(closingDate) || bids.closingDate
+        await bids.save()
+        return res.send("Your Bid is successfully updated!!!")
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { addBid, showAllBids, showUserBids, deleteBid, updateBid }
