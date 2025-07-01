@@ -4,8 +4,10 @@ import DeleteBid from '../Popup/DeleteBid'
 
 function UserBids({ bids }) {
     const [modal, setModal] = useState(false)
-    const deleteBid = () => {
+    const [id, setId] = useState("")
+    const openDeleteBidModal = (id) => {
         setModal(true)
+        setId(id)
     }
     if (bids.length == 0) {
         return <div>You have added no bids</div>
@@ -111,7 +113,7 @@ function UserBids({ bids }) {
 
                                                     </td>
                                                     <td>
-                                                        <button onClick={deleteBid}>
+                                                        <button onClick={() => openDeleteBidModal(bid.id)}>
                                                             <Trash size={'18px'} />
                                                         </button>
 
@@ -144,7 +146,7 @@ function UserBids({ bids }) {
                     </div>
                 </div>
             </div>
-            <DeleteBid modal={modal} setModal={setModal} />
+            <DeleteBid modal={modal} setModal={setModal} id={id} />
         </>
     )
 }

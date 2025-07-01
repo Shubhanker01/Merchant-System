@@ -1,8 +1,18 @@
 import React from 'react'
+import { deleteBidAsync } from '../../Async logic/bidsOperation'
+import { toast } from 'react-toastify'
+import { bidsSocket } from '../../socket'
 
-function DeleteBid({ modal, setModal }) {
-    const deleteBid = () => {
-
+function DeleteBid({ modal, setModal, id }) {
+    const deleteBid = async () => {
+        try {
+            let res = await deleteBidAsync(id)
+            toast.success(res, { position: 'top-center' })
+            setModal(false)
+            bidsSocket.emit('delete-bids')
+        } catch (error) {
+            console.log(error)
+        }
     }
     return (
         <>
@@ -24,7 +34,7 @@ function DeleteBid({ modal, setModal }) {
 
                         </div>
                         <div className='p-5'>
-                            <p>Are you sure you want to delete this bid?</p>
+                            <p>Are you sure you want to delete the bid with the ID {id}</p>
                             <button onClick={deleteBid} type="button" className="mt-4 text-white inline-flex items-center bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
 
                                 Delete

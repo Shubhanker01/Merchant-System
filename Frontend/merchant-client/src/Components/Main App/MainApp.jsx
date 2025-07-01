@@ -8,13 +8,8 @@ import { bidsSocket } from '../../socket'
 function MainApp() {
     const [bids, setBids] = useState([])
     useEffect(() => {
-        // socket.connect()
         bidsSocket.connect()
-        // socket.on('connect', () => {
-        //     console.log(`${socket.id} is connected`)
-        // })
         return () => {
-            // socket.disconnect()
             bidsSocket.disconnect()
         }
     }, [])
@@ -25,22 +20,16 @@ function MainApp() {
         function receiveEventForCreation(arg) {
             toast.info(arg)
         }
+        function receiveEventForDeletion(arg) {
+            toast.info(arg)
+        }
         bidsSocket.on('read-bids', receiveBids)
         bidsSocket.on('success-creation-bids', receiveEventForCreation)
-        // socket.on('read-bids', receiveBids)
-        // socket.on("msg", (arg) => {
-        //     toast.info(arg)
-        //     console.log(arg)
-        // })
-        // socket.on('bidadded', (arg) => {
-        //     toast.info(arg)
-        // })
+        bidsSocket.on('on-delete', receiveEventForDeletion)
         return () => {
-            // socket.off('read-bids', receiveBids)
-            // socket.off('msg', () => {
-            //     console.log('disconnected')
-            // })
             bidsSocket.off('read-bids', receiveBids)
+            bidsSocket.off('success-creation-bids', receiveEventForCreation)
+            bidsSocket.off('on-delete', receiveEventForDeletion)
         }
 
     }, [])

@@ -69,4 +69,14 @@ const showUserBids = async (bidderName) => {
     }
 }
 
-module.exports = { addBid, showAllBids, showUserBids }
+const deleteBid = async (req, res) => {
+    try {
+        let { id } = req.params
+        await Bids.findOneAndDelete({ _id: id })
+        return res.send("Successfully deleted")
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { addBid, showAllBids, showUserBids, deleteBid }
