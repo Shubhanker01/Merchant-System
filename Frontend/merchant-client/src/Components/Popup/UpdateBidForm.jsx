@@ -1,8 +1,14 @@
 import React from 'react'
+import { updateUserBid } from '../../Async logic/bidsOperation'
+import { toast } from 'react-toastify'
 
-function UpdateBidForm({ modal, setModal, updateField, setUpdateField }) {
-    const handleFormUpdate = () => {
+function UpdateBidForm({ id, modal, setModal, updateField, setUpdateField }) {
+    const handleFormUpdate = async (e) => {
+        e.preventDefault()
+        let data = await updateUserBid(id, updateField)
+        toast.success(data, { position: 'top-center' })
         setModal(false)
+
     }
     return (
         <>
@@ -31,7 +37,7 @@ function UpdateBidForm({ modal, setModal, updateField, setUpdateField }) {
                                 </div>
                                 <div className="col-span-2">
                                     <label htmlFor="price" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                    <input type="number" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Rs2999" required={true} min="0" value={updateField.price} onChange={(e) => setUpdateField({ ...updateField, price: e.target.value })} />
+                                    <input type="number" name="price" id="price" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Rs2999" required={true} min="0" value={updateField.price} onChange={(e) => setUpdateField({ ...updateField, price: Number(e.target.value) })} />
                                 </div>
 
                                 <div className="col-span-2 sm:col-span-1">

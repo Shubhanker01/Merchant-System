@@ -17,7 +17,6 @@ function UserBids({ bids }) {
     const openUpdateModal = (id, { title, price, closingDate }) => {
         setUpdateModal(true)
         setId(id)
-        console.log(convertToDateFormat(closingDate))
         setUpdateBidFields({ ...updateBidFields, title: title, price: price, closingDate: convertToDateFormat(closingDate) })
     }
     if (bids.length == 0) {
@@ -158,7 +157,7 @@ function UserBids({ bids }) {
                 </div>
             </div>
             <DeleteBid modal={modal} setModal={setModal} id={id} />
-            <UpdateBidForm modal={updateModal} setModal={setUpdateModal} updateField={updateBidFields} setUpdateField={setUpdateBidFields} />
+            <UpdateBidForm id={id} modal={updateModal} setModal={setUpdateModal} updateField={updateBidFields} setUpdateField={setUpdateBidFields} />
         </>
     )
 }
