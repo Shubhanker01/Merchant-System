@@ -1,13 +1,24 @@
 import React, { useState } from 'react'
 import { Pencil, Trash } from 'lucide-react'
 import DeleteBid from '../Popup/DeleteBid'
+import UpdateBidForm from '../Popup/UpdateBidForm'
+import convertToDateFormat from '../../utils/convertToDateFormat'
 
 function UserBids({ bids }) {
     const [modal, setModal] = useState(false)
+    const [updateModal, setUpdateModal] = useState(false)
     const [id, setId] = useState("")
+    const [updateBidFields, setUpdateBidFields] = useState({ title: "", price: 0, closingDate: "" })
+
     const openDeleteBidModal = (id) => {
         setModal(true)
         setId(id)
+    }
+    const openUpdateModal = (id, { title, price, closingDate }) => {
+        setUpdateModal(true)
+        setId(id)
+        console.log(convertToDateFormat(closingDate))
+        setUpdateBidFields({ ...updateBidFields, title: title, price: price, closingDate: convertToDateFormat(closingDate) })
     }
     if (bids.length == 0) {
         return <div>You have added no bids</div>
@@ -107,7 +118,7 @@ function UserBids({ bids }) {
                                                         </span>
                                                     </td>
                                                     <td>
-                                                        <button>
+                                                        <button onClick={() => openUpdateModal(bid.id, { title: bid.title, price: bid.price, closingDate: bid.closingDate })}>
                                                             <Pencil size={'18px'} />
                                                         </button>
 
@@ -147,6 +158,7 @@ function UserBids({ bids }) {
                 </div>
             </div>
             <DeleteBid modal={modal} setModal={setModal} id={id} />
+            <UpdateBidForm modal={updateModal} setModal={setUpdateModal} updateField={updateBidFields} setUpdateField={setUpdateBidFields} />
         </>
     )
 }
