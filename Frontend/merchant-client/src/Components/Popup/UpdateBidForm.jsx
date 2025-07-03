@@ -1,12 +1,15 @@
 import React from 'react'
 import { updateUserBid } from '../../Async logic/bidsOperation'
 import { toast } from 'react-toastify'
+import { bidsSocket } from '../../socket'
 
 function UpdateBidForm({ id, modal, setModal, updateField, setUpdateField }) {
     const handleFormUpdate = async (e) => {
         e.preventDefault()
         let data = await updateUserBid(id, updateField)
         toast.success(data, { position: 'top-center' })
+        // emit to the server that bid has been updated
+        bidsSocket.emit('updation-bid', id)
         setModal(false)
 
     }

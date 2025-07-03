@@ -18,18 +18,23 @@ function MainApp() {
             setBids(arg)
         }
         function receiveEventForCreation(arg) {
-            toast.info(arg)
+            toast.info(arg, { theme: 'dark' })
         }
         function receiveEventForDeletion(arg) {
-            toast.info(arg)
+            toast.info(arg, { theme: 'dark' })
+        }
+        function receiveEventForUpdation(arg) {
+            toast.info(arg, { theme: 'dark' })
         }
         bidsSocket.on('read-bids', receiveBids)
         bidsSocket.on('success-creation-bids', receiveEventForCreation)
         bidsSocket.on('on-delete', receiveEventForDeletion)
+        bidsSocket.on('on-updation', receiveEventForUpdation)
         return () => {
             bidsSocket.off('read-bids', receiveBids)
             bidsSocket.off('success-creation-bids', receiveEventForCreation)
             bidsSocket.off('on-delete', receiveEventForDeletion)
+            bidsSocket.off('on-updation', receiveEventForUpdation)
         }
 
     }, [])

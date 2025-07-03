@@ -61,8 +61,15 @@ const bidsNamespace = (io) => {
             let userBids = await showUserBids(user)
             socket.emit('user-bids', userBids)
         })
+        // listen for deleting event
         socket.on('delete-bids', () => {
             socket.broadcast.emit('on-delete', "A bid has been removed by the user")
+            sendBids(bids)
+        })
+        // listening for updation event
+        socket.on('updation-bid', (id) => {
+            socket.broadcast.emit('on-updation', `Bid ID ${id} has been updated`)
+            sendBids(bids)
         })
 
     })
