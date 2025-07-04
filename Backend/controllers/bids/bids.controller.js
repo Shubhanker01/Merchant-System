@@ -28,10 +28,12 @@ const addBid = async (req, res) => {
 }
 
 // controller to show all bids
-const showAllBids = async (req, res) => {
+// pagination implement
+const showAllBids = async () => {
     try {
+        // let pageSize = 10
         let result = [];
-        const bids = await Bids.find({})
+        const bids = await Bids.find({}).sort({ createdAt: 'desc' }).exec()
         if (bids.length !== 0) {
             bids.map((bid) => {
                 result.push({
@@ -45,6 +47,23 @@ const showAllBids = async (req, res) => {
             })
         }
         // res.send(result)
+        // const bids = await Bids.aggregate([
+        //     {
+        //         $facet: {
+        //             noOfBids: [{ $count: 'totalCount' }],
+        //             data: [
+        //                 {
+        //                     $skip: (pageNo - 1) * pageSize
+        //                 },
+        //                 {
+        //                     $limit: pageSize
+        //                 }
+        //             ]
+        //         }
+        //     }
+        // ]
+
+        // )
         return result
 
     } catch (error) {
@@ -52,6 +71,7 @@ const showAllBids = async (req, res) => {
     }
 }
 
+// pagination implement
 const showUserBids = async (bidderName) => {
     try {
         let result = []

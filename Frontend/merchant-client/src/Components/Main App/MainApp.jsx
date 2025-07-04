@@ -7,6 +7,7 @@ import { bidsSocket } from '../../socket'
 
 function MainApp() {
     const [bids, setBids] = useState([])
+    const [currentIndex, setCurrentIndex] = useState(0)
     useEffect(() => {
         bidsSocket.connect()
         return () => {
@@ -43,6 +44,7 @@ function MainApp() {
             <NavbarApp />
             <BidsTable bids={bids} />
             <AddBid />
+            
         </div>
     )
 }
