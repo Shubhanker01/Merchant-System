@@ -28,12 +28,13 @@ const addBid = async (req, res) => {
 }
 
 // controller to show all bids
-// pagination implement
+// implement time based pagination
 const showAllBids = async () => {
     try {
         // let pageSize = 10
         let result = [];
-        const bids = await Bids.find({}).sort({ createdAt: 'desc' }).exec()
+        let query = { createdAt: { $gt: new Date('2025-07-04T10:07:54.491+00:00') } }
+        const bids = await Bids.find(query).sort({ createdAt: 'desc' }).limit(2).exec()
         if (bids.length !== 0) {
             bids.map((bid) => {
                 result.push({
@@ -46,24 +47,6 @@ const showAllBids = async () => {
                 })
             })
         }
-        // res.send(result)
-        // const bids = await Bids.aggregate([
-        //     {
-        //         $facet: {
-        //             noOfBids: [{ $count: 'totalCount' }],
-        //             data: [
-        //                 {
-        //                     $skip: (pageNo - 1) * pageSize
-        //                 },
-        //                 {
-        //                     $limit: pageSize
-        //                 }
-        //             ]
-        //         }
-        //     }
-        // ]
-
-        // )
         return result
 
     } catch (error) {
