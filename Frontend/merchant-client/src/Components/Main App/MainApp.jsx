@@ -4,10 +4,10 @@ import AddBid from '../Footer/AddBid'
 import BidsTable from '../Body/BidsTable'
 import { toast } from 'react-toastify'
 import { bidsSocket } from '../../socket'
+import Pagination from '../Footer/Pagination'
 
 function MainApp() {
     const [bids, setBids] = useState([])
-    const [currentIndex, setCurrentIndex] = useState(0)
     useEffect(() => {
         bidsSocket.connect()
         return () => {
@@ -44,7 +44,7 @@ function MainApp() {
             <NavbarApp />
             <BidsTable bids={bids} />
             <AddBid />
-            
+            <Pagination />
         </div>
     )
 }

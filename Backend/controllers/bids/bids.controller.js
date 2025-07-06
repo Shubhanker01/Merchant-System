@@ -29,7 +29,7 @@ const addBid = async (req, res) => {
 
 // controller to show all bids
 // implement time based pagination
-const showAllBids = async () => {
+const showAllBids = async (dateStr) => {
     try {
         // let pageSize = 10
         let result = [];
@@ -43,10 +43,13 @@ const showAllBids = async () => {
                     title: bid.title,
                     price: bid.price,
                     openingDate: convertDateToString(bid.openingDate),
-                    closingDate: convertDateToString(bid.closingDate)
+                    closingDate: convertDateToString(bid.closingDate),
+                    createdAt: bid.createdAt
                 })
             })
         }
+        // also return next page information
+        console.log(result[result.length - 1].createdAt)
         return result
 
     } catch (error) {
