@@ -38,9 +38,13 @@ const sendMessageToRoom = (socket, io) => {
 
 }
 
-const sendBids = async (io) => {
-    let bids = await showAllBids()
-    io.emit("read-bids", bids)
+const sendBids = (io, socket) => {
+    // listen for the event from client to server about next page info
+    socket.on('query-bids', async (queryDate) => {
+        let bids = await showAllBids(queryDate)
+        socket.emit("read-bids", bids)
+    })
+
 }
 
 // create namespace for bids crud
@@ -48,7 +52,7 @@ const bidsNamespace = (io) => {
     const bids = io.of('/bids')
     bids.on('connection', (socket) => {
         // console.log(`${socket.id} connected to bids namespace`)
-        sendBids(bids)
+        sendBids(bids, socket)
         // listen to different events 
         socket.on('create-bids', (arg) => {
             console.log(arg)

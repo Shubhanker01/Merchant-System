@@ -33,7 +33,7 @@ const showAllBids = async (dateStr) => {
     try {
         // let pageSize = 10
         let result = [];
-        let query = { createdAt: { $gt: new Date('2025-07-04T10:07:54.491+00:00') } }
+        let query = dateStr !== "" ? { createdAt: { $lt: new Date(dateStr) } } : {}
         const bids = await Bids.find(query).sort({ createdAt: 'desc' }).limit(2).exec()
         if (bids.length !== 0) {
             bids.map((bid) => {
@@ -49,8 +49,11 @@ const showAllBids = async (dateStr) => {
             })
         }
         // also return next page information
-        console.log(result[result.length - 1].createdAt)
-        return result
+        // check if the user is in last page
+        // if (result.length < 2) {
+        //     return { results: result, prevPage: result[0].createdAt }
+        // }
+        return { results: result, nextPage: result[result.length - 1].createdAt }
 
     } catch (error) {
         console.log(error)
