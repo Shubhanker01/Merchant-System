@@ -24,15 +24,19 @@ function MainApp() {
         function receiveBids(arg) {
             console.log(arg)
             setBids(arg.results)
-            if (arg.results.length == pageLimit) {
-                setNextQuery(arg.nextPage)
-            }
-            else {
-                // user is in the last page
-                if (prevQuery !== "") {
-                    setNextQuery("")
-                }
-            }
+            // if (arg.results.length == pageLimit) {
+            //     setNextQuery(arg.nextPage)
+            //     // setPrevQuery(arg.prevPage)
+            // }
+            setNextQuery(arg.nextPage)
+            // else {
+            //     // console.log(prevQuery)
+            //     // user is in the last page
+            //     if (prevQuery !== "") {
+            //         console.log("I am in last page")
+            //         setNextQuery("")
+            //     }
+            // }
         }
         function receiveEventForCreation(arg) {
             toast.info(arg, { theme: 'dark' })
