@@ -29,12 +29,20 @@ const addBid = async (req, res) => {
 
 // controller to show all bids
 // implement time based pagination
-// finding first and last page
-const showAllBids = async (dateStr) => {
+const showAllBids = async ({ nextQuery, prevQuery }) => {
     try {
         // let pageSize = 10
-        let result = [];
-        let query = dateStr !== "" ? { createdAt: { $lt: new Date(dateStr) } } : {}
+        let result = []
+        // look for both previous query or next query if both queries are null then fetch only the first data according to page size
+        let previousQuery = prevQuery == "" ? null : prevQuery
+        let nextquery = nextQuery == "" ? null : nextQuery
+        let query = {}
+        if (previousQuery) {
+            query = { createdAt: { $gt: new Date(previousQuery) } }
+        }
+        if (nextquery) {
+            query = { createdAt: { $lt: new Date(nextquery) } }
+        }
         const bids = await Bids.find(query).sort({ createdAt: 'desc' }).limit(2).exec()
         if (bids.length !== 0) {
             bids.map((bid) => {
@@ -49,14 +57,6 @@ const showAllBids = async (dateStr) => {
                 })
             })
         }
-        // also return next page information
-        // check if the user is in last page
-        // if (result.length < 2) {
-        //     return { results: result, nextPage: "", prevPage: result[0].createdAt }
-        // }
-        // else if (result.length < 2 && query == "") {
-        //     return { results: result, nextPage: "", prevPage: "" }
-        // }
         if (result.length == 0) {
             return { results: [], nextPage: "", prevPage: "" }
         }

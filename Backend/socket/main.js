@@ -40,8 +40,8 @@ const sendMessageToRoom = (socket, io) => {
 
 const sendBids = (io, socket) => {
     // listen for the event from client to server about next page info
-    socket.on('query-bids', async (queryDate) => {
-        let bids = await showAllBids(queryDate)
+    socket.on('query-bids', async ({ nextQuery, prevQuery }) => {
+        let bids = await showAllBids({ nextQuery, prevQuery })
         socket.emit("read-bids", bids)
     })
 
@@ -58,7 +58,7 @@ const bidsNamespace = (io) => {
             console.log(arg)
             // broadcast the message to all user except the sender
             socket.broadcast.emit('success-creation-bids', "A new bid has been added")
-            sendBids(bids)
+            // sendBids(bids)
         })
         socket.on('send-user-bids', async (user) => {
             console.log(user)
@@ -68,12 +68,12 @@ const bidsNamespace = (io) => {
         // listen for deleting event
         socket.on('delete-bids', () => {
             socket.broadcast.emit('on-delete', "A bid has been removed by the user")
-            sendBids(bids)
+            // sendBids(bids)
         })
         // listening for updation event
         socket.on('updation-bid', (id) => {
             socket.broadcast.emit('on-updation', `Bid ID ${id} has been updated`)
-            sendBids(bids)
+            // sendBids(bids)
         })
 
     })

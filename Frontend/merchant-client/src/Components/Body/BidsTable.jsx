@@ -3,15 +3,23 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { showAllBids } from '../../Async logic/bidsThunk'
 import { useEffect } from 'react'
+import { Frown } from 'lucide-react'
 
 function BidsTable({ bids }) {
     // const dispatch = useDispatch()
     // const state = useSelector(state => state.bids.bids)
 
-    useEffect(() => {
-        // dispatch(showAllBids())
-    }, [])
-
+    // useEffect(() => {
+    //     // dispatch(showAllBids())
+    // }, [])
+    if (bids.length == 0) {
+        return (
+            <div className='m-[100px_auto]'>
+                <h1 className='text-center text-3xl'>No Bids to Show</h1>
+                <Frown size={36} className='mx-auto' />
+            </div>
+        )
+    }
     return (
         <div className='m-[100px_auto]'>
             <table className='table-auto sm:text-base text-sm text-gray-200 bg-gray-900 rounded-md ml-auto mr-auto sm:w-[70%] w-[85%]'>

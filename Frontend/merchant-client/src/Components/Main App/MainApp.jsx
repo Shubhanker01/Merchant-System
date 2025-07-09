@@ -9,7 +9,7 @@ import Pagination from '../Footer/Pagination'
 function MainApp() {
     const pageLimit = 2
     const [bids, setBids] = useState([])
-    const [query, setNextQuery] = useState("")
+    const [nextQuery, setNextQuery] = useState("")
     const [prevQuery, setPrevQuery] = useState("")
     useEffect(() => {
         bidsSocket.connect()
@@ -20,23 +20,12 @@ function MainApp() {
     // edge cases -> 1. Check if the user is in last page of the results.
     // edge case -> 2. Checking if the user is in the first page but the result length is less than page limit ie show no navigation 
     useEffect(() => {
-        bidsSocket.emit('query-bids', query)
+        bidsSocket.emit('query-bids', { nextQuery: "", prevQuery: "" })
         function receiveBids(arg) {
             console.log(arg)
             setBids(arg.results)
-            // if (arg.results.length == pageLimit) {
-            //     setNextQuery(arg.nextPage)
-            //     // setPrevQuery(arg.prevPage)
-            // }
             setNextQuery(arg.nextPage)
-            // else {
-            //     // console.log(prevQuery)
-            //     // user is in the last page
-            //     if (prevQuery !== "") {
-            //         console.log("I am in last page")
-            //         setNextQuery("")
-            //     }
-            // }
+            setPrevQuery(arg.prevPage)
         }
         function receiveEventForCreation(arg) {
             toast.info(arg, { theme: 'dark' })
@@ -65,7 +54,7 @@ function MainApp() {
             <NavbarApp />
             <BidsTable bids={bids} />
             <AddBid />
-            <Pagination query={query} prevQuery={prevQuery} />
+            <Pagination query={nextQuery} prevQuery={prevQuery} />
         </div>
     )
 }

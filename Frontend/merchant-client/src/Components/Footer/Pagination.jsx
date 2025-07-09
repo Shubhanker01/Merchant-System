@@ -8,13 +8,10 @@ function Pagination({ query, prevQuery }) {
     const [lastPage, isLastPage] = useState(false)
     const nextPage = () => {
         isFirstPage(false)
-        bidsSocket.emit('query-bids', query)
-        // if (query == "" && prevQuery == "") {
-        //     isLastPage(true)
-        // }
+        bidsSocket.emit('query-bids', { nextQuery: query, prevQuery: "" })
     }
     const prevPage = () => {
-        bidsSocket.emit('query-bids', prevQuery)
+        bidsSocket.emit('query-bids', { nextQuery: "", prevQuery: prevQuery })
     }
     return (
         <>
