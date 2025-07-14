@@ -67,11 +67,16 @@ const showAllBids = async ({ nextQuery, prevQuery }) => {
     }
 }
 
-// pagination implement
+// pagination implement for individual user bids
+// index based pagination
 const showUserBids = async (bidderName) => {
     try {
+        let currentPage = 1
+        let itemsPerPage = 2
+        let skipAmt = (currentPage - 1) * itemsPerPage
         let result = []
-        let bids = await Bids.find({ bidderName: bidderName })
+        let total = await Bids.countDocuments()
+        let bids = await Bids.find({ bidderName: bidderName }).sort({ createdAt: 'desc' }).skip(skipAmt).limit(itemsPerPage)
         bids.map((bid) => {
             result.push({
                 id: bid._id,
@@ -81,7 +86,7 @@ const showUserBids = async (bidderName) => {
                 closingDate: convertDateToString(bid.closingDate)
             })
         })
-        return result
+        return { results: result, totalPages: total }
     } catch (error) {
         console.log(error)
     }

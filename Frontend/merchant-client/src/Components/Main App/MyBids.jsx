@@ -6,9 +6,11 @@ import decodeToken from '../../utils/decodeJwt'
 import getCookie from '../../utils/getCookie'
 import { useState } from 'react'
 import UserBids from '../Body/UserBids'
+import UserBidsPagination from '../Footer/UserBidsPagination'
 
 function MyBids() {
     const [userBids, setUserBids] = useState([])
+    const [totalPages, setTotalPages] = useState(0)
     const cookie = getCookie()
     const user = decodeToken(cookie)
     useEffect(() => {
@@ -19,8 +21,10 @@ function MyBids() {
     })
     useEffect(() => {
         bidsSocket.emit('send-user-bids', user.name)
-        function getUserBids(bids) {
-            setUserBids(bids)
+        function getUserBids(arg) {
+            console.log(arg)
+            setTotalPages(arg.totalPages)
+            setUserBids(arg.results)
         }
         bidsSocket.on('user-bids', getUserBids)
         return () => {
@@ -33,6 +37,7 @@ function MyBids() {
             <div className='mt-[100px]'>
                 <h1 className='ml-[20px] font-bold text-2xl'>Your Bids</h1>
                 <UserBids bids={userBids} />
+                <UserBidsPagination totalPages={totalPages} />
             </div>
 
         </>

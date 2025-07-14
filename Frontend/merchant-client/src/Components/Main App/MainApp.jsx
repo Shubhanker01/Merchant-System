@@ -7,7 +7,6 @@ import { bidsSocket } from '../../socket'
 import Pagination from '../Footer/Pagination'
 
 function MainApp() {
-    const pageLimit = 2
     const [bids, setBids] = useState([])
     const [nextQuery, setNextQuery] = useState("")
     const [prevQuery, setPrevQuery] = useState("")
