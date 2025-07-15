@@ -69,13 +69,13 @@ const showAllBids = async ({ nextQuery, prevQuery }) => {
 
 // pagination implement for individual user bids
 // index based pagination
-const showUserBids = async (bidderName) => {
+const showUserBids = async (bidderName, currPage) => {
     try {
-        let currentPage = 1
+        let currentPage = currPage
         let itemsPerPage = 2
         let skipAmt = (currentPage - 1) * itemsPerPage
         let result = []
-        let total = await Bids.countDocuments()
+        let total = await Bids.countDocuments({ bidderName: bidderName })
         let bids = await Bids.find({ bidderName: bidderName }).sort({ createdAt: 'desc' }).skip(skipAmt).limit(itemsPerPage)
         bids.map((bid) => {
             result.push({

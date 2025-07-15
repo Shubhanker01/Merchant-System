@@ -60,9 +60,8 @@ const bidsNamespace = (io) => {
             socket.broadcast.emit('success-creation-bids', "A new bid has been added")
             // sendBids(bids)
         })
-        socket.on('send-user-bids', async (user) => {
-            console.log(user)
-            let userBids = await showUserBids(user)
+        socket.on('send-user-bids', async (user, pageNo) => {
+            let userBids = await showUserBids(user, pageNo)
             socket.emit('user-bids', userBids)
         })
         // listen for deleting event

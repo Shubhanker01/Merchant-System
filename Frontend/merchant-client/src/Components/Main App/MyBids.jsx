@@ -11,6 +11,7 @@ import UserBidsPagination from '../Footer/UserBidsPagination'
 function MyBids() {
     const [userBids, setUserBids] = useState([])
     const [totalPages, setTotalPages] = useState(0)
+    const [currentPage, setCurrentPage] = useState(1)
     const cookie = getCookie()
     const user = decodeToken(cookie)
     useEffect(() => {
@@ -20,7 +21,7 @@ function MyBids() {
         }
     })
     useEffect(() => {
-        bidsSocket.emit('send-user-bids', user.name)
+        bidsSocket.emit('send-user-bids', user.name, currentPage)
         function getUserBids(arg) {
             console.log(arg)
             setTotalPages(arg.totalPages)
@@ -30,14 +31,14 @@ function MyBids() {
         return () => {
             bidsSocket.off('user-bids', getUserBids)
         }
-    }, [])
+    }, [currentPage])
     return (
         <>
             <NavbarApp />
             <div className='mt-[100px]'>
                 <h1 className='ml-[20px] font-bold text-2xl'>Your Bids</h1>
                 <UserBids bids={userBids} />
-                <UserBidsPagination totalPages={totalPages} />
+                <UserBidsPagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </div>
 
         </>
