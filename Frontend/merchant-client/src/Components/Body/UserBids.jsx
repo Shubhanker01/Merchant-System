@@ -4,7 +4,7 @@ import DeleteBid from '../Popup/DeleteBid'
 import UpdateBidForm from '../Popup/UpdateBidForm'
 import convertToDateFormat from '../../utils/convertToDateFormat'
 
-function UserBids({ bids }) {
+function UserBids({ bids, setBids }) {
     const [modal, setModal] = useState(false)
     const [updateModal, setUpdateModal] = useState(false)
     const [id, setId] = useState("")
@@ -141,8 +141,8 @@ function UserBids({ bids }) {
                     </div>
                 </div>
             </div>
-            <DeleteBid modal={modal} setModal={setModal} id={id} />
-            <UpdateBidForm id={id} modal={updateModal} setModal={setUpdateModal} updateField={updateBidFields} setUpdateField={setUpdateBidFields} />
+            <DeleteBid modal={modal} setModal={setModal} id={id} bids={bids} setBids={setBids} />
+            <UpdateBidForm id={id} modal={updateModal} setModal={setUpdateModal} updateField={updateBidFields} setUpdateField={setUpdateBidFields} bids={bids} setBids={setBids} />
         </>
     )
 }

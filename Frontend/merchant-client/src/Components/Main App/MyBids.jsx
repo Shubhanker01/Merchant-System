@@ -37,7 +37,7 @@ function MyBids() {
             <NavbarApp />
             <div className='mt-[100px]'>
                 <h1 className='ml-[20px] font-bold text-2xl'>Your Bids</h1>
-                <UserBids bids={userBids} />
+                <UserBids bids={userBids} setBids={setUserBids}/>
                 <UserBidsPagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </div>
 

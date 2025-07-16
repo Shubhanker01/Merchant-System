@@ -3,13 +3,18 @@ import { deleteBidAsync } from '../../Async logic/bidsOperation'
 import { toast } from 'react-toastify'
 import { bidsSocket } from '../../socket'
 
-function DeleteBid({ modal, setModal, id }) {
+function DeleteBid({ modal, setModal, id, bids, setBids }) {
     const deleteBid = async () => {
         try {
             let res = await deleteBidAsync(id)
             toast.success(res, { position: 'top-center' })
             setModal(false)
             bidsSocket.emit('delete-bids')
+            setBids(bids.filter((bid) => {
+                if (bid.id !== id) {
+                    return bid
+                }
+            }))
         } catch (error) {
             console.log(error)
         }
