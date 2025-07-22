@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Navbar() {
     const [show, setShow] = useState(false)
-    
+
     const handleShow = () => {
         if (show) {
             document.querySelector('#navBtn').classList.remove('close')
@@ -20,18 +20,15 @@ function Navbar() {
                 <div>
                     <h1 className='text-gray-100 sm:text-3xl sm:p-4 text-md p-2'>Merchant Management System</h1>
                 </div>
-                {
-                    window.innerWidth <= 640 ?
-                        <button className='justify-self-end mr-4' id='navBtn' onClick={handleShow}>
-                            <div className='btn-line'></div>
-                            <div className='btn-line'></div>
-                            <div className='btn-line'></div>
-                        </button> :
-                        <div className='sm:justify-self-end sm:mt-4 sm:mr-4'>
-                            <Link to="/signup" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>SignUp</Link>
-                            <Link to="/login" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>LogIn</Link>
-                        </div>
-                }
+                <button className='justify-self-end mr-4 sm:hidden' id='navBtn' onClick={handleShow}>
+                    <div className='btn-line'></div>
+                    <div className='btn-line'></div>
+                    <div className='btn-line'></div>
+                </button> 
+                <div className='sm:justify-self-end sm:mt-4 sm:mr-4 hidden sm:block'>
+                    <Link to="/signup" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>SignUp</Link>
+                    <Link to="/login" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>LogIn</Link>
+                </div>
             </div>
             {
                 show == false ?
