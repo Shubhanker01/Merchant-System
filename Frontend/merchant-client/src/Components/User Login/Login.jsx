@@ -34,8 +34,9 @@ function Login() {
     <>
       <LoadingBar color="#f11946" progress={progress}
         onLoaderFinished={() => setProgress(100)} height={3} />
-      <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-[0px_auto]">
-        <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <div className='h-screen bg-[#282A36]'>
+      <div className="w-[80%] bg-[#BD93F9] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-[0px_auto] pt-[30px]">
+        <div className="p-6 space-y-4 md:space-y-6 sm:p-8 pt-[30px]">
           <h1 className="text-md font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
             Login to your account
           </h1>
@@ -55,6 +56,7 @@ function Login() {
             </p>
           </form>
         </div>
+      </div>
       </div>
     </>
 

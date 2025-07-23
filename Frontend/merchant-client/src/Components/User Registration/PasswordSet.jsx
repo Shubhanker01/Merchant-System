@@ -3,11 +3,13 @@ import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'
 import { setPassword } from '../../Async logic/merchantThunk'
 import LoadingBar from 'react-top-loading-bar'
+import { useNavigate } from 'react-router-dom'
 
 function PasswordSet() {
     const [progress, setProgress] = useState(0)
     const [password, setPasswordField] = useState("")
     const [confPassword, setConfPassword] = useState("")
+    const navigate = useNavigate()
     const dispatch = useDispatch()
     const token = document.cookie.split('; ').find((row) => row.startsWith("token="))?.split("=")[1]
 
@@ -21,6 +23,7 @@ function PasswordSet() {
                 toast.success(res, { position: 'top-center' })
                 setProgress(80)
                 setProgress(100)
+                navigate('/login')
             }).catch((err) => {
                 console.log(err)
             })
@@ -31,11 +34,12 @@ function PasswordSet() {
 
 
     return (
-        <div>
+        <div className='bg-[#282A36] h-screen'>
             <LoadingBar color="#f11946" progress={progress}
-                onLoaderFinished={() => setProgress(0)} height={3}/>
-            <h1 className='text-center sm:text-2xl text-md mt-[30px] mb-[15px]'>This is last step. Please set your password to complete your registration</h1>
-            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-[0px_auto]">
+                onLoaderFinished={() => setProgress(0)} height={3} />
+
+            <h1 className='text-center text-[#F8F8F2] sm:text-2xl text-md pt-[30px] mb-[15px]'>This is last step. Please set your password to complete your registration</h1>
+            <div className="w-[80%] bg-[#BD93F9] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-[0px_auto]">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 className="text-md font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                         Set your password

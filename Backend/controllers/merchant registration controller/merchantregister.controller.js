@@ -12,7 +12,7 @@ const registerUserEmail = async (req, res) => {
             email: req.body.email,
             isVerified: false,
         })
-        let response = await sendEmail(req.body.email)
+        let response = await sendEmail(req.body.email, "register")
         if (response) {
             await TempPassword.create({
                 password: response.password,
@@ -83,7 +83,7 @@ const setUserPasswordFirstTime = async (req, res) => {
         }
         else {
             await Merchant.findOneAndUpdate({ email: email }, { password: hashedPassword })
-            return res.send("Password set successfully")
+            return res.send("Password set successfully!! You have successfully registered")
         }
 
     } catch (error) {

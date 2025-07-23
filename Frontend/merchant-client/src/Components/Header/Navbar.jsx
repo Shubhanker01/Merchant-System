@@ -24,7 +24,7 @@ function Navbar() {
                     <div className='btn-line'></div>
                     <div className='btn-line'></div>
                     <div className='btn-line'></div>
-                </button> 
+                </button>
                 <div className='sm:justify-self-end sm:mt-4 sm:mr-4 hidden sm:block'>
                     <Link to="/signup" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>SignUp</Link>
                     <Link to="/login" className='text-gray-100 p-2 m-2 bg-orange-600 rounded-md'>LogIn</Link>

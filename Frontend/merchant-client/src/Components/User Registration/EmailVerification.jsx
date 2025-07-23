@@ -18,7 +18,6 @@ function EmailVerification() {
             if (response != undefined) {
                 setProgress(80)
                 toast.success(response, { position: 'top-center' })
-                
                 navigate('/signup/password-set')
             }
         }).catch((err) => {
@@ -28,9 +27,9 @@ function EmailVerification() {
     return (
         <>
             <LoadingBar color='#f11946' progress={progress} height={3} onLoaderFinished={() => setProgress(0)} />
-            <div>
-                <h1 className='text-center sm:text-2xl text-md mt-[30px] mb-[15px]'>This is Step 2 of 3. Enter the OTP that has been sent to your email</h1>
-                <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-[0px_auto]">
+            <div className='bg-[#282A36] h-screen'>
+                <h1 className='text-center text-[#F8F8F2] sm:text-2xl text-md pt-[30px] mb-[15px]'>This is Step 2 of 3. Enter the OTP that has been sent to your email</h1>
+                <div className="w-[80%] bg-[#BD93F9] rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 m-[0px_auto]">
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                         <h1 className="text-md font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                             Verify your account
