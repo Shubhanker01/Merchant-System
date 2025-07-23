@@ -1,0 +1,21 @@
+config:
+  target: "http://localhost:8000"
+  phases:
+    - duration: 30
+      arrivalRate: 2
+  payload:
+    path: "users.csv"
+    fields:
+      - email
+      - password
+  defaults:
+    headers:
+      content-type: "application/json"
+
+scenarios:
+  - flow:
+      - post:
+          url: "/api/merchants/login"
+          json:
+            email: "{{ email }}"
+            password: "{{ password }}"

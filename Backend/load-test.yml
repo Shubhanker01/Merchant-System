@@ -1,0 +1,9 @@
+config:
+  target: 'http://localhost:8000'
+  phases:
+    - duration: 30
+      arrivalRate: 1 # 10 users per second
+scenarios:
+  - flow:
+      - get:
+          url: "/api/bids/v1/user/showbids"
