@@ -8,6 +8,7 @@ import { useState } from 'react'
 import UserBids from '../Body/UserBids'
 import UserBidsPagination from '../Footer/UserBidsPagination'
 import SearchBar from '../Body/SearchBar'
+import { queryBids } from '../../Async logic/bidsOperation'
 
 function MyBids() {
     const [userBids, setUserBids] = useState([])
@@ -34,6 +35,14 @@ function MyBids() {
             bidsSocket.off('user-bids', getUserBids)
         }
     }, [currentPage])
+    useEffect(() => {
+        async function query() {
+            let data = await queryBids(searchBids, user.name)
+            console.log(data)
+        }
+        query()
+    }, [searchBids])
+
     return (
         <>
             <NavbarApp />

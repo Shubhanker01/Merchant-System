@@ -20,3 +20,18 @@ export const updateUserBid = async (id, updateData) => {
         console.log(error)
     }
 }
+
+export const queryBids = async (search, bidderName) => {
+    try {
+        let res = await axios.get(`${import.meta.env.VITE_PROD_SERVER}/api/bids/v1/searchbids`, {
+            params: {
+                name: bidderName,
+                search: search
+            }
+        })
+        let data = await res.data
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}

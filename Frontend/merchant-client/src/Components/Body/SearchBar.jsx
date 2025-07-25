@@ -5,11 +5,11 @@ function SearchBar({ searchBids, setSearchBids }) {
     const valueChange = (e) => {
         setSearchBids(e.target.value)
     }
-    const debouncedSearchValue = useDebounce(searchBids, 2000)
+    // const debouncedSearchValue = useDebounce(searchBids, 2000)
 
-    useEffect(() => {
-        console.log("I am changed")
-    }, [debouncedSearchValue])
+    // useEffect(() => {
+    //     console.log("I am changed")
+    // }, [debouncedSearchValue])
     return (
         <>
             <div className="block relative w-[25%] ml-8 mt-4">
