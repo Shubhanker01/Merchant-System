@@ -122,4 +122,28 @@ const updateBid = async (req, res) => {
     }
 }
 
-module.exports = { addBid, showAllBids, showUserBids, deleteBid, updateBid }
+// query for bids
+const queryBids = async (req, res) => {
+    try {
+        let results = []
+        let searchValue = req.query.search
+        let name = req.query.name
+        // find bids by both biddername and title
+        let bids = await Bids.find({ bidderName: name, title: { $regex: '^' + searchValue, $options: 'i' } })
+        bids.map((bid) => {
+            results.push({
+                id: bid._id,
+                title: bid.title,
+                price: bid.price,
+                openingDate: convertDateToString(bid.openingDate),
+                closingDate: convertDateToString(bid.closingDate)
+            })
+        })
+
+        return res.send(results)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { addBid, showAllBids, showUserBids, deleteBid, updateBid, queryBids }

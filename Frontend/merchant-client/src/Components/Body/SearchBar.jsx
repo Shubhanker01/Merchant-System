@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import useDebounce from '../../hooks/useDebounce'
 
 function SearchBar({ searchBids, setSearchBids }) {
     const valueChange = (e) => {
         setSearchBids(e.target.value)
     }
+    const debouncedSearchValue = useDebounce(searchBids, 2000)
+
+    useEffect(() => {
+        console.log("I am changed")
+    }, [debouncedSearchValue])
     return (
         <>
-            <div className="block relative">
+            <div className="block relative w-[25%] ml-8 mt-4">
                 <span className="h-full absolute inset-y-0 left-0 flex items-center pl-2">
                     <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current text-gray-500">
                         <path

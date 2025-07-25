@@ -3,16 +3,12 @@ import { Pencil, Trash } from 'lucide-react'
 import DeleteBid from '../Popup/DeleteBid'
 import UpdateBidForm from '../Popup/UpdateBidForm'
 import convertToDateFormat from '../../utils/convertToDateFormat'
-import SearchBar from './SearchBar'
-import useDebounce from '../../hooks/useDebounce'
 
 function UserBids({ bids, setBids }) {
     const [modal, setModal] = useState(false)
     const [updateModal, setUpdateModal] = useState(false)
     const [id, setId] = useState("")
-    const [searchBids, setSearchBids] = useState("")
     const [updateBidFields, setUpdateBidFields] = useState({ title: "", price: 0, closingDate: "" })
-    const debouncedValue = useDebounce(searchBids, 2000)
     const openDeleteBidModal = (id) => {
         setModal(true)
         setId(id)
@@ -25,7 +21,6 @@ function UserBids({ bids, setBids }) {
     if (bids.length == 0) {
         return <div>You have added no bids</div>
     }
-    console.log(debouncedValue)
     return (
         <>
             <div class="container mx-auto px-4 sm:px-8">
@@ -40,7 +35,6 @@ function UserBids({ bids, setBids }) {
                                     </svg>
                                 </div>
                             </div>
-                            <SearchBar searchBids={searchBids} setSearchBids={setSearchBids} />
                         </div>
 
                     </div>

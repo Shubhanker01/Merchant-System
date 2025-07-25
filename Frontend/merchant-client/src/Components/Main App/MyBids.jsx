@@ -7,11 +7,13 @@ import getCookie from '../../utils/getCookie'
 import { useState } from 'react'
 import UserBids from '../Body/UserBids'
 import UserBidsPagination from '../Footer/UserBidsPagination'
+import SearchBar from '../Body/SearchBar'
 
 function MyBids() {
     const [userBids, setUserBids] = useState([])
     const [totalPages, setTotalPages] = useState(0)
     const [currentPage, setCurrentPage] = useState(1)
+    const [searchBids, setSearchBids] = useState("")
     const cookie = getCookie()
     const user = decodeToken(cookie)
     useEffect(() => {
@@ -37,7 +39,8 @@ function MyBids() {
             <NavbarApp />
             <div className='mt-[100px]'>
                 <h1 className='ml-[20px] font-bold text-2xl'>Your Bids</h1>
-                <UserBids bids={userBids} setBids={setUserBids}/>
+                <SearchBar searchBids={searchBids} setSearchBids={setSearchBids} />
+                <UserBids bids={userBids} setBids={setUserBids} />
                 <UserBidsPagination totalPages={totalPages} currentPage={currentPage} setCurrentPage={setCurrentPage} />
             </div>
 
