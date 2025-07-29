@@ -9,6 +9,7 @@ import UserBids from '../Body/UserBids'
 import UserBidsPagination from '../Footer/UserBidsPagination'
 import SearchBar from '../Body/SearchBar'
 import { queryBids } from '../../Async logic/bidsOperation'
+import useDebounce from '../../hooks/useDebounce'
 
 function MyBids() {
     const [userBids, setUserBids] = useState([])
@@ -17,12 +18,13 @@ function MyBids() {
     const [searchBids, setSearchBids] = useState("")
     const cookie = getCookie()
     const user = decodeToken(cookie)
+    const debouncedSearchValue = useDebounce(searchBids, 2000)
     useEffect(() => {
         bidsSocket.connect()
         return () => {
             bidsSocket.disconnect()
         }
-    })
+    }, [])
     useEffect(() => {
         bidsSocket.emit('send-user-bids', user.name, currentPage)
         function getUserBids(arg) {
@@ -37,11 +39,18 @@ function MyBids() {
     }, [currentPage])
     useEffect(() => {
         async function query() {
-            let data = await queryBids(searchBids, user.name)
-            console.log(data)
+            if (debouncedSearchValue.trim() !== "") {
+                let data = await queryBids(debouncedSearchValue, user.name)
+                setUserBids(data)
+                setTotalPages(0)
+                setCurrentPage(1)
+            }
+            else {
+                bidsSocket.emit('send-user-bids', user.name, currentPage)
+            }
         }
         query()
-    }, [searchBids])
+    }, [debouncedSearchValue, currentPage])
 
     return (
         <>
