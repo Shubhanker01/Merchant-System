@@ -17,7 +17,7 @@ const messageModel = new Schema({
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'merchants'
-    },
+    }
 }, {
     timestamps: true
 })

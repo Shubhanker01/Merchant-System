@@ -1,4 +1,3 @@
-import React from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import { useEffect } from 'react'
 import { bidsSocket } from '../../socket'
