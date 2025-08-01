@@ -9,6 +9,7 @@ import PasswordSet from './Components/User Registration/PasswordSet'
 import MainApp from './Components/Main App/MainApp'
 import MessageApp from './Components/Main App/MessageApp'
 import MyBids from './Components/Main App/MyBids'
+import Projects from './Components/Main App/Projects'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
             <Route index element={<MainApp />}></Route>
             <Route path='message' element={<MessageApp />}></Route>
             <Route path='mybids' element={<MyBids />}></Route>
+            <Route path='projects' element={<Projects />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
