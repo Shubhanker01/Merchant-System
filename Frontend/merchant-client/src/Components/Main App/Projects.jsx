@@ -1,8 +1,16 @@
 import React from 'react'
+import NavbarApp from '../Header/NavbarApp'
+import AddProject from '../Footer/AddProject'
 
 function Projects() {
     return (
-        <div>This is my projects</div>
+        <>
+            <NavbarApp />
+            <div>
+
+            </div>
+            <AddProject />
+        </>
     )
 }
 

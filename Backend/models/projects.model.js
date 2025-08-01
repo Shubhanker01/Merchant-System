@@ -9,8 +9,12 @@ const projectModel = new Schema({
         type: String,
         required: true
     },
-    budgetRange: {
-        type: String,
+    minPrice: {
+        type: Number,
+        required: true
+    },
+    maxPrice: {
+        type: Number,
         required: true
     },
     deadline: {

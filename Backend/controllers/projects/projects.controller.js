@@ -6,8 +6,8 @@ const fs = require('node:fs')
 const addProject = async (req, res) => {
     try {
         // check if the title or other text body is missing
-        let { title, description, budgetRange, deadline } = req.body
-        if (!title || !description || !budgetRange || !deadline) {
+        let { title, description, minPrice, maxPrice, deadline } = req.body
+        if (!title || !description || !minPrice || !maxPrice || !deadline) {
             return res.status(400).send("Please enter full information")
         }
         // check if the attachment is added
@@ -33,7 +33,8 @@ const addProject = async (req, res) => {
         await Project.create({
             title: title,
             description: description,
-            budgetRange: budgetRange,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
             deadline: new Date(deadline),
             attachments: resultUrl
         })
