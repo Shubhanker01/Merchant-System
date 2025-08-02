@@ -10,9 +10,15 @@ const addProject = async (req, res) => {
         if (!title || !description || !minPrice || !maxPrice || !deadline) {
             return res.status(400).send("Please enter full information")
         }
+        if (minPrice > maxPrice) {
+            return res.status(400).send("Minimum Price should be less than Maximum Price")
+        }
+        let currDate = new Date()
+        if (currDate.getTime() > new Date(deadline).getTime()) {
+            return res.status(400).send("Deadline should be greater than current date")
+        }
         // check if the attachment is added
         if (!req.file) return res.status(400).send("Attachment not added! Please add the attachment")
-        console.log(req.file)
         // check if the file type is correct
         if (req.file.mimetype !== 'application/pdf') {
             // remove the file 
@@ -45,6 +51,17 @@ const addProject = async (req, res) => {
     }
 }
 
+const displayProject = async (req, res) => {
+    try {
+        let projects = await Project.find({})
+        return res.send(projects)
+    } catch (error) {
+        console.log(error)
+    }
+}
 
 
-module.exports = { addProject }
+
+
+
+module.exports = { addProject, displayProject }

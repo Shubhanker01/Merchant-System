@@ -21,9 +21,8 @@ function ProjectForm({ modal, openModal }) {
         formData.append('maxPrice', form.maxPrice)
         formData.append('deadline', form.deadline)
         formData.append('attachment', attachmentFile.files[0])
-        let result = await addProject(formData)
-        
-        toast.success(result, { position: 'top-center' })
+        await addProject(formData)
+
 
     }
     return (
