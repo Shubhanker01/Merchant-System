@@ -22,9 +22,8 @@ function ProjectForm({ modal, openModal, projects, setProjects }) {
             formData.append('maxPrice', form.maxPrice)
             formData.append('deadline', form.deadline)
             formData.append('attachment', attachmentFile.files[0])
-            console.log(form.minPrice, form.maxPrice)
             let res = await addProject(formData)
-            if (res.success === true) {
+            if (res !== undefined) {
                 setProjects([...projects, {
                     _id: res.project._id,
                     title: res.project.title,
@@ -34,6 +33,8 @@ function ProjectForm({ modal, openModal, projects, setProjects }) {
                     deadline: new Date(res.project.deadline).toLocaleDateString(),
                     attachments: res.project.attachments
                 }])
+                setForm({ ...form, title: "", description: "", minPrice: 0, maxPrice: 0, deadline: "" })
+                openModal(!modal)
             }
         } catch (error) {
             console.log(error)
