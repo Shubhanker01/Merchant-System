@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { addProject } from '../../Async logic/projectOperation'
 import { toast } from 'react-toastify'
 
-function ProjectForm({ modal, openModal }) {
+function ProjectForm({ modal, openModal, projects, setProjects }) {
     const [form, setForm] = useState({
         title: "",
         description: "",
@@ -11,18 +11,33 @@ function ProjectForm({ modal, openModal }) {
         deadline: ""
     })
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        let attachmentFile = document.getElementById('attachment')
-        // create a form data and append fields
-        const formData = new FormData()
-        formData.append('title', form.title)
-        formData.append('description', form.description)
-        formData.append('minPrice', form.minPrice)
-        formData.append('maxPrice', form.maxPrice)
-        formData.append('deadline', form.deadline)
-        formData.append('attachment', attachmentFile.files[0])
-        await addProject(formData)
-
+        try {
+            e.preventDefault()
+            let attachmentFile = document.getElementById('attachment')
+            // create a form data and append fields
+            const formData = new FormData()
+            formData.append('title', form.title)
+            formData.append('description', form.description)
+            formData.append('minPrice', form.minPrice)
+            formData.append('maxPrice', form.maxPrice)
+            formData.append('deadline', form.deadline)
+            formData.append('attachment', attachmentFile.files[0])
+            console.log(form.minPrice, form.maxPrice)
+            let res = await addProject(formData)
+            if (res.success === true) {
+                setProjects([...projects, {
+                    _id: res.project._id,
+                    title: res.project.title,
+                    description: res.project.description,
+                    minPrice: res.project.minPrice,
+                    maxPrice: res.project.maxPrice,
+                    deadline: new Date(res.project.deadline).toLocaleDateString(),
+                    attachments: res.project.attachments
+                }])
+            }
+        } catch (error) {
+            console.log(error)
+        }
 
     }
     return (

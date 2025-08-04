@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ProjectForm from '../Popup/ProjectForm';
 
-function AddProject() {
+function AddProject({ projects, setProjects }) {
     const [modal, openModal] = useState(false);
     return (
         <>
@@ -14,7 +14,7 @@ function AddProject() {
                     <p className='hidden sm:block text-slate-100 font-medium m-2'>Add Project</p>
                 </button>
             </div>
-            <ProjectForm modal={modal} openModal={openModal} />
+            <ProjectForm modal={modal} openModal={openModal} projects={projects} setProjects={setProjects} />
         </>
     )
 }

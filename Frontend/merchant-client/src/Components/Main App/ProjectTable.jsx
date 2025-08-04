@@ -1,6 +1,9 @@
 import React from 'react'
 
 function ProjectTable({ projects }) {
+    if (projects.length == 0) {
+        return <h1>No Projects to Display</h1>
+    }
     return (
         <>
             <div className="overflow-x-auto p-4 mt-[80px]">
@@ -16,8 +19,8 @@ function ProjectTable({ projects }) {
                         </tr>
                     </thead>
                     <tbody>
-                        {projects.map((project, idx) => (
-                            <tr key={idx} className="border-b hover:bg-gray-100 transition duration-150">
+                        {projects.map((project) => (
+                            <tr key={project._id} className="border-b hover:bg-gray-100 transition duration-150">
                                 <td className="px-4 py-2">{project.title}</td>
                                 <td className="px-4 py-2">{project.description}</td>
                                 <td className="px-4 py-2">₹{project.minPrice}</td>
@@ -26,7 +29,7 @@ function ProjectTable({ projects }) {
                                     {new Date(project.deadline).toLocaleDateString()}
                                 </td>
                                 <td className="px-4 py-2 text-blue-600 underline">
-                                    <a href={project.url} target="_blank" rel="noopener noreferrer">
+                                    <a href={project.attachments} target="_blank" rel="noopener noreferrer">
                                         View PDF
                                     </a>
                                 </td>

@@ -10,7 +10,7 @@ const addProject = async (req, res) => {
         if (!title || !description || !minPrice || !maxPrice || !deadline) {
             return res.status(400).send("Please enter full information")
         }
-        if (minPrice > maxPrice) {
+        if (Number(minPrice) > Number(maxPrice)) {
             return res.status(400).send("Minimum Price should be less than Maximum Price")
         }
         let currDate = new Date()
@@ -36,7 +36,7 @@ const addProject = async (req, res) => {
             return res.status(500).send("Some error occured on uploading")
         }
         // finally save in database 
-        await Project.create({
+        let project = await Project.create({
             title: title,
             description: description,
             minPrice: minPrice,
@@ -44,7 +44,10 @@ const addProject = async (req, res) => {
             deadline: new Date(deadline),
             attachments: resultUrl
         })
-        return res.status(200).send("Project successfully added")
+        return res.status(200).json({
+            message: "Successfully added project",
+            project
+        })
 
     } catch (error) {
         console.log(error)
