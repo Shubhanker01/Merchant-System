@@ -90,6 +90,20 @@ const createNamspace = (io) => {
     })
 }
 
+// create namespace for project section
+const projectNamespace = (io) => {
+    const project = io.of('/projects')
+    project.on('connection', (socket) => {
+        console.log(`${socket.id} joined the project namespace`)
+        // listen to different events
+        // 1. On project creation
+        socket.on('project-added', (arg) => {
+            console.log(arg)
+            socket.broadcast.emit('on-project-added', 'A new Project has been created please check!!!')
+        })
+    })
+}
+
 
 const initializeSocketio = (io) => {
     return io.on('connection', async (socket) => {
@@ -110,4 +124,4 @@ const initializeSocketio = (io) => {
 }
 
 
-module.exports = { initializeSocketio, createNamspace, bidsNamespace }
+module.exports = { initializeSocketio, createNamspace, bidsNamespace, projectNamespace }

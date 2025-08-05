@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { addProject } from '../../Async logic/projectOperation'
 import { toast } from 'react-toastify'
+import { projectSocket } from '../../socket'
 
 function ProjectForm({ modal, openModal, projects, setProjects }) {
     const [form, setForm] = useState({
@@ -35,6 +36,7 @@ function ProjectForm({ modal, openModal, projects, setProjects }) {
                 }])
                 setForm({ ...form, title: "", description: "", minPrice: 0, maxPrice: 0, deadline: "" })
                 openModal(!modal)
+                projectSocket.emit('project-added', 'New project has been added')
             }
         } catch (error) {
             console.log(error)

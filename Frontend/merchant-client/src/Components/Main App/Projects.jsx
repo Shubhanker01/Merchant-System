@@ -3,10 +3,29 @@ import NavbarApp from '../Header/NavbarApp'
 import AddProject from '../Footer/AddProject'
 import ProjectTable from './ProjectTable'
 import { displayProjects } from '../../Async logic/projectOperation'
+import { projectSocket } from '../../socket'
+import { toast } from 'react-toastify'
 
 function Projects() {
     const [projects, setProjects] = useState([])
 
+    useEffect(() => {
+        // connect to project socket to show updates regarding project
+        projectSocket.connect()
+        return () => {
+            projectSocket.disconnect()
+        }
+    }, [])
+    useEffect(() => {
+        // give notification on new project added
+        function eventOnNewProjectAdded(arg) {
+            toast.info(arg, { position: 'top-center' })
+        }
+        projectSocket.on('on-project-added', eventOnNewProjectAdded)
+        return () => {
+            projectSocket.off('on-project-added', eventOnNewProjectAdded)
+        }
+    }, [])
     useEffect(() => {
         async function displayAllProjects() {
             let data = await displayProjects()
