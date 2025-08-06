@@ -54,10 +54,11 @@ const addProject = async (req, res) => {
     }
 }
 
-const displayProject = async (req, res) => {
+const displayProject = async () => {
     try {
         let projects = await Project.find({})
-        return res.send(projects)
+        // return res.send(projects)
+        return projects
     } catch (error) {
         console.log(error)
     }

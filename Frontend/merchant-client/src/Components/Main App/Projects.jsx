@@ -21,19 +21,25 @@ function Projects() {
         function eventOnNewProjectAdded(arg) {
             toast.info(arg, { position: 'top-center' })
         }
+        function eventOnProjectRead(arg) {
+            setProjects(arg)
+        }
         projectSocket.on('on-project-added', eventOnNewProjectAdded)
+        // todo: display project in realtime
+        projectSocket.on('show-project', eventOnProjectRead)
         return () => {
             projectSocket.off('on-project-added', eventOnNewProjectAdded)
+            projectSocket.off('show-project', eventOnProjectRead)
         }
     }, [])
-    useEffect(() => {
-        async function displayAllProjects() {
-            let data = await displayProjects()
-            console.log(data)
-            setProjects(data)
-        }
-        displayAllProjects()
-    }, [])
+    // useEffect(() => {
+    //     async function displayAllProjects() {
+    //         let data = await displayProjects()
+    //         console.log(data)
+    //         setProjects(data)
+    //     }
+    //     displayAllProjects()
+    // }, [])
 
     return (
         <>

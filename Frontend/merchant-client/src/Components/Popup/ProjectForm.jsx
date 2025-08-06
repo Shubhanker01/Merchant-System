@@ -25,15 +25,15 @@ function ProjectForm({ modal, openModal, projects, setProjects }) {
             formData.append('attachment', attachmentFile.files[0])
             let res = await addProject(formData)
             if (res !== undefined) {
-                setProjects([...projects, {
-                    _id: res.project._id,
-                    title: res.project.title,
-                    description: res.project.description,
-                    minPrice: res.project.minPrice,
-                    maxPrice: res.project.maxPrice,
-                    deadline: new Date(res.project.deadline).toLocaleDateString(),
-                    attachments: res.project.attachments
-                }])
+                // setProjects([...projects, {
+                //     _id: res.project._id,
+                //     title: res.project.title,
+                //     description: res.project.description,
+                //     minPrice: res.project.minPrice,
+                //     maxPrice: res.project.maxPrice,
+                //     deadline: new Date(res.project.deadline).toLocaleDateString(),
+                //     attachments: res.project.attachments
+                // }])
                 setForm({ ...form, title: "", description: "", minPrice: 0, maxPrice: 0, deadline: "" })
                 openModal(!modal)
                 projectSocket.emit('project-added', 'New project has been added')

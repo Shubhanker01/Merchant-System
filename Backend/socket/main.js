@@ -1,7 +1,7 @@
 
 const { Message } = require('../models/message.model')
 const { showAllBids, showUserBids } = require('../controllers/bids/bids.controller')
-
+const { displayProject } = require('../controllers/projects/projects.controller')
 // initialize socket io event
 
 // const create chat room
@@ -90,16 +90,25 @@ const createNamspace = (io) => {
     })
 }
 
+// function to display project
+async function funcWrapperToDisplayProjects(project) {
+    let result = await displayProject()
+    // emit projects to the client
+    project.emit('show-project', result)
+
+}
 // create namespace for project section
 const projectNamespace = (io) => {
     const project = io.of('/projects')
-    project.on('connection', (socket) => {
+    project.on('connection', async (socket) => {
         console.log(`${socket.id} joined the project namespace`)
+        funcWrapperToDisplayProjects(project)
         // listen to different events
         // 1. On project creation
         socket.on('project-added', (arg) => {
             console.log(arg)
             socket.broadcast.emit('on-project-added', 'A new Project has been created please check!!!')
+            funcWrapperToDisplayProjects(project)
         })
     })
 }
