@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import AddProject from '../Footer/AddProject'
 import ProjectTable from './ProjectTable'
-import { displayProjects } from '../../Async logic/projectOperation'
 import { projectSocket } from '../../socket'
 import { toast } from 'react-toastify'
 
@@ -32,14 +31,6 @@ function Projects() {
             projectSocket.off('show-project', eventOnProjectRead)
         }
     }, [])
-    // useEffect(() => {
-    //     async function displayAllProjects() {
-    //         let data = await displayProjects()
-    //         console.log(data)
-    //         setProjects(data)
-    //     }
-    //     displayAllProjects()
-    // }, [])
 
     return (
         <>

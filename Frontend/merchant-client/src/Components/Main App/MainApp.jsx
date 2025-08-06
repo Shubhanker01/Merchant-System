@@ -3,7 +3,7 @@ import NavbarApp from '../Header/NavbarApp'
 import AddBid from '../Footer/AddBid'
 import BidsTable from '../Body/BidsTable'
 import { toast } from 'react-toastify'
-import { bidsSocket } from '../../socket'
+import { bidsSocket, socket } from '../../socket'
 import Pagination from '../Footer/Pagination'
 
 function MainApp() {
@@ -11,6 +11,7 @@ function MainApp() {
     const [nextQuery, setNextQuery] = useState("")
     const [prevQuery, setPrevQuery] = useState("")
     useEffect(() => {
+        socket.connect()
         bidsSocket.connect()
         return () => {
             bidsSocket.disconnect()

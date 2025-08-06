@@ -110,20 +110,21 @@ const projectNamespace = (io) => {
             socket.broadcast.emit('on-project-added', 'A new Project has been created please check!!!')
             funcWrapperToDisplayProjects(project)
         })
+
+        // check for disconnection
+        socket.on('disconnect', () => {
+            console.log(`${socket.id} is disconnected from project namespace`)
+        })
     })
 }
 
 
 const initializeSocketio = (io) => {
-    return io.on('connection', async (socket) => {
+    io.on('connection', async (socket) => {
         try {
-            socket.emit('msg', 'This message is for client')
-            socket.on('bid-added', (arg) => {
-                console.log(arg)
-            })
-            // sendBids(io)
+            console.log(`${socket.id} joined the app globally`)
             socket.on('disconnect', () => {
-                io.emit('left', 'a user has left the chat')
+                console.log(`${socket.id} is disconnected from app globally`)
             })
         }
         catch (err) {
