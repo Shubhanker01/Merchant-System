@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { addProject } from '../../Async logic/projectOperation'
 import { toast } from 'react-toastify'
 import { projectSocket } from '../../socket'
-
+import getCookie from '../../utils/getCookie'
+import decodeToken from '../../utils/decodeJwt'
 function ProjectForm({ modal, openModal, projects, setProjects }) {
     const [form, setForm] = useState({
         title: "",
         description: "",
+        projectCreaterEmail:"",
         minPrice: 0,
         maxPrice: 0,
         deadline: ""

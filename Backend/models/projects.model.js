@@ -5,6 +5,10 @@ const projectModel = new Schema({
         type: String,
         required: true
     },
+    projectCreaterEmail: {
+        type: String,
+        ref: 'merchants'
+    },
     description: {
         type: String,
         required: true
