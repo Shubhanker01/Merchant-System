@@ -5,10 +5,13 @@ import { projectSocket } from '../../socket'
 import getCookie from '../../utils/getCookie'
 import decodeToken from '../../utils/decodeJwt'
 function ProjectForm({ modal, openModal, projects, setProjects }) {
+    const token = getCookie()
+    const decodedToken = decodeToken(token)
+    console.log(decodedToken)
     const [form, setForm] = useState({
         title: "",
         description: "",
-        projectCreaterEmail:"",
+        projectCreaterEmail: decodedToken.email,
         minPrice: 0,
         maxPrice: 0,
         deadline: ""
@@ -17,25 +20,18 @@ function ProjectForm({ modal, openModal, projects, setProjects }) {
         try {
             e.preventDefault()
             let attachmentFile = document.getElementById('attachment')
+            console.log(attachmentFile.files[0])
             // create a form data and append fields
             const formData = new FormData()
             formData.append('title', form.title)
             formData.append('description', form.description)
+            formData.append('projectCreaterEmail', form.projectCreaterEmail)
             formData.append('minPrice', form.minPrice)
             formData.append('maxPrice', form.maxPrice)
             formData.append('deadline', form.deadline)
             formData.append('attachment', attachmentFile.files[0])
-            let res = await addProject(formData)
+            let res = await addProject(formData, token)
             if (res !== undefined) {
-                // setProjects([...projects, {
-                //     _id: res.project._id,
-                //     title: res.project.title,
-                //     description: res.project.description,
-                //     minPrice: res.project.minPrice,
-                //     maxPrice: res.project.maxPrice,
-                //     deadline: new Date(res.project.deadline).toLocaleDateString(),
-                //     attachments: res.project.attachments
-                // }])
                 setForm({ ...form, title: "", description: "", minPrice: 0, maxPrice: 0, deadline: "" })
                 openModal(!modal)
                 projectSocket.emit('project-added', 'New project has been added')
