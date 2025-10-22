@@ -1,6 +1,9 @@
 import React from 'react'
+import IndividualProject from './IndividualProject'
+import { Link, useParams } from 'react-router-dom'
 
 function ProjectTable({ projects }) {
+    const { userId } = useParams()
     if (projects.length == 0) {
         return <h1>No Projects to Display</h1>
     }
@@ -32,6 +35,9 @@ function ProjectTable({ projects }) {
                                     <a href={project.attachments} target="_blank" rel="noopener noreferrer">
                                         View PDF
                                     </a>
+                                </td>
+                                <td className='px-4 py-2 text-blue-600 underline'>
+                                    <Link to={`/main-app/${userId}/projects/${project._id}`} state={project}>Individual Project</Link>
                                 </td>
                             </tr>
                         ))}
