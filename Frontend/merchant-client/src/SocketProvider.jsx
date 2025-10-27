@@ -1,22 +1,25 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useRef } from 'react';
 import io from 'socket.io-client';
 
 const URL = `${import.meta.env.VITE_PROD_SERVER}`
 const socketContext = createContext()
 export const SocketProvider = ({ children }) => {
-    const [socketInstance, setSocketInstance] = useState(null)
-    useEffect(() => {
-        const socket = io(URL, {
+    const socketRef = useRef(null)
+    if (!socketRef.current) {
+        socketRef.current = io(URL, {
             autoConnect: false
         })
-        setSocketInstance(socket)
+    }
+    useEffect(() => {
+        const socket = socketRef.current
+        socket.connect()
         // cleanup on unmount
         return () => {
             socket.disconnect()
         }
     }, [])
     return (
-        <socketContext.Provider value={socketInstance}>
+        <socketContext.Provider value={socketRef.current}>
             {children}
         </socketContext.Provider>
     )

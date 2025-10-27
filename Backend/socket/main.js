@@ -91,41 +91,54 @@ const createNamspace = (io) => {
 }
 
 // function to display project
-async function funcWrapperToDisplayProjects(project) {
+async function funcWrapperToDisplayProjects() {
     let result = await displayProject()
-    // emit projects to the client
-    project.emit('show-project', result)
-
+    console.log(result)
+    return result
 }
 // create namespace for project section
-const projectNamespace = (io) => {
-    const project = io.of('/projects')
-    project.on('connection', async (socket) => {
-        console.log(`${socket.id} joined the project namespace`)
-        funcWrapperToDisplayProjects(project)
-        // listen to different events
-        // 1. On project creation
-        socket.on('project-added', (arg) => {
-            console.log(arg)
-            socket.broadcast.emit('on-project-added', 'A new Project has been created please check!!!')
-            funcWrapperToDisplayProjects(project)
-        })
+// const projectNamespace = (io) => {
+//     const project = io.of('/projects')
+//     project.on('connection', async (socket) => {
+//         console.log(`${socket.id} joined the project namespace`)
+//         funcWrapperToDisplayProjects(project)
+//         // listen to different events
+//         // 1. On project creation
+//         socket.on('project-added', (arg) => {
+//             console.log(arg)
+//             socket.broadcast.emit('on-project-added', 'A new Project has been created please check!!!')
+//             funcWrapperToDisplayProjects(project)
+//         })
 
-        // check for disconnection
-        socket.on('disconnect', () => {
-            console.log(`${socket.id} is disconnected from project namespace`)
-        })
-    })
-}
+//         // check for disconnection
+//         socket.on('disconnect', () => {
+//             console.log(`${socket.id} is disconnected from project namespace`)
+//         })
+//     })
+// }
 
 
 const initializeSocketio = (io) => {
+    // global socket connection
     io.on('connection', async (socket) => {
         try {
             console.log(`${socket.id} joined the app globally`)
             socket.on('disconnect', () => {
                 console.log(`${socket.id} is disconnected from app globally`)
             })
+            // display projects on connection
+            let projects = await funcWrapperToDisplayProjects()
+            // io.emit('show-project', projects)
+            socket.on('show-client-project', () => {
+                io.emit('show-project', projects)
+            })
+            // event to add project
+            socket.on('project-added', (arg) => {
+                console.log(arg)
+                socket.broadcast.emit('on-project-added', 'A new Project has been created please check!!!')
+                // funcWrapperToDisplayProjects(socket)
+            })
+
         }
         catch (err) {
             console.log(err)
@@ -134,4 +147,4 @@ const initializeSocketio = (io) => {
 }
 
 
-module.exports = { initializeSocketio, createNamspace, bidsNamespace, projectNamespace }
+module.exports = { initializeSocketio, createNamspace, bidsNamespace }

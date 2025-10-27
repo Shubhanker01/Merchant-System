@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { addProject } from '../../Async logic/projectOperation'
 import { toast } from 'react-toastify'
-import { projectSocket } from '../../socket'
+// import { projectSocket } from '../../socket'
+import { useSocket } from '../../SocketProvider'
 import getCookie from '../../utils/getCookie'
 import decodeToken from '../../utils/decodeJwt'
 function ProjectForm({ modal, openModal, projects, setProjects }) {
+    const socket = useSocket()
     const token = getCookie()
     const decodedToken = decodeToken(token)
     console.log(decodedToken)
@@ -34,7 +36,7 @@ function ProjectForm({ modal, openModal, projects, setProjects }) {
             if (res !== undefined) {
                 setForm({ ...form, title: "", description: "", minPrice: 0, maxPrice: 0, deadline: "" })
                 openModal(!modal)
-                projectSocket.emit('project-added', 'New project has been added')
+                socket.emit('project-added', 'New project has been added')
             }
         } catch (error) {
             console.log(error)
