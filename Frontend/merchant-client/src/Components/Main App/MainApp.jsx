@@ -1,21 +1,17 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import AddBid from '../Footer/AddBid'
 import BidsTable from '../Body/BidsTable'
 import { toast } from 'react-toastify'
-import { bidsSocket } from '../../socket'
+import { bidsSocket, socket } from '../../socket'
 import Pagination from '../Footer/Pagination'
-import { useSocket } from '../../SocketProvider'
 
 function MainApp() {
-    const socket = useSocket()
-    console.log(socket)
     const [bids, setBids] = useState([])
     const [nextQuery, setNextQuery] = useState("")
     const [prevQuery, setPrevQuery] = useState("")
     useEffect(() => {
         socket.connect()
-        console.log(socket.id)
         bidsSocket.connect()
         return () => {
             bidsSocket.disconnect()
