@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import AddProject from '../Footer/AddProject'
 import ProjectTable from './ProjectTable'
+// import { projectSocket } from '../../socket'
 import { useSocket } from '../../SocketProvider'
 import { toast } from 'react-toastify'
 
@@ -20,7 +21,7 @@ function Projects() {
         function eventOnProjectRead(arg) {
             setProjects(arg)
         }
-        // emit projects to the client
+        // emit from client side
         socket.emit('show-client-project', "Requesting for project list")
         socket.on('on-project-added', eventOnNewProjectAdded)
         // todo: display project in realtime
