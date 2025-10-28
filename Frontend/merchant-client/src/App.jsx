@@ -18,22 +18,22 @@ function App() {
     <>
       <ToastContainer />
       <BrowserRouter>
-          <Routes>
-            <Route path='/' element={<Home />}></Route>
-            <Route path='/login' element={<Login />}></Route>
-            <Route path='/signup'>
-              <Route index element={<Signup />}></Route>
-              <Route path='email-verify' element={<EmailVerification />}></Route>
-              <Route path='password-set' element={<PasswordSet />}></Route>
-            </Route>
-            <Route path='/main-app/:userId'>
-              <Route index element={<MainApp />}></Route>
-              <Route path='message' element={<MessageApp />}></Route>
-              <Route path='mybids' element={<MyBids />}></Route>
-              <Route path='projects' element={<Projects />}></Route>
-              <Route path='projects/:projectId' element={<IndividualProject />}></Route>
-            </Route>
-          </Routes>
+        <Routes>
+          <Route path='/' element={<Home />}></Route>
+          <Route path='/login' element={<Login />}></Route>
+          <Route path='/signup'>
+            <Route index element={<Signup />}></Route>
+            <Route path='email-verify' element={<EmailVerification />}></Route>
+            <Route path='password-set' element={<PasswordSet />}></Route>
+          </Route>
+          <Route path='/main-app/:userId'>
+            <Route index element={<MainApp />}></Route>
+            <Route path='message' element={<MessageApp />}></Route>
+            <Route path='mybids' element={<MyBids />}></Route>
+            <Route path='projects' element={<Projects />}></Route>
+            <Route path='projects/:projectId' element={<IndividualProject />}></Route>
+          </Route>
+        </Routes>
       </BrowserRouter>
 
     </>
