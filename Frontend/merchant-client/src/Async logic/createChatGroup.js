@@ -1,7 +1,7 @@
 import axios from "axios";
 import decodeToken from "../utils/decodeJwt";
 import getCookie from "../utils/getCookie";
-import { socket } from "../socket";
+// import { socket } from "../socket";
 
 const createGroupChat = async (participants, groupName) => {
     try {
@@ -13,7 +13,7 @@ const createGroupChat = async (participants, groupName) => {
             name: groupName,
             participants: participantsId
         })
-        socket.emit('chat-room', participantsId)
+        // socket.emit('chat-room', participantsId)
         let data = await response.data
         return data
     } catch (error) {

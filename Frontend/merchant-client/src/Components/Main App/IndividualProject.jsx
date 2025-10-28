@@ -4,7 +4,6 @@ import { Calendar, FileText, IndianRupee, ClipboardList } from "lucide-react"
 function IndividualProject() {
     const location = useLocation()
     const project = location.state
-    console.log(project)
     const { title, description, minPrice, maxPrice, deadline, attachments } = project
     return (
         <>
