@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser')
 const { createServer } = require('node:http')
 const server = createServer(app)
 const { Server } = require('socket.io')
-const { initializeSocketio, createNamspace, bidsNamespace } = require('../Backend/socket/main')
+const { initializeSocketio, createNamspace, bidsNamespace, projectNamespace } = require('../Backend/socket/main')
 
 const io = new Server(server, {
     cors: {
@@ -21,7 +21,7 @@ createNamspace(io)
 // create different namespace for bids
 bidsNamespace(io)
 // create namespace for project
-// projectNamespace(io)
+projectNamespace(io)
 
 app.set('io', io)
 // creating a middleware to use io in routes

@@ -2,16 +2,18 @@ import React, { useEffect, useState } from 'react'
 import NavbarApp from '../Header/NavbarApp'
 import AddProject from '../Footer/AddProject'
 import ProjectTable from './ProjectTable'
-// import { projectSocket } from '../../socket'
-import { useSocket } from '../../SocketProvider'
+import { projectSocket } from '../../socket'
 import { toast } from 'react-toastify'
 
 function Projects() {
-    const socket = useSocket()
     const [projects, setProjects] = useState([])
 
     useEffect(() => {
-        socket.connect()
+        // connect to project socket to show updates regarding project
+        projectSocket.connect()
+        return () => {
+            projectSocket.disconnect()
+        }
     }, [])
     useEffect(() => {
         // give notification on new project added
@@ -21,14 +23,12 @@ function Projects() {
         function eventOnProjectRead(arg) {
             setProjects(arg)
         }
-        // emit from client side
-        socket.emit('show-client-project', "Requesting for project list")
-        socket.on('on-project-added', eventOnNewProjectAdded)
+        projectSocket.on('on-project-added', eventOnNewProjectAdded)
         // todo: display project in realtime
-        socket.on('show-project', eventOnProjectRead)
+        projectSocket.on('show-project', eventOnProjectRead)
         return () => {
-            socket.off('on-project-added', eventOnNewProjectAdded)
-            socket.off('show-project', eventOnProjectRead)
+            projectSocket.off('on-project-added', eventOnNewProjectAdded)
+            projectSocket.off('show-project', eventOnProjectRead)
         }
     }, [])
 
