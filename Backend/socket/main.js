@@ -51,7 +51,8 @@ const sendBids = (io, socket) => {
 const bidsNamespace = (io) => {
     const bids = io.of('/bids')
     bids.on('connection', (socket) => {
-        // console.log(`${socket.id} connected to bids namespace`)
+        console.log(`${socket.id} connected to bids namespace`)
+        
         sendBids(bids, socket)
         // listen to different events 
         socket.on('create-bids', (arg) => {
@@ -74,7 +75,9 @@ const bidsNamespace = (io) => {
             socket.broadcast.emit('on-updation', `Bid ID ${id} has been updated`)
             // sendBids(bids)
         })
-
+        socket.on('hello', (arg) => {
+            console.log(arg)
+        })
     })
 }
 
@@ -109,6 +112,7 @@ const projectNamespace = (io) => {
             console.log(arg)
             socket.broadcast.emit('on-project-added', 'A new Project has been created please check!!!')
             funcWrapperToDisplayProjects(project)
+            io.of('/bids').emit('new-project-added', 'A new project has been added please check!!')
         })
 
         // check for disconnection

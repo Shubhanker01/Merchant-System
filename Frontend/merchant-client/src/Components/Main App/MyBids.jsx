@@ -26,14 +26,19 @@ function MyBids() {
     }, [])
     useEffect(() => {
         bidsSocket.emit('send-user-bids', user.name, currentPage)
+        function getProjectAddedNotification(arg) {
+            console.log(arg)
+        }
         function getUserBids(arg) {
             console.log(arg)
             setTotalPages(arg.totalPages)
             setUserBids(arg.results)
         }
         bidsSocket.on('user-bids', getUserBids)
+        bidsSocket.on('new-project-added', getProjectAddedNotification)
         return () => {
             bidsSocket.off('user-bids', getUserBids)
+            bidsSocket.off('new-project-added', getProjectAddedNotification)
         }
     }, [currentPage])
     useEffect(() => {

@@ -36,15 +36,20 @@ function MainApp() {
         function receiveEventForUpdation(arg) {
             toast.info(arg, { theme: 'dark' })
         }
+        function receiveMessageFromProjectNamespace(arg) {
+            toast.info(arg, { theme: 'dark' })
+        }
         bidsSocket.on('read-bids', receiveBids)
         bidsSocket.on('success-creation-bids', receiveEventForCreation)
         bidsSocket.on('on-delete', receiveEventForDeletion)
         bidsSocket.on('on-updation', receiveEventForUpdation)
+        bidsSocket.on('new-project-added', receiveMessageFromProjectNamespace)
         return () => {
             bidsSocket.off('read-bids', receiveBids)
             bidsSocket.off('success-creation-bids', receiveEventForCreation)
             bidsSocket.off('on-delete', receiveEventForDeletion)
             bidsSocket.off('on-updation', receiveEventForUpdation)
+            bidsSocket.off('new-project-added', receiveMessageFromProjectNamespace)
         }
 
     }, [])
