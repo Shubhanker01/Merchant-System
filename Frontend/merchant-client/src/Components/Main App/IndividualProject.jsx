@@ -1,11 +1,15 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { Calendar, FileText, IndianRupee, ClipboardList } from "lucide-react"
+import getCookie from '../../utils/getCookie'
+import decodeToken from '../../utils/decodeJwt'
 function IndividualProject() {
+    const token = getCookie('token')
+    const decodedToken = decodeToken(token)
     const location = useLocation()
     const project = location.state
-    console.log(project)
-    const { title, description, minPrice, maxPrice, deadline, attachments } = project
+    const { title, description, minPrice, maxPrice, deadline, attachments, projectCreaterEmail } = project
+
     return (
         <>
             <div className="min-h-screen bg-gray-50 flex justify-center py-10 px-5">
@@ -73,6 +77,17 @@ function IndividualProject() {
                             </a>
                         </div>
                     )}
+                    <div className='mt-6 '>
+                        {
+                            decodedToken.email !== projectCreaterEmail ?
+                                <div>
+                                    <button className="bg-green-600 text-white px-5 py-2 rounded-xl hover:bg-green-700 transition">
+                                        Place a Bid
+                                    </button>
+                                </div> :
+                                <div></div>
+                        }
+                    </div>
                 </div>
             </div>
         </>

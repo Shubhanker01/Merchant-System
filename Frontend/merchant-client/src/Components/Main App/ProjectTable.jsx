@@ -19,6 +19,7 @@ function ProjectTable({ projects }) {
                             <th className="px-4 py-2 text-left">Max Price</th>
                             <th className="px-4 py-2 text-left">Deadline</th>
                             <th className="px-4 py-2 text-left">PDF</th>
+                            <th className='px-4 py-2 text-left'>Details</th>
                         </tr>
                     </thead>
                     <tbody>

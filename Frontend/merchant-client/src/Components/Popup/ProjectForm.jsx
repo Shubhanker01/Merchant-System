@@ -7,7 +7,6 @@ import decodeToken from '../../utils/decodeJwt'
 function ProjectForm({ modal, openModal, projects, setProjects }) {
     const token = getCookie()
     const decodedToken = decodeToken(token)
-    console.log(decodedToken)
     const [form, setForm] = useState({
         title: "",
         description: "",

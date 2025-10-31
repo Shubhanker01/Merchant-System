@@ -47,7 +47,6 @@ const addBidToProject = async (req, res) => {
             projectId: projectId,
             price: price,
             expectedDate: new Date(expectedDate),
-            proposal: proposal,
             bidderEmail: bidderEmail,
             proposal: resultUrl
         })
