@@ -51,7 +51,7 @@ const addBidToProject = async (req, res) => {
             proposal: resultUrl
         })
         return res.status(200).json({
-            message: "Successfully added bid to the project",
+            message: "Successfully placed your bid in the project",
             bid
         })
     }

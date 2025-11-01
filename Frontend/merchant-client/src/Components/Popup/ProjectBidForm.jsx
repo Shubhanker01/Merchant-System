@@ -16,6 +16,33 @@ function ProjectBidForm({ modal, openModal }) {
         expectedDate: "",
         bidderEmail: decodedToken.email
     })
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const fileInput = document.getElementById('proposal')
+        const formData = new FormData()
+        formData.append('projectId', form.projectId)
+        formData.append('price', form.price)
+        formData.append('expectedDate', form.expectedDate)
+        formData.append('bidderEmail', form.bidderEmail)
+        formData.append('proposal', fileInput.files[0])
+        try {
+            let response = await addBidToProject(formData, token)
+            if (response && response.message) {
+                // toast.success(response.message)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        setForm({
+            projectId: projectId,
+            price: 0,
+            expectedDate: "",
+            bidderEmail: decodedToken.email
+        })
+        openModal(false)
+    }
+
     return (
         <>
             <div id="bids-modal" tabIndex="-1" className={`fixed ${modal == true ? `block` : `hidden`}  z-50 inset-0 bg-gray-900 bg-opacity-60 overflow-y-auto h-full w-full px-4`}>
@@ -41,16 +68,16 @@ function ProjectBidForm({ modal, openModal }) {
 
                                 <div className="col-span-2 sm:col-span-1">
                                     <label htmlFor="minPrice" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                                    <input type='number' id='minPrice' name='minPrice' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder='' value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })}></input>
+                                    <input type='number' id='minPrice' name='minPrice' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder='' value={form.price} onChange={(e) => setForm({ ...form, price: e.target.value })} required={true}></input>
                                 </div>
 
                                 <div className="col-span-2">
                                     <label htmlFor="deadline" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Expected Date</label>
-                                    <input type='date' id='closing-date' name='deadline' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={form.deadline} onChange={(e) => setForm({ ...form, deadline: e.target.value })}></input>
+                                    <input type='date' id='closing-date' name='deadline' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" value={form.expectedDate} onChange={(e) => setForm({ ...form, expectedDate: e.target.value })} required={true}></input>
                                 </div>
                                 <div className="col-span-2">
-                                    <label htmlFor="attachment" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Proposal</label>
-                                    <input type='file' id='attachment' name='proposal' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"></input>
+                                    <label htmlFor="proposal" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Proposal</label>
+                                    <input type='file' id='proposal' name='proposal' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required={true}></input>
                                 </div>
                             </div>
 
