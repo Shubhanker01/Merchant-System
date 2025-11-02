@@ -19,7 +19,8 @@ export const addBidToProject = async (formData, token) => {
     catch (error) {
         console.log(error)
         toast.update(toastId, {
-            render: error.response?.data || "Failed to place bid!", type: "error", isLoading: false, autoClose: 3000, position: 'top-center'
+            render: error.response?.data.message || "Failed to place bid!", type: "error", isLoading: false, autoClose: 3000, position: 'top-center'
         })
+        return null
     }
 }
