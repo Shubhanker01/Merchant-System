@@ -15,16 +15,16 @@ function IndividualProject() {
     const { title, description, minPrice, maxPrice, deadline, attachments, projectCreaterEmail } = project
     const [modal, setModal] = useState(false)
     const [placedBid, hasPlacedBid] = useState(false)
-
     useEffect(() => {
         const checkBidStatus = async () => {
-            const bidPlaced = await checkIfBidPlaced(project._id, decodedToken.email)
-            hasPlacedBid(bidPlaced)
+            const bidPlaced = await checkIfBidPlaced(project._id)
+            return bidPlaced
         }
-        checkBidStatus()
-    }, [])
-
-    console.log(placedBid)
+        checkBidStatus().then((bidPlaced) => {
+            hasPlacedBid(bidPlaced)
+        })
+        console.log("I am called")
+    }, [placedBid])
 
     return (
         <>
@@ -95,7 +95,7 @@ function IndividualProject() {
                     )}
                     <div className='mt-6 '>
                         {
-                            decodedToken.email !== projectCreaterEmail ?
+                            decodedToken.email !== projectCreaterEmail && placedBid === false ?
                                 <div>
                                     <button onClick={() => { setModal(!modal) }} className="bg-green-600 text-white px-5 py-2 rounded-xl hover:bg-green-700 transition">
                                         Place a Bid
@@ -106,7 +106,7 @@ function IndividualProject() {
                     </div>
                 </div>
             </div>
-            <ProjectBidForm modal={modal} openModal={setModal} />
+            <ProjectBidForm modal={modal} openModal={setModal} hasPlacedBid={hasPlacedBid} />
         </>
     )
 }

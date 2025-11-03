@@ -6,7 +6,7 @@ import { toast } from 'react-toastify'
 import { addBidToProject } from '../../Async logic/projectBidOperation'
 import { useParams } from 'react-router-dom'
 
-function ProjectBidForm({ modal, openModal }) {
+function ProjectBidForm({ modal, openModal, hasPlacedBid }) {
     const { projectId } = useParams()
     const token = getCookie()
     const decodedToken = decodeToken(token)
@@ -30,6 +30,7 @@ function ProjectBidForm({ modal, openModal }) {
             let response = await addBidToProject(formData, token)
             if (response && response.message) {
                 // toast.success(response.message)
+                hasPlacedBid(true)
             }
         } catch (error) {
             console.log(error)

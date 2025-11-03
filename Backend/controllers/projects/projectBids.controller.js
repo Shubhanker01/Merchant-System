@@ -63,7 +63,8 @@ const addBidToProject = async (req, res) => {
 // check if the bidder has already placed a bid on the project
 const hasPlacedBid = async (req, res) => {
     try {
-        let { projectId, bidderEmail } = req.body
+        let { projectId } = req.params
+        let bidderEmail = req.user.email
         // check if all the fields are present
         if (!projectId || !bidderEmail) {
             return res.status(400).send("please provide all the information")
