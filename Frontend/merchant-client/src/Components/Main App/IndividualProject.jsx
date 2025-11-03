@@ -4,6 +4,8 @@ import { Calendar, FileText, IndianRupee, ClipboardList } from "lucide-react"
 import getCookie from '../../utils/getCookie'
 import decodeToken from '../../utils/decodeJwt'
 import ProjectBidForm from '../Popup/ProjectBidForm'
+import { checkIfBidPlaced } from '../../Async logic/projectBidOperation'
+import { useEffect } from 'react'
 
 function IndividualProject() {
     const token = getCookie('token')
@@ -12,6 +14,17 @@ function IndividualProject() {
     const project = location.state
     const { title, description, minPrice, maxPrice, deadline, attachments, projectCreaterEmail } = project
     const [modal, setModal] = useState(false)
+    const [placedBid, hasPlacedBid] = useState(false)
+
+    useEffect(() => {
+        const checkBidStatus = async () => {
+            const bidPlaced = await checkIfBidPlaced(project._id, decodedToken.email)
+            hasPlacedBid(bidPlaced)
+        }
+        checkBidStatus()
+    }, [])
+
+    console.log(placedBid)
 
     return (
         <>

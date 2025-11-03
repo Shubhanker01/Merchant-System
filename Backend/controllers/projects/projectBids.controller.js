@@ -60,4 +60,20 @@ const addBidToProject = async (req, res) => {
     }
 }
 
-module.exports = { addBidToProject }
+// check if the bidder has already placed a bid on the project
+const hasPlacedBid = async (req, res) => {
+    try {
+        let { projectId, bidderEmail } = req.body
+        // check if all the fields are present
+        if (!projectId || !bidderEmail) {
+            return res.status(400).send("please provide all the information")
+        }
+        // make db call
+        let bid = await projectBids.exists({ projectId: projectId, bidderEmail: bidderEmail })
+        return res.status(200).json({ placedBid: bid ? true : false })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { addBidToProject, hasPlacedBid }
