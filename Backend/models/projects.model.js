@@ -9,6 +9,10 @@ const projectModel = new Schema({
         type: String,
         ref: 'merchants'
     },
+    createrId: {
+        type: Schema.Types.ObjectId,
+        ref: 'merchants'
+    },
     description: {
         type: String,
         required: true

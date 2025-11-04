@@ -62,6 +62,9 @@ app.use('/api', require('./routes/projects/projects.routes'))
 // project bids router
 app.use('/api', require('./routes/projects/projectBids.routes'))
 
+// project notification router
+app.use('/api/project/notifications', require('./routes/projects/projectNotification.routes'))
+
 server.listen(port, () => {
     console.log("Example app listening on port ", port)
 })

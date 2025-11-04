@@ -12,19 +12,31 @@ function IndividualProject() {
     const decodedToken = decodeToken(token)
     const location = useLocation()
     const project = location.state
-    const { title, description, minPrice, maxPrice, deadline, attachments, projectCreaterEmail } = project
+    const { title, description, minPrice, maxPrice, deadline, attachments, projectCreaterEmail, createrId } = project
     const [modal, setModal] = useState(false)
-    const [placedBid, hasPlacedBid] = useState(false)
+    const [hasPlacedBid, setHasPlacedBid] = useState(null)
+
     useEffect(() => {
         const checkBidStatus = async () => {
             const bidPlaced = await checkIfBidPlaced(project._id)
             return bidPlaced
         }
         checkBidStatus().then((bidPlaced) => {
-            hasPlacedBid(bidPlaced)
+            setHasPlacedBid(bidPlaced)
         })
-        console.log("I am called")
-    }, [placedBid])
+    }, [project._id])
+
+    if (hasPlacedBid === null) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+                <div className="text-center">
+                    <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                    <p className="text-gray-600 text-lg font-medium">Loading project...</p>
+                </div>
+            </div>
+        )
+    }
+
 
     return (
         <>
@@ -95,7 +107,7 @@ function IndividualProject() {
                     )}
                     <div className='mt-6 '>
                         {
-                            decodedToken.email !== projectCreaterEmail && placedBid === false ?
+                            decodedToken.email !== projectCreaterEmail && hasPlacedBid === false ?
                                 <div>
                                     <button onClick={() => { setModal(!modal) }} className="bg-green-600 text-white px-5 py-2 rounded-xl hover:bg-green-700 transition">
                                         Place a Bid
@@ -106,7 +118,7 @@ function IndividualProject() {
                     </div>
                 </div>
             </div>
-            <ProjectBidForm modal={modal} openModal={setModal} hasPlacedBid={hasPlacedBid} />
+            <ProjectBidForm modal={modal} openModal={setModal} hasPlacedBid={setHasPlacedBid} />
         </>
     )
 }

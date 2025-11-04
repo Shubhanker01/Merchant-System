@@ -29,6 +29,7 @@ function ProjectBidForm({ modal, openModal, hasPlacedBid }) {
         try {
             let response = await addBidToProject(formData, token)
             if (response && response.message) {
+                
                 // toast.success(response.message)
                 hasPlacedBid(true)
             }

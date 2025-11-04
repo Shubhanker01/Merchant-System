@@ -4,13 +4,17 @@ import { toast } from 'react-toastify'
 import { projectSocket } from '../../socket'
 import getCookie from '../../utils/getCookie'
 import decodeToken from '../../utils/decodeJwt'
+import { useParams } from 'react-router-dom'
+
 function ProjectForm({ modal, openModal, projects, setProjects }) {
+    const { userId } = useParams()
     const token = getCookie()
     const decodedToken = decodeToken(token)
     const [form, setForm] = useState({
         title: "",
         description: "",
         projectCreaterEmail: decodedToken.email,
+        createrId: userId,
         minPrice: 0,
         maxPrice: 0,
         deadline: ""
@@ -25,6 +29,7 @@ function ProjectForm({ modal, openModal, projects, setProjects }) {
             formData.append('title', form.title)
             formData.append('description', form.description)
             formData.append('projectCreaterEmail', form.projectCreaterEmail)
+            formData.append('createrId', form.createrId)
             formData.append('minPrice', form.minPrice)
             formData.append('maxPrice', form.maxPrice)
             formData.append('deadline', form.deadline)
