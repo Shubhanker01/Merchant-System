@@ -28,4 +28,17 @@ const createNotification = async (req, res) => {
     }
 }
 
-module.exports = { createNotification }
+// read creater notifications
+const readNotifications = async (req, res) => {
+    try {
+        const { recipientId } = req.params
+        const notifications = await ProjectNotifications.find({ recipientId: recipientId }).sort({ createdAt: -1 })
+        return res.status(200).json({ notifications: notifications })
+    }
+    catch (error) {
+        console.log(error)
+        return res.status(500).send("Internal Server Error")
+    }
+}
+
+module.exports = { createNotification, readNotifications }

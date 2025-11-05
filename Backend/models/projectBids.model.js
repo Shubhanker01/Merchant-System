@@ -21,6 +21,10 @@ const projectBidsModel = new Schema({
     bidderEmail: {
         type: String,
         ref: 'merchants'
+    },
+    bidderId: {
+        type: Schema.Types.ObjectId,
+        ref: 'merchants'
     }
 })
 

@@ -11,6 +11,7 @@ import MessageApp from './Components/Main App/MessageApp'
 import MyBids from './Components/Main App/MyBids'
 import Projects from './Components/Main App/Projects'
 import IndividualProject from './Components/Main App/IndividualProject'
+import Notification from './Components/Main App/Notification'
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
             <Route path='mybids' element={<MyBids />}></Route>
             <Route path='projects' element={<Projects />}></Route>
             <Route path='projects/:projectId' element={<IndividualProject />}></Route>
+            <Route path='notification' element={<Notification />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

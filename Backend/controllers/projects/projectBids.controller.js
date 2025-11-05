@@ -8,9 +8,9 @@ const { uploadOnCloudinary } = require('../../utils/cloudinary')
 // add a bid to a project
 const addBidToProject = async (req, res) => {
     try {
-        let { projectId, price, expectedDate, bidderEmail } = req.body
+        let { projectId, price, expectedDate, bidderEmail, bidderId } = req.body
         // check if all the fields are present
-        if (!projectId || !price || !expectedDate || !bidderEmail) {
+        if (!projectId || !price || !expectedDate || !bidderEmail || !bidderId) {
             return res.status(400).send("Please enter full information")
         }
         // check if projectId is valid
@@ -48,6 +48,7 @@ const addBidToProject = async (req, res) => {
             price: price,
             expectedDate: new Date(expectedDate),
             bidderEmail: bidderEmail,
+            bidderId: bidderId,
             proposal: resultUrl
         })
         return res.status(200).json({

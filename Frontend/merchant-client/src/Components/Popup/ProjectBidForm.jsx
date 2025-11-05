@@ -2,21 +2,22 @@ import React from 'react'
 import { useState } from 'react'
 import decodeToken from '../../utils/decodeJwt'
 import getCookie from '../../utils/getCookie'
-import { toast } from 'react-toastify'
 import { addBidToProject } from '../../Async logic/projectBidOperation'
 import { useParams } from 'react-router-dom'
+import { sendProjectNotification } from '../../Async logic/projectNotification'
 
-function ProjectBidForm({ modal, openModal, hasPlacedBid }) {
-    const { projectId } = useParams()
+function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
+    const { projectId, userId } = useParams()
     const token = getCookie()
     const decodedToken = decodeToken(token)
     const [form, setForm] = useState({
         projectId: projectId,
         price: 0,
         expectedDate: "",
-        bidderEmail: decodedToken.email
+        bidderEmail: decodedToken.email,
+        bidderId: userId
     })
-
+    console.log(form.bidderId, form.bidderEmail)
     const handleSubmit = async (e) => {
         e.preventDefault()
         const fileInput = document.getElementById('proposal')
@@ -25,12 +26,21 @@ function ProjectBidForm({ modal, openModal, hasPlacedBid }) {
         formData.append('price', form.price)
         formData.append('expectedDate', form.expectedDate)
         formData.append('bidderEmail', form.bidderEmail)
+        formData.append('bidderId', form.bidderId)
         formData.append('proposal', fileInput.files[0])
         try {
             let response = await addBidToProject(formData, token)
             if (response && response.message) {
-                
-                // toast.success(response.message)
+                let notificationDetails = {
+                    projectId: projectId,
+                    bidderId: userId,
+                    recipientId: createrId,
+                    message: `A new bid has been placed on your project.`,
+                    price: form.price,
+                    bidderName: decodedToken.name
+                }
+                let notificationResponse = await sendProjectNotification(notificationDetails)
+                console.log(notificationResponse)
                 hasPlacedBid(true)
             }
         } catch (error) {

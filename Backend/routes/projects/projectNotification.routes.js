@@ -2,8 +2,9 @@
 const express = require('express')
 const router = express.Router()
 
-const { createNotification } = require('../../controllers/projects/projectNotification.controller')
+const { createNotification, readNotifications } = require('../../controllers/projects/projectNotification.controller')
 
 router.route('/notify/:projectId/:bidderId/:recipientId').post(createNotification)
 
+router.route('/read/:recipientId').get(readNotifications)
 module.exports = router

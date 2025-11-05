@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
 import Logout from '../Popup/Logout'
+import { Bell } from 'lucide-react'
 
 function NavbarApp() {
     let { userId } = useParams()
@@ -54,6 +55,7 @@ function NavbarApp() {
                                         <NavLink to={`/main-app/${userId}/message`} className="text-white text-base  px-4 py-2  hover:text-orange-600">Message</NavLink>
                                         <NavLink to={`/main-app/${userId}/mybids`} className='text-white text-base  px-4 py-2  hover:text-orange-600'>My Bids</NavLink>
                                         <NavLink to={`/main-app/${userId}/projects`} className='text-white text-base px-4 py-2 hover:text-orange-600'>Projects</NavLink>
+                                        <NavLink to={`/main-app/${userId}/notification`} className='px-4 py-2 self-center'><Bell color='white' size={28}></Bell></NavLink>
                                         {/* <NavLink to="/about" className="text-white text-base  px-4 py-2  hover:text-orange-600">About</NavLink>
                                         <NavLink to="/contact" className="text-white text-base  px-4 py-2  hover:text-orange-600">Contact Me</NavLink> */}
                                         <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2' onClick={openLogoutModal}>Logout</button>
@@ -65,6 +67,7 @@ function NavbarApp() {
                                         <NavLink to={`/main-app/${userId}/projects`} className='text-white text-base  px-4 py-2  hover:text-orange-600 self-center'>Projects</NavLink>
                                         {/* <NavLink to="/about" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">About</NavLink>
                                         <NavLink to="/contact" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Contact Me</NavLink> */}
+                                        <NavLink to={`/main-app/${userId}/notification`} className='px-4 py-2 self-center'><Bell color='white' size={28}></Bell></NavLink>
                                         <button className='text-slate-100 bg-orange-600 rounded-md text-base p-2 self-center' onClick={openLogoutModal}>Logout</button>
                                     </div>
                             }

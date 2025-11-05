@@ -118,7 +118,7 @@ function IndividualProject() {
                     </div>
                 </div>
             </div>
-            <ProjectBidForm modal={modal} openModal={setModal} hasPlacedBid={setHasPlacedBid} />
+            <ProjectBidForm modal={modal} openModal={setModal} hasPlacedBid={setHasPlacedBid} createrId={createrId} />
         </>
     )
 }
