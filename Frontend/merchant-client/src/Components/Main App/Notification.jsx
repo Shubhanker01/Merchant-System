@@ -4,9 +4,11 @@ import { Bell, Clock, CheckCircle } from "lucide-react"
 import { readProjectNotifications } from '../../Async logic/projectNotification'
 import { useParams } from 'react-router-dom'
 import NavbarApp from '../Header/NavbarApp.jsx'
+import { useNotification } from '../../Context/NotificationContext.jsx'
 
 function Notification() {
     const { userId } = useParams()
+    const { decrement } = useNotification()
     const [notifications, setNotifications] = useState([])
     const [loading, setLoading] = useState(true)
     useEffect(() => {
@@ -16,6 +18,7 @@ function Notification() {
         }
         fetchNotifications()
         setLoading(false)
+        decrement()
     }, [])
 
     if (loading) {
@@ -29,7 +32,7 @@ function Notification() {
         <>
             <NavbarApp />
             <div className="max-w-3xl mx-auto px-4 py-24">
-                <div className="flex items-center gap-2 mb-6">
+                <div className="flex items-start gap-2 mb-6">
                     <Bell className="text-blue-600 w-6 h-6" />
                     <h2 className="text-2xl font-semibold text-gray-800 dark:text-white">
                         Notifications

@@ -4,11 +4,14 @@ import './index.css'
 import App from './App.jsx'
 import store from './store.js'
 import { Provider } from 'react-redux'
+import { NotificationProvider } from './Context/NotificationContext.jsx'
 
 createRoot(document.getElementById('root')).render(
 
   <Provider store={store}>
-    <App />
+    <NotificationProvider>
+      <App />
+    </NotificationProvider>
   </Provider>
   ,
 )
