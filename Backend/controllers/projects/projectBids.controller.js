@@ -1,5 +1,6 @@
 // handle bids operations for projects
 const { projectBids } = require('../../models/projectBids.model')
+const { Merchant } = require('../../models/merchant.model')
 const { Project } = require('../../models/projects.model')
 const fs = require('node:fs')
 const { uploadOnCloudinary } = require('../../utils/cloudinary')
@@ -51,6 +52,12 @@ const addBidToProject = async (req, res) => {
             bidderId: bidderId,
             proposal: resultUrl
         })
+        // increment notification count for recipient
+        await Merchant.findByIdAndUpdate(project.createrId, {
+            $inc: {
+                notificationCount: 1
+            }
+        })
         return res.status(200).json({
             message: "Successfully placed your bid in the project",
             bid
@@ -77,5 +84,6 @@ const hasPlacedBid = async (req, res) => {
         console.log(error)
     }
 }
+
 
 module.exports = { addBidToProject, hasPlacedBid }

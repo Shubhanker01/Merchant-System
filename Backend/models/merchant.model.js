@@ -18,6 +18,10 @@ const merchantSchema = new mongoose.Schema({
     isVerified: {
         type: Boolean,
         default: false
+    },
+    notificationCount: {
+        type: Number,
+        default: 0
     }
 })
 

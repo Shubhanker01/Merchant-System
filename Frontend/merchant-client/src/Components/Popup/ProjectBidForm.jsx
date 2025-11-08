@@ -9,7 +9,7 @@ import { useNotification } from '../../Context/NotificationContext'
 
 function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
     const { projectId, userId } = useParams()
-    const { increment } = useNotification()
+    const { increment, notificationCount } = useNotification()
     const token = getCookie()
     const decodedToken = decodeToken(token)
     const [form, setForm] = useState({
@@ -44,7 +44,8 @@ function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
                 let notificationResponse = await sendProjectNotification(notificationDetails)
                 console.log(notificationResponse)
                 hasPlacedBid(true)
-                increment()
+                increment(notificationCount)
+                console.log("Notification after increment:", notificationCount)
             }
         } catch (error) {
             console.log(error)

@@ -1,5 +1,6 @@
 // controller for project notifications
 const ProjectNotifications = require('../../models/projectnotification.model')
+const { Merchant } = require('../../models/merchant.model')
 
 const createNotification = async (req, res) => {
     try {
@@ -41,4 +42,15 @@ const readNotifications = async (req, res) => {
     }
 }
 
-module.exports = { createNotification, readNotifications }
+// show notification count for a user
+const showNotificationCount = async (req, res) => {
+    try {
+        const { userId } = req.params
+        const notificationCount = await Merchant.findById(userId)
+        return res.status(200).json({ notificationCount: notificationCount.notificationCount })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { createNotification, readNotifications, showNotificationCount }

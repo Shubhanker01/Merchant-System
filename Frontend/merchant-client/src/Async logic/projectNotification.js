@@ -27,3 +27,14 @@ export const readProjectNotifications = async (userId) => {
         console.log(error)
     }
 }
+
+export const getNotificationCount = async (userId) => {
+    try {
+        const response = await axios.get(`${import.meta.env.VITE_PROD_SERVER}/api/project/notifications/count/${userId}`)
+        const data = await response.data
+        return data
+    }
+    catch (error) {
+        console.log(error)
+    }
+}

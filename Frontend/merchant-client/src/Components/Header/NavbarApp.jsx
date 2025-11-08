@@ -9,6 +9,7 @@ function NavbarApp() {
     const [toggle, setToggle] = useState(false)
     const [modal, setModal] = useState(false)
     const { notificationCount } = useNotification()
+    console.log("Notification Count in Navbar:", notificationCount)
     const handleToggle = () => {
         if (toggle == false) {
             setToggle(true)
