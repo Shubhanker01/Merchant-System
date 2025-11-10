@@ -19,7 +19,7 @@ function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
         bidderEmail: decodedToken.email,
         bidderId: userId
     })
-    console.log(form.bidderId, form.bidderEmail)
+    
     const handleSubmit = async (e) => {
         e.preventDefault()
         const fileInput = document.getElementById('proposal')
@@ -44,7 +44,7 @@ function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
                 let notificationResponse = await sendProjectNotification(notificationDetails)
                 console.log(notificationResponse)
                 hasPlacedBid(true)
-                increment(notificationCount)
+                increment()
                 console.log("Notification after increment:", notificationCount)
             }
         } catch (error) {

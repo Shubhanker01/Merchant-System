@@ -38,3 +38,13 @@ export const getNotificationCount = async (userId) => {
         console.log(error)
     }
 }
+
+export const markNotificationRead = async (userId) => {
+    try {
+        const response = await axios.post(`${import.meta.env.VITE_PROD_SERVER}/api/project/notifications/mark/${userId}`)
+        const data = await response.data
+        return data
+    } catch (error) {
+        console.log(error)
+    }
+}

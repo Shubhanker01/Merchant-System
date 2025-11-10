@@ -1,15 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, NavLink } from 'react-router-dom'
 import Logout from '../Popup/Logout'
 import { Bell } from 'lucide-react'
 import { useNotification } from '../../Context/NotificationContext'
+import { getNotificationCount } from '../../Async logic/projectNotification'
 
 function NavbarApp() {
     let { userId } = useParams()
     const [toggle, setToggle] = useState(false)
     const [modal, setModal] = useState(false)
-    const { notificationCount } = useNotification()
-    console.log("Notification Count in Navbar:", notificationCount)
+    const { notificationCount, setNotificationCount } = useNotification()
+
+    useEffect(() => {
+        const notificationCount = async () => {
+            let count = await getNotificationCount(userId)
+            setNotificationCount(count.notificationCount)
+        }
+        notificationCount()
+    }, [notificationCount])
+
     const handleToggle = () => {
         if (toggle == false) {
             setToggle(true)
@@ -60,7 +69,7 @@ function NavbarApp() {
                                         <NavLink to={`/main-app/${userId}/projects`} className='text-white text-base px-4 py-2 hover:text-orange-600'>Projects</NavLink>
                                         <NavLink to={`/main-app/${userId}/notification`} className='px-4 py-2 self-center'><Bell color='white' size={28}></Bell>
                                             {notificationCount > 0 && (
-                                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                                <span className="absolute z-20 top-[40px] right-[126px] bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                                                     {notificationCount}
                                                 </span>
                                             )}
@@ -79,7 +88,7 @@ function NavbarApp() {
                                         <NavLink to="/contact" className="text-white text-base  px-4 py-2  hover:text-orange-600 self-center">Contact Me</NavLink> */}
                                         <NavLink to={`/main-app/${userId}/notification`} className='px-4 py-2 self-center'><Bell color='white' size={28} />
                                             {notificationCount > 0 && (
-                                                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+                                                <span className="absolute z-20 top-[40px] right-[126px] bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
                                                     {notificationCount}
                                                 </span>
                                             )}

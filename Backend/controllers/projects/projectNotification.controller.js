@@ -46,11 +46,32 @@ const readNotifications = async (req, res) => {
 const showNotificationCount = async (req, res) => {
     try {
         const { userId } = req.params
-        const notificationCount = await Merchant.findById(userId)
+        const count = await ProjectNotifications.countDocuments({ recipientId: userId, isRead: false })
+        const notificationCount = await Merchant.findByIdAndUpdate(userId, {
+            $set: { notificationCount: count }
+        })
         return res.status(200).json({ notificationCount: notificationCount.notificationCount })
     } catch (error) {
         console.log(error)
     }
 }
 
-module.exports = { createNotification, readNotifications, showNotificationCount }
+// mark notifications as read 
+const markNotificationAsRead = async (req, res) => {
+    try {
+        const { userId } = req.params
+        // update project notifications
+        await ProjectNotifications.updateMany({ recipientId: userId, isRead: false }, {
+            $set: { isRead: true }
+        })
+        // update notification count to zero
+        await Merchant.findByIdAndUpdate(userId, {
+            $set: { notificationCount: 0 }
+        })
+        return res.status(200).json({ message: "All notifications mark as read" })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+module.exports = { createNotification, readNotifications, showNotificationCount, markNotificationAsRead }

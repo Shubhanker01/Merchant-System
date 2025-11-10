@@ -1,25 +1,33 @@
 import React from 'react'
 import { useEffect, useState } from "react"
 import { Bell, Clock, CheckCircle } from "lucide-react"
-import { readProjectNotifications } from '../../Async logic/projectNotification'
+import { readProjectNotifications, markNotificationRead } from '../../Async logic/projectNotification'
 import { useParams } from 'react-router-dom'
 import NavbarApp from '../Header/NavbarApp.jsx'
 import { useNotification } from '../../Context/NotificationContext.jsx'
 
 function Notification() {
     const { userId } = useParams()
-    const { decrement } = useNotification()
+    const { notificationCount, setNotificationCount } = useNotification()
     const [notifications, setNotifications] = useState([])
     const [loading, setLoading] = useState(true)
+
     useEffect(() => {
         const fetchNotifications = async () => {
             const response = await readProjectNotifications(userId)
             setNotifications(response.notifications)
+            if (notificationCount > 0) {
+                const res = await markNotificationRead(userId)
+                console.log(res)
+                setNotificationCount(0)
+            }
+
+            setLoading(false)
         }
         fetchNotifications()
-        setLoading(false)
-        decrement()
     }, [])
+
+
 
     if (loading) {
         return (
