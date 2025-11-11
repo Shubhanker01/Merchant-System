@@ -5,11 +5,9 @@ import getCookie from '../../utils/getCookie'
 import { addBidToProject } from '../../Async logic/projectBidOperation'
 import { useParams } from 'react-router-dom'
 import { sendProjectNotification } from '../../Async logic/projectNotification'
-import { useNotification } from '../../Context/NotificationContext'
 
 function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
     const { projectId, userId } = useParams()
-    const { increment, notificationCount } = useNotification()
     const token = getCookie()
     const decodedToken = decodeToken(token)
     const [form, setForm] = useState({
@@ -19,7 +17,7 @@ function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
         bidderEmail: decodedToken.email,
         bidderId: userId
     })
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         const fileInput = document.getElementById('proposal')
@@ -44,8 +42,6 @@ function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
                 let notificationResponse = await sendProjectNotification(notificationDetails)
                 console.log(notificationResponse)
                 hasPlacedBid(true)
-                increment()
-                console.log("Notification after increment:", notificationCount)
             }
         } catch (error) {
             console.log(error)

@@ -11,7 +11,9 @@ function MainApp() {
     const [nextQuery, setNextQuery] = useState("")
     const [prevQuery, setPrevQuery] = useState("")
     useEffect(() => {
+        // connecting global socket
         socket.connect()
+        console.log(socket.id)
         bidsSocket.connect()
         return () => {
             bidsSocket.disconnect()

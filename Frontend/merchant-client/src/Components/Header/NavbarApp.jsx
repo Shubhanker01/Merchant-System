@@ -12,13 +12,13 @@ function NavbarApp() {
     const { notificationCount, setNotificationCount } = useNotification()
 
     useEffect(() => {
-        const notificationCount = async () => {
+        const fetchNotificationCount = async () => {
             let count = await getNotificationCount(userId)
             setNotificationCount(count.notificationCount)
         }
-        notificationCount()
-    }, [notificationCount])
-
+        fetchNotificationCount()
+    }, [userId])
+    console.log("notification count:", notificationCount)
     const handleToggle = () => {
         if (toggle == false) {
             setToggle(true)
