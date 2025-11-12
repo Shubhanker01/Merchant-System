@@ -4,6 +4,7 @@ import Logout from '../Popup/Logout'
 import { Bell } from 'lucide-react'
 import { useNotification } from '../../Context/NotificationContext'
 import { getNotificationCount } from '../../Async logic/projectNotification'
+import { socket } from '../../socket'
 
 function NavbarApp() {
     let { userId } = useParams()
@@ -17,6 +18,9 @@ function NavbarApp() {
             setNotificationCount(count.notificationCount)
         }
         fetchNotificationCount()
+        socket.on('count', (arg) => {
+            console.log("Notification count through socket", arg)
+        })
     }, [userId])
     console.log("notification count:", notificationCount)
     const handleToggle = () => {

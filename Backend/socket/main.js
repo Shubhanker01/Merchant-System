@@ -2,6 +2,7 @@
 const { Message } = require('../models/message.model')
 const { showAllBids, showUserBids } = require('../controllers/bids/bids.controller')
 const { displayProject } = require('../controllers/projects/projects.controller')
+const { showNotificationCountSocketStyle } = require('../controllers/projects/projectNotification.controller')
 // initialize socket io event
 
 // const create chat room
@@ -52,7 +53,7 @@ const bidsNamespace = (io) => {
     const bids = io.of('/bids')
     bids.on('connection', (socket) => {
         console.log(`${socket.id} connected to bids namespace`)
-        
+
         sendBids(bids, socket)
         // listen to different events 
         socket.on('create-bids', (arg) => {
@@ -100,6 +101,13 @@ async function funcWrapperToDisplayProjects(project) {
     project.emit('show-project', result)
 
 }
+
+// function to display notification count
+async function displayNotificationCount(io, userId) {
+    const count = await showNotificationCountSocketStyle(userId)
+    io.to(userId).emit('count', count)
+}
+
 // create namespace for project section
 const projectNamespace = (io) => {
     const project = io.of('/projects')
@@ -122,11 +130,18 @@ const projectNamespace = (io) => {
     })
 }
 
-
+// 1. show notification increment real time
 const initializeSocketio = (io) => {
     io.on('connection', async (socket) => {
         try {
             console.log(`${socket.id} joined the app globally`)
+            const userId = socket.handshake.auth.userId
+            if (userId) {
+                socket.join(userId)
+                console.log("UserId has joined the socket", userId)
+            }
+            await displayNotificationCount(io, userId)
+            console.log(socket.rooms)
             socket.on('disconnect', () => {
                 console.log(`${socket.id} is disconnected from app globally`)
             })

@@ -56,6 +56,18 @@ const showNotificationCount = async (req, res) => {
     }
 }
 
+const showNotificationCountSocketStyle = async (userId) => {
+    try {
+        const count = await ProjectNotifications.countDocuments({ recipientId: userId, isRead: false })
+        const notificationCount = await Merchant.findByIdAndUpdate(userId, {
+            $set: { notificationCount: count }
+        })
+        return notificationCount.notificationCount
+    } catch (error) {
+        console.log(error)
+    }
+}
+
 // mark notifications as read 
 const markNotificationAsRead = async (req, res) => {
     try {
@@ -74,4 +86,4 @@ const markNotificationAsRead = async (req, res) => {
     }
 }
 
-module.exports = { createNotification, readNotifications, showNotificationCount, markNotificationAsRead }
+module.exports = { createNotification, readNotifications, showNotificationCount, markNotificationAsRead, showNotificationCountSocketStyle }

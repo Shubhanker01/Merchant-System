@@ -5,18 +5,21 @@ import BidsTable from '../Body/BidsTable'
 import { toast } from 'react-toastify'
 import { bidsSocket, socket } from '../../socket'
 import Pagination from '../Footer/Pagination'
+import { useParams } from 'react-router-dom'
 
 function MainApp() {
+    const { userId } = useParams()
     const [bids, setBids] = useState([])
     const [nextQuery, setNextQuery] = useState("")
     const [prevQuery, setPrevQuery] = useState("")
     useEffect(() => {
         // connecting global socket
+        socket.auth = { userId }
         socket.connect()
-        console.log(socket.id)
         bidsSocket.connect()
         return () => {
             bidsSocket.disconnect()
+            socket.disconnect()
         }
     }, [])
     // edge cases -> 1. Check if the user is in last page of the results.
