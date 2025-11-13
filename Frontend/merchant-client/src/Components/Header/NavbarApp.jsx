@@ -13,16 +13,17 @@ function NavbarApp() {
     const { notificationCount, setNotificationCount } = useNotification()
 
     useEffect(() => {
-        const fetchNotificationCount = async () => {
-            let count = await getNotificationCount(userId)
-            setNotificationCount(count.notificationCount)
+        function eventNotificationCount(count) {
+            console.log("Notification count through socket", count)
+            setNotificationCount(count)
         }
-        fetchNotificationCount()
-        socket.on('count', (arg) => {
-            console.log("Notification count through socket", arg)
-        })
+        socket.emit('subscribeToNotifications', { userId })
+        socket.on('count', eventNotificationCount)
+        return () => {
+            socket.off('count', eventNotificationCount)
+        }
     }, [userId])
-    console.log("notification count:", notificationCount)
+
     const handleToggle = () => {
         if (toggle == false) {
             setToggle(true)

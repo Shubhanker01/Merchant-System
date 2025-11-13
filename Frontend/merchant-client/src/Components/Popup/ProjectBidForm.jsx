@@ -5,6 +5,7 @@ import getCookie from '../../utils/getCookie'
 import { addBidToProject } from '../../Async logic/projectBidOperation'
 import { useParams } from 'react-router-dom'
 import { sendProjectNotification } from '../../Async logic/projectNotification'
+import { socket } from '../../socket'
 
 function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
     const { projectId, userId } = useParams()
@@ -42,6 +43,7 @@ function ProjectBidForm({ modal, openModal, hasPlacedBid, createrId }) {
                 let notificationResponse = await sendProjectNotification(notificationDetails)
                 console.log(notificationResponse)
                 hasPlacedBid(true)
+                socket.emit('subscribeToNotifications', { userId: createrId })
             }
         } catch (error) {
             console.log(error)

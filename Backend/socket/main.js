@@ -138,10 +138,12 @@ const initializeSocketio = (io) => {
             const userId = socket.handshake.auth.userId
             if (userId) {
                 socket.join(userId)
-                console.log("UserId has joined the socket", userId)
             }
-            await displayNotificationCount(io, userId)
-            console.log(socket.rooms)
+            socket.on('subscribeToNotifications', async (data) => {
+                console.log(data)
+                await displayNotificationCount(io, data.userId)
+            })
+
             socket.on('disconnect', () => {
                 console.log(`${socket.id} is disconnected from app globally`)
             })

@@ -1,6 +1,7 @@
 // controller for project notifications
 const ProjectNotifications = require('../../models/projectnotification.model')
 const { Merchant } = require('../../models/merchant.model')
+const { projectBids } = require('../../models/projectBids.model')
 
 const createNotification = async (req, res) => {
     try {
@@ -86,4 +87,31 @@ const markNotificationAsRead = async (req, res) => {
     }
 }
 
-module.exports = { createNotification, readNotifications, showNotificationCount, markNotificationAsRead, showNotificationCountSocketStyle }
+
+const getBiddersOfProject = async (req, res) => {
+    try {
+        let { projectId } = req.params
+        let bidders = []
+        let bids = await projectBids.find({ projectId: projectId })
+        for (const bid of bids) {
+            bidders.push(bid.bidderId)
+        }
+        return res.json(bidders)
+
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+const notifyBidders = async (io, projectId) => {
+    const bids = await projectBids.find({ projectId: projectId })
+    const bidderIds = bids.map(bid => bid.bidderId)
+
+    for (const id of bidderIds) {
+        io.to(id).emit('new-bid-added', {
+            message: `A new bid has been added in the project in which your bid is added.`
+        })
+    }
+}
+
+module.exports = { createNotification, readNotifications, showNotificationCount, markNotificationAsRead, showNotificationCountSocketStyle, notifyBidders }

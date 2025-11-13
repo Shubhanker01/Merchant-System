@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import deleteCookie from '../../utils/deleteCookie'
 import { toast } from 'react-toastify'
+import { socket } from '../../socket'
 
 function Logout({ modal, setModal }) {
     const navigate = useNavigate()
@@ -10,6 +11,7 @@ function Logout({ modal, setModal }) {
         deleteCookie()
         navigate('/')
         toast.success('You have been Logged out', { position: 'top-center' })
+        socket.disconnect()
     }
 
     return (

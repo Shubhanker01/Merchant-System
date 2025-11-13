@@ -19,7 +19,6 @@ function MainApp() {
         bidsSocket.connect()
         return () => {
             bidsSocket.disconnect()
-            socket.disconnect()
         }
     }, [])
     // edge cases -> 1. Check if the user is in last page of the results.
